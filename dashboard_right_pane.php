@@ -10,7 +10,7 @@ $session_user_id = $_SESSION['user_id'];
 <!--RIGHT SECTION-->
 <div class="ud-rhs">
     <?php
-    if ($user_details_row['user_type'] == 'Service provider') {
+    if ($user_details_row['user_type'] == 'Service provider' || $user_details_row['user_type'] == "Service expert") {
         ?>
         <div class="ud-rhs-promo">
             <h3><?php echo $BIZBOOK['PROMOTE_MY_BUSINESS']; ?></h3>

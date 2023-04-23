@@ -9,11 +9,7 @@ if (file_exists('config/info.php')) {
 }
 
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-    echo "<pre>";
-    print_r($_SESSION);
-    echo "____";
-    print_r($_POST);
-    die();
+
     if (isset($_POST['listing_submit'])) {
 
         $_SESSION['listing_info_question'] = $_POST["listing_info_question"];
@@ -179,8 +175,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
         $listing_name1 = trim(preg_replace('/[^A-Za-z0-9]/', ' ', $listing_name));
         $listing_slug = checkListingSlug($listing_name1);
-        echo $listing_slug;
-        die("THYGUY");
+
 
 //    Condition to get User Id starts
 
@@ -284,8 +279,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					,'$threesixty_view', '$listing_video', '$service_1_name', '$service_1_price', '$service_1_detail', '$service_1_image', '$service_1_view_more', '$service_2_name', '$service_2_price', '$service_2_image', '$service_3_name', '$service_3_price', '$service_3_image'
 					, '$service_4_name', '$service_4_price', '$service_4_image', '$service_5_name', '$service_5_price', '$service_5_image', '$service_6_name', '$service_6_price', '$service_6_image', '$listing_status'
 					, '$listing_info_question', '$listing_info_answer', '$payment_status', '$listing_slug', '$curDate')";
-echo $listing_qry;
-die();
+
         $listing_res = mysqli_query($conn,$listing_qry);
         $ListingID = mysqli_insert_id($conn);
         $listlastID = $ListingID;

@@ -2921,4 +2921,6 @@ $BIZBOOK['NEWS'] = "News";
 $BIZBOOK['REMIND_FOR_EXPERT_PROFILE'] = "Reminder";
 $BIZBOOK['REMIND_ME_LATER'] = "Remind me later";
 $BIZBOOK['FILL_NOW'] = "Fill now";
+$BIZBOOK['SEND_MAIL_TITLE'] = "MESSAGE";
+$BIZBOOK['SEND_MAIL_SUBJECT'] = "Enter subject *"; $BIZBOOK['MSG_SUCCESSFUL_MESSAGE'] = "Your Message Is sent Successfully!!!";$BIZBOOK['BECOME_SERVICE_EXPERT'] = "Become service expert";
 //************************* Changes *************************

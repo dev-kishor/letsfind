@@ -79,8 +79,11 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
     </div>
 
     <!-- Button trigger modal -->
+
+
     <?php
-    if (isset($_SESSION["user_id"])) {
+    $get_user_type = getUser($_SESSION["user_id"])["user_type"];
+    if (isset($_SESSION["user_id"]) && $get_user_type === "Service expert") {
     ?>
         <input type="hidden" id="checkifexpertidfill" value="<?php echo getExpertInformation() == 1 ? "1" : "0"; ?>">
         <a id="modelalert" data-toggle="modal" data-target="#alertserviceexpert" data-backdrop="static" data-keyboard="false">
@@ -287,7 +290,7 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                                                                                     } ?>"><img src="<?php echo $slash; ?>images/icon/dbl1.png" alt="" loading="lazy" /> <?php echo $BIZBOOK['MY_DASHBOARD']; ?></a>
                                                 </li>
                                                 <?php
-                                                if ($user_details_row['user_type'] == "Service provider") {  //To Check User type is Service provider
+                                                if ($user_details_row['user_type'] == "Service provider" || $user_details_row['user_type'] == "Service expert") {  //To Check User type is Service provider
                                                 ?>
                                                     <?php if ($footer_row['admin_listing_show'] == 1 && $user_details_row['setting_listing_show'] == 1) { ?>
                                                         <li>
