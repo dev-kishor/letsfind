@@ -215,7 +215,7 @@
                 } else {
                     $_SESSION['status_msg'] = $BIZBOOK['USER_INSERT_SUCCESS_MESSAGE'];  // Success Message in session
                     $_SESSION['register_status_msg'] = 1;
-                    header('Location: login?login=register');
+                    header('Location: login?login=login');
                     exit();
                 }
             } else {
