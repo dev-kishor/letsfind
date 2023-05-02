@@ -22,6 +22,15 @@ if (isset($_SESSION['user_id'])) {
 
     $user_details_row = getUser($_SESSION['user_id']); //Fetch Logged In user data
     $user_plan = $user_details_row['user_plan']; //Fetch of Logged In user Plan
+    $chk_user_type = $user_details_row["user_type"]; //Fetch of Logged In user Plan
+    $getExpertInformation = getExpertInformation();
+    if ($chk_user_type === "Service expert" && $getExpertInformation != 1) {
+        $current_page = basename($_SERVER['PHP_SELF']);
+        if ($current_page == "dashboard.php" || $current_page == "create-service-expert-profile.php") {
+        } else {
+            header("Location: dashboard");
+        }
+    }
 
     $user_plan_type = getPlanType($user_plan); //Fetch Logged In User Plan details and data
     $session_user_id = $_SESSION['user_id'];
@@ -35,6 +44,10 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
 }
 
 ?>
+
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -83,7 +96,11 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
 
     <?php
     $get_user_type = getUser($_SESSION["user_id"])["user_type"];
-    if (isset($_SESSION["user_id"]) && $get_user_type === "Service expert") {
+
+    $current_page = basename($_SERVER['PHP_SELF']);
+
+
+    if (isset($_SESSION["user_id"]) && $get_user_type === "Service expert" && $current_page !== "create-service-expert-profile.php") {
     ?>
         <input type="hidden" id="checkifexpertidfill" value="<?php echo getExpertInformation() == 1 ? "1" : "0"; ?>">
         <a id="modelalert" data-toggle="modal" data-target="#alertserviceexpert" data-backdrop="static" data-keyboard="false">
@@ -102,7 +119,7 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $BIZBOOK["REMIND_ME_LATER"] ?></button>
-                            <button type="button" class="btn fillNOw"><a href="service-experts/db-service-expert"> <?php echo $BIZBOOK["FILL_NOW"] ?></a></button>
+                            <button type="button" class="btn fillNOw"><a href="service-experts/create-service-expert-profile"> <?php echo $BIZBOOK["FILL_NOW"] ?></a></button>
                         </div>
                     </div>
                 </div>
@@ -257,8 +274,8 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                 } else {
                                     include("top-notifications.php");
                                 ?>
-                                    <div class="chatheader" style="float: left; width: 33%;    padding: 6px 0px 0px 40px;">
-                                        <p style="color: white;"><a href="chat/index">Chat</a></p>
+                                    <div class="chatheader">
+                                      <a href="chat/index">Chat</a>
                                     </div>
                                     <div class="al">
                                         <div class="head-pro">
