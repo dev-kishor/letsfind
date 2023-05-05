@@ -1,25 +1,17 @@
 <?php
-
 if (file_exists('config/info.php')) {
     include('config/info.php');
 }
-
 if (file_exists('functions.php')) {
     include('functions.php');
 }
-
 $footer_row = getAllFooter(); //Fetch Footer Data
-
 $admin_row = getAllSuperAdmin(); //Fetch Admin Data
-
 $data_array['website_email_id'] = $footer_row['admin_primary_email'];
 $data_array['admin_user_name'] = $admin_row['admin_email'];
 $data_array['admin_user_password'] = $admin_row['admin_password'];
-
 $all_texts_row = getAllTexts(); //Fetch All Text Data
-
 if (isset($_SESSION['user_id'])) {
-
     $user_details_row = getUser($_SESSION['user_id']); //Fetch Logged In user data
     $user_plan = $user_details_row['user_plan']; //Fetch of Logged In user Plan
     $chk_user_type = $user_details_row["user_type"]; //Fetch of Logged In user Plan
@@ -31,21 +23,16 @@ if (isset($_SESSION['user_id'])) {
             header("Location: dashboard");
         }
     }
-
     $user_plan_type = getPlanType($user_plan); //Fetch Logged In User Plan details and data
     $session_user_id = $_SESSION['user_id'];
 }
-
 //Home page preview process
 if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isset($_GET['query'])) {
     $current_home_page = $_GET['type']; //To set Homepage type.
 } else {
     $current_home_page = $footer_row['admin_home_page']; //To set Homepage type.
 }
-
 ?>
-
-
 
 
 <!doctype html>
@@ -73,39 +60,30 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
     <script src="<?php echo $slash; ?>js/html5shiv.js"></script>
     <script src="<?php echo $slash; ?>js/respond.min.js"></script>
     <![endif]-->
-
     <!--    Google Analytics Code Starts-->
     <?php echo stripslashes($footer_row['admin_google_analytics']); ?>
     <!--    Google Analytics Code Ends-->
-
 </head>
 
 <body>
-
     <!--    Google Ad Sense Code Starts-->
     <?php echo stripslashes($footer_row['admin_google_ad_sense']); ?>
     <!--    Google Ad Sense Code Ends-->
-
     <!-- Preloader -->
     <div id="preloader">
         <div id="status">&nbsp;</div>
     </div>
-
     <!-- Button trigger modal -->
-
 
     <?php
     $get_user_type = getUser($_SESSION["user_id"])["user_type"];
-
     $current_page = basename($_SERVER['PHP_SELF']);
-
 
     if (isset($_SESSION["user_id"]) && $get_user_type === "Service expert" && $current_page !== "create-service-expert-profile.php") {
     ?>
         <input type="hidden" id="checkifexpertidfill" value="<?php echo getExpertInformation() == 1 ? "1" : "0"; ?>">
         <a id="modelalert" data-toggle="modal" data-target="#alertserviceexpert" data-backdrop="static" data-keyboard="false">
         </a>
-
         <!-- Alert if user is service provider and service expert and they yet not filled expert profile -->
         <section class="alertserviceexpert">
             <div class="modal fade" id="alertserviceexpert" tabindex="-1" role="dialog" aria-hidden="true">
@@ -129,7 +107,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
     <?php
     }
     ?>
-
 
     <!-- START -->
     <section>
@@ -200,7 +177,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                                 <ul id="pg-resu">
                                                     <?php
                                                     foreach (getAllCategoriesPos() as $category_row) {
-
                                                     ?>
                                                         <li>
                                                             <a href="<?php echo $ALL_LISTING_URL . urlModifier($category_row['category_slug']); ?>"><?php echo $category_row['category_name']; ?> -<span><?php echo AddingZero_BeforeNumber(getCountCategoryListing($category_row['category_id'])); ?></span></a>
@@ -227,7 +203,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                     </div>
                                 </div>
                                 <!--END MOBILE MENU-->
-
                                 <div class="top-ser">
                                     <form name="filter_form" id="filter_form" class="filter_form">
                                         <ul>
@@ -249,7 +224,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                                     ?>
                                                 </ul>
                                             </li>
-
                                             <li class="sbtn">
                                                 <button type="button" class="btn btn-success" id="top_filter_submit"><i class="material-icons">&nbsp;</i></button>
                                             </li>
@@ -275,7 +249,7 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                     include("top-notifications.php");
                                 ?>
                                     <div class="chatheader">
-                                      <a href="chat/index">Chat</a>
+                                        <a href="chat/index">Chat</a>
                                     </div>
                                     <div class="al">
                                         <div class="head-pro">
@@ -394,7 +368,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                                 <?php
                                                 }
                                                 ?>
-
                                                 <li>
                                                     <a href="<?php echo $slash; ?>db-my-profile" class="<?php if ($current_page == "db-my-profile.php" || $current_page == "db-my-profile-edit") {
                                                                                                             echo "db-lact";
@@ -611,7 +584,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                                     <?php
                                                     }
                                                     ?>
-
                                                     <li>
                                                         <a href="<?php echo $slash; ?>db-my-profile" class="<?php if ($current_page == "db-my-profile.php" || $current_page == "db-my-profile-edit") {
                                                                                                                 echo "db-lact";
@@ -713,7 +685,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                         </div>
                     </div>
                 </div>
-
                 <?php if ($current_page == "index.php" || $current_page == "index1.php" || $current_page == "index2.php" || $current_page == "all-category.php") { ?>
                     <div class="container">
                         <div class="row">
@@ -731,6 +702,7 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                     <ul>
                                         <li class="sr-cate">
                                             <select onChange="getSearchCategories(this.value);" name="explor_select" id="explor_select" data-placeholder="<?php echo $BIZBOOK['SEARCHBOX_LABEL_SER']; ?>" class="chosen-select">
+                                                <option value="1"><?php echo $BIZBOOK['ALL_SERVICES']; ?></option>
                                                 <!--<option value=""><?php echo $BIZBOOK['SEARCHBOX_LABEL_SER']; ?></option>-->
                                                 <?php if ($footer_row['admin_listing_show'] == 1) { ?>
                                                     <option value="1"><?php echo $BIZBOOK['ALL_SERVICES']; ?></option>
@@ -765,7 +737,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                             <select id="city_check" name="city_check" data-placeholder="<?php echo $BIZBOOK['SELECT_CITY']; ?>" class="chosen-select">
                                                 <?php
                                                 foreach (getAllListingPageCities() as $city_listrow) {
-
                                                     if (strpos($city_listrow['city_id'], ',') !== false) {
                                                         $city_id_array = array_unique(explode(',', $city_listrow['city_id']));
                                                         foreach ($city_id_array as $places) {
@@ -782,20 +753,7 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                             </select>
                                         </li>
                                         <li class="sr-nor">
-                                            <select id="expert-select-search" name="expert-select-search" class="chosen-select">
-                                                <option value=""><?php echo $BIZBOOK['SEARCHBOX_LABEL']; ?></option>
-                                                <?php
-                                                foreach (getAllCategoriesPos() as $expert_search_categories_row) {
-
-                                                    $search_category_name = $expert_search_categories_row['category_name'];
-
-                                                    $search_category_id = $expert_search_categories_row['category_id'];
-                                                ?>
-                                                    <option value="<?php echo $search_category_name; ?>"><?php echo $search_category_name; ?></option>
-                                                <?php
-                                                }
-                                                ?>
-                                            </select>
+                                            <input type="text" autocomplete="off" id="search-text" placeholder="<?php echo $BIZBOOK['SEARCHBOX_LABEL']; ?>" class="search-field search-text">
                                         </li>
                                         <li class="sr-sea">
                                             <input type="text" autocomplete="off" id="select-search" placeholder="<?php echo $BIZBOOK['SEARCHBOX_LABEL']; ?>" class="search-field">
@@ -989,7 +947,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                 <?php } ?>

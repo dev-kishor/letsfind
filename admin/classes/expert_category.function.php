@@ -113,6 +113,18 @@ function getSlugExpertCategory($arg)
 
 }
 
+//Get particular Category Like category name
+function getExpertWithLikeCategory($arg)
+{
+    global $conn;
+    $sql = "SELECT group_concat(category_id separator ',') as category_id FROM  " . TBL . "expert_categories where category_slug like '%".$arg."%'";
+    $rs = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($rs);
+    return $row;
+
+}
+
+
 //Get particular Category Name using category id
 function getExpertCategoryName($arg)
 {

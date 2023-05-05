@@ -28252,3 +28252,7 @@ color: black;
 background-color: white;
 
 }
+.search-text{
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}

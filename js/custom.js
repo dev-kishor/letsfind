@@ -920,7 +920,6 @@ function isNumber(evt) {
 jQuery(document).ready(function ($) {
     $("#filter_submit").on('click', function () {
         event.preventDefault();
-
         if (webpage_full_link != null) {
             var link = webpage_full_link;
         } else {
@@ -928,8 +927,10 @@ jQuery(document).ready(function ($) {
         }
 
         var explor_select = $("#explor_select").val();
-        var expert_select_search = $("#expert-select-search").val();
+        var expert_select_search = $("#search-text").val();
         var select_city = $("#city_check").val();
+        // console.log(link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search + "&select_city=" + select_city);
+        // return false
         window.location.href = link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search + "&select_city=" + select_city;
 
     });
@@ -1248,9 +1249,9 @@ $('#noti-clr-noti').on('click', function () {
 //************************* Kishor Changes *************************
 
 function showExpertProfile() {
-    let check = document.getElementById("checkifexpertidfill").value
+    let check = document.getElementById("checkifexpertidfill")?.value
     if (check != 1) {
-        document.getElementById("modelalert").click()
+        document.getElementById("modelalert")?.click()
     }
 }
 
