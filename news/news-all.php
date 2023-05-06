@@ -1,52 +1,40 @@
 <?php
 include "news-config-info.php";
 include "../header.php";
-
 if (file_exists('../config/news_page_authentication.php')) {
     include('../config/news_page_authentication.php');
 }
-
 if (isset($_SESSION['user_id'])) {
     $session_user_id = $_SESSION['user_id'];
 }
-
 $user_details_row = getUser($session_user_id);
+// echo "<br><br><br><br><br><pre>";
+// print_r($_GET);
+// die();
 
 if (isset($_GET['category'])) {
 
-
     $category_search_slug1 = str_replace('-', ' ', $_GET['category']);
-
     $category_search_slug = str_replace('.php', '', $category_search_slug1);
-
-    $cat_search_row = getSlugNewsCategory($category_search_slug);  //Fetch Category Id using category name
-
-    $category_id = $cat_search_row['category_id'];
+    $cat_search_row = getSlugNewsCategoryLike($category_search_slug);  //Fetch Category Id using category name
+    if ($cat_search_row['category_id'] == "") {
+        $category_id = 0;
+    } else {
+        $category_id = $cat_search_row['category_id'];
+    }
 
     $category_slug = $cat_search_row['category_slug'];
-
     $category_search_name = $cat_search_row['category_name'];
-
-    $category_search_query = "AND FIND_IN_SET($category_id, T1.category_id)";
-
-
+    $category_search_query = "AND category_id in ($category_id) or T1.news_description like '%$category_search_slug%' or news_title like '%$category_search_slug%'";
 }
-
 
 if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
-
     $get_city_name = $_REQUEST['home_city'];
-
     $city1 = str_replace('-', ' ', $get_city_name);
-
-    $city_search_row = getJobCityName($city1);  //Fetch City Id using City name
-
+    $city_search_row = getNewsCityName($city1);  //Fetch City Id using City name
     $get_city = $city_search_row['city_id'];
-
     $news_location_search_query = 'AND (FIND_IN_SET(' . $get_city . ',city_id))';
-
 }
-
 ?>
 <style>
     .hom-top {
@@ -62,9 +50,11 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                     <li><a href="<?php echo $slash ?>news" class=""><?php echo $BIZBOOK['HOME']; ?></a></li>
                     <?php
                     foreach (getAllNewsCategoriesPos() as $news_category_row) {
-                        ?>
-                        <li><a href="<?php echo $ALL_NEWS_URL . urlModifier($news_category_row['category_slug']); ?>" class="<?php if($category_search_name == $news_category_row['category_name']){ echo 'act'; } ?>"><?php echo $news_category_row['category_name']; ?></a></li>
-                        <?php
+                    ?>
+                        <li><a href="<?php echo $ALL_NEWS_URL . urlModifier($news_category_row['category_slug']); ?>" class="<?php if ($category_search_name == $news_category_row['category_name']) {
+                                                                                                                                    echo 'act';
+                                                                                                                                } ?>"><?php echo $news_category_row['category_name']; ?></a></li>
+                    <?php
                     }
                     ?>
                 </ul>
@@ -73,7 +63,6 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
     </div>
 </section>
 <!--END-->
-
 <!-- START -->
 <section class="news-hom-ban">
     <div class="news-hom-ban-inn">
@@ -82,12 +71,10 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
     </div>
 </section>
 <!--END-->
-
 <!-- START -->
 <section class="news-hom-big">
     <div class="container">
         <div class="row">
-
             <div class="col-md-8">
                 <div class="all-list-bre news-bre">
                     <ul>
@@ -95,30 +82,24 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                         <li><a href="#!"><?php echo $category_search_name; ?></a></li>
                     </ul>
                 </div>
-                <?php
-                $newssql = "SELECT T1.*  FROM " . TBL . "news AS T1 WHERE T1.news_status= 'Active' $category_search_query $news_location_search_query";
 
+                <!-- Main -->
+                <?php
+               $newssql = "SELECT T1.*  FROM " . TBL . "news AS T1 WHERE T1.news_status= 'Active' $category_search_query $news_location_search_query";
+                // die();
                 $newsrs = mysqli_query($conn, $newssql);
                 $total_news = mysqli_num_rows($newsrs);
-
                 if (mysqli_num_rows($newsrs) > 0) {
-
                     while ($newsrow = mysqli_fetch_array($newsrs)) {
-
                         $news_id = $newsrow['news_id'];
-
                         $news_category_id = $newsrow['category_id'];
-
                         $news_category_row = getNewsCategory($news_category_id);
-
                         $news_category_name = $news_category_row['category_name'];
-
-                        ?>
+                ?>
                         <!--BIG POST START-->
                         <div class="news-home-box news-home-box1">
                             <div class="im">
-                                <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $newsrow['news_image']; ?>"
-                                     alt="">
+                                <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $newsrow['news_image']; ?>" alt="">
                             </div>
                             <div class="txt">
                                 <span class="news-cate"><?php echo $news_category_name; ?></span>
@@ -126,54 +107,66 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                                 <p><?php
                                     if (strlen($newsrow['news_description']) >= 100) {
                                         $pos = strpos($newsrow['news_description'], ' ', 100);
-                                        echo substr(stripslashes($newsrow['news_description']), 0, $pos).'...';
-                                    }else{
+                                        echo substr(stripslashes($newsrow['news_description']), 0, $pos) . '...';
+                                    } else {
                                         echo stripslashes($newsrow['news_description']);
                                     }
-
                                     ?></p>
                                 <span class="news-date"><?php echo dateFormatconverter($newsrow['news_cdt']); ?></span>
-                                <span class="news-date"><?php $news_location_row = getJobCity($newsrow['city_id']); echo $news_location_row['city_name']; ?></span>
-                                <span
-                                    class="news-views"><?php echo AddingZero_BeforeNumber(news_detail_pageview_count($newsrow['news_id'])); ?> <?php echo $BIZBOOK['VIEWS']; ?></span>
+                                <span class="news-date"><?php $news_location_row = getJobCity($newsrow['city_id']);
+                                                        echo $news_location_row['city_name']; ?></span>
+                                <span class="news-views"><?php echo AddingZero_BeforeNumber(news_detail_pageview_count($newsrow['news_id'])); ?> <?php echo $BIZBOOK['VIEWS']; ?></span>
                             </div>
-                            <a href="<?php echo $NEWS_DETAIL_URL . urlModifier($newsrow['news_slug']); ?>"
-                               class="fclick"></a>
+                            <a href="<?php echo $NEWS_DETAIL_URL . urlModifier($newsrow['news_slug']); ?>" class="fclick"></a>
                         </div>
                         <!--END BIG POST START-->
-                        <?php
+                    <?php
                     }
                 } else {
                     ?>
-                    <span style="    font-size: 21px;
-    color: #bfbfbf;
-    letter-spacing: 1px;
-    /* background: #525252; */
-    text-shadow: 0px 0px 2px #fff;
-    text-transform: uppercase;
-    text-align: center!important;
-    margin-top: 5%;"><?php echo $BIZBOOK['NEWS_NO_NEWS_MESSAGE']; ?></span>
-                    <?php
+                    <span style="font-size: 21px;
+                                    color: #bfbfbf;
+                                    letter-spacing: 1px;
+                                    /* background: #525252; */
+                                    text-shadow: 0px 0px 2px #fff;
+                                    text-transform: uppercase;
+                                    text-align: center!important;
+                                    margin-top: 5%;"><?php echo $BIZBOOK['NEWS_NO_NEWS_MESSAGE']; ?></span>
+                <?php
                 }
                 ?>
+                <!-- Main -->
+
+
+
             </div>
             <div class="col-md-4">
                 <div class="news-com-rhs">
-                    <?php if(getCountNewsSocialMediaActive() >= 1){ ?>
+                    <?php if (getCountNewsSocialMediaActive() >= 1) { ?>
                         <!-- SOCIAL MEDIA START-->
                         <div class="news-soci">
                             <h4><?php echo $BIZBOOK['SOCIAL_MEDIA']; ?></h4>
                             <ul>
                                 <?php foreach (getAllNewsSocialMediaActive() as $home_social_media_row) { ?>
-                                    <li><a target="_blank" href="<?php echo $home_social_media_row['social_media_link']; ?>" class="<?php if($home_social_media_row['social_media_id'] == 1){ echo "sm-fb-big"; }
-                                        elseif($home_social_media_row['social_media_id'] == 2){ echo "sm-tw-big"; }
-                                        elseif($home_social_media_row['social_media_id'] == 3){ echo "sm-li-big"; }
-                                        elseif($home_social_media_row['social_media_id'] == 4){ echo "sm-yt-big"; }
-                                        ?>"><b><?php echo $home_social_media_row['social_media_count']; ?></b> <?php if($home_social_media_row['social_media_id'] == 1){ echo $BIZBOOK['FACEBOOK']; }
-                                            elseif($home_social_media_row['social_media_id'] == 2){ echo $BIZBOOK['TWITTER']; }
-                                            elseif($home_social_media_row['social_media_id'] == 3){ echo $BIZBOOK['LINKEDIN']; }
-                                            elseif($home_social_media_row['social_media_id'] == 4){ echo $BIZBOOK['YOUTUBE']; }
-                                            ?></a></li>
+                                    <li><a target="_blank" href="<?php echo $home_social_media_row['social_media_link']; ?>" class="<?php if ($home_social_media_row['social_media_id'] == 1) {
+                                                                                                                                        echo "sm-fb-big";
+                                                                                                                                    } elseif ($home_social_media_row['social_media_id'] == 2) {
+                                                                                                                                        echo "sm-tw-big";
+                                                                                                                                    } elseif ($home_social_media_row['social_media_id'] == 3) {
+                                                                                                                                        echo "sm-li-big";
+                                                                                                                                    } elseif ($home_social_media_row['social_media_id'] == 4) {
+                                                                                                                                        echo "sm-yt-big";
+                                                                                                                                    }
+                                                                                                                                    ?>"><b><?php echo $home_social_media_row['social_media_count']; ?></b> <?php if ($home_social_media_row['social_media_id'] == 1) {
+                                                                                                                                                                                                                echo $BIZBOOK['FACEBOOK'];
+                                                                                                                                                                                                            } elseif ($home_social_media_row['social_media_id'] == 2) {
+                                                                                                                                                                                                                echo $BIZBOOK['TWITTER'];
+                                                                                                                                                                                                            } elseif ($home_social_media_row['social_media_id'] == 3) {
+                                                                                                                                                                                                                echo $BIZBOOK['LINKEDIN'];
+                                                                                                                                                                                                            } elseif ($home_social_media_row['social_media_id'] == 4) {
+                                                                                                                                                                                                                echo $BIZBOOK['YOUTUBE'];
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                            ?></a></li>
                                 <?php } ?>
                             </ul>
                         </div>
@@ -185,11 +178,10 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                         <ul>
                             <?php
                             foreach (getAllNewsCategoriesPos() as $news_right_side_category_row) {
-
                                 $count_news_per_category = getCountCategoryNews($news_right_side_category_row['category_id']);
-                                ?>
+                            ?>
                                 <li><a href="<?php echo $ALL_NEWS_URL . urlModifier($news_right_side_category_row['category_slug']); ?>"><span><?php echo $count_news_per_category; ?></span><b><?php echo $news_right_side_category_row['category_name']; ?></b></a></li>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>
@@ -202,16 +194,13 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                             <?php
                             $news_si = 1;
                             foreach (getAllNewsTrending() as $right_section_trending_row) {
-                                
+
                                 $right_section_trending_news_id = $right_section_trending_row['news_id'];
-
                                 $right_section_trending_news_sql_row = getIdNews($right_section_trending_news_id);
-
-                                ?>
+                            ?>
                                 <li>
                                     <div class="hot-page2-hom-pre-1">
-                                        <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $right_section_trending_news_sql_row['news_image']; ?>"
-                                             alt="">
+                                        <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $right_section_trending_news_sql_row['news_image']; ?>" alt="">
                                     </div>
                                     <div class="hot-page2-hom-pre-2">
                                         <h5><?php echo stripslashes($right_section_trending_news_sql_row['news_title']); ?></h5>
@@ -219,7 +208,7 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                                     </div>
                                     <a href="<?php echo $NEWS_DETAIL_URL . urlModifier($right_section_trending_news_sql_row['news_slug']); ?>" class="fclick"></a>
                                 </li>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>
@@ -233,12 +222,11 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                     ?>
                     <div class="news-rhs-ads-ban">
                         <div class="ban-ati-com">
-                            <a href="<?php echo stripslashes($get_ad_row_1['ad_link']); ?>"><span><?php echo $BIZBOOK['AD']; ?></span><img
-                                    src="<?php echo $slash; ?>images/ads/<?php if ($ad_enquiry_photo_1 != NULL || !empty($ad_enquiry_photo_1)) {
-                                        echo $ad_enquiry_photo_1;
-                                    } else {
-                                        echo "ads2.jpg";
-                                    } ?>"></a>
+                            <a href="<?php echo stripslashes($get_ad_row_1['ad_link']); ?>"><span><?php echo $BIZBOOK['AD']; ?></span><img src="<?php echo $slash; ?>images/ads/<?php if ($ad_enquiry_photo_1 != NULL || !empty($ad_enquiry_photo_1)) {
+                                                                                                                                                                                    echo $ad_enquiry_photo_1;
+                                                                                                                                                                                } else {
+                                                                                                                                                                                    echo "ads2.jpg";
+                                                                                                                                                                                } ?>"></a>
                         </div>
                     </div>
                     <!-- ADS END-->
@@ -250,22 +238,19 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                     <!-- ADS START-->
                     <div class="news-rhs-ads-ban">
                         <div class="ban-ati-com">
-                            <a href="<?php echo stripslashes($get_ad_row_2['ad_link']); ?>"><span><?php echo $BIZBOOK['AD']; ?></span><img
-                                    src="<?php echo $slash; ?>images/ads/<?php if ($ad_enquiry_photo_2 != NULL || !empty($ad_enquiry_photo_2)) {
-                                        echo $ad_enquiry_photo_2;
-                                    } else {
-                                        echo "ads1.jpg";
-                                    } ?>"></a>
+                            <a href="<?php echo stripslashes($get_ad_row_2['ad_link']); ?>"><span><?php echo $BIZBOOK['AD']; ?></span><img src="<?php echo $slash; ?>images/ads/<?php if ($ad_enquiry_photo_2 != NULL || !empty($ad_enquiry_photo_2)) {
+                                                                                                                                                                                    echo $ad_enquiry_photo_2;
+                                                                                                                                                                                } else {
+                                                                                                                                                                                    echo "ads1.jpg";
+                                                                                                                                                                                } ?>"></a>
                         </div>
                     </div>
                     <!-- ADS END-->
-
                     <!-- SUBSCRIBE START-->
                     <div class="news-subsc">
                         <div class="ud-rhs-poin1">
                             <div class="log-bor">&nbsp;</div>
-                            <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/6349/6349282.png"
-                                 alt="">
+                            <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/6349/6349282.png" alt="">
                             <h5><?php echo $BIZBOOK['NEWS-SUBSCRIBE']; ?> <b><?php echo $BIZBOOK['NEWS-NEWSLETTER']; ?></b></h5>
                             <p><?php echo $BIZBOOK['NEWS-NEWSLETTER-P-TAG']; ?></p>
                         </div>
@@ -291,7 +276,6 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
 </section>
 <!--END-->
 
-
 <!-- START -->
 <section class="news-hom-all-lat">
     <div class="news-hom-all-lat-inn">
@@ -303,23 +287,18 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                 <?php
                 if (isset($_GET['category'])) {
                     $latest_news_query = getAllNewsCategory($category_id);
-                }else{
+                } else {
                     $latest_news_query = getAllNews();
                 }
                 foreach ($latest_news_query as $latest_news_row) {
-
                     $latest_news_category_id = $latest_news_row['category_id'];
-
                     $latest_news_category_row = getNewsCategory($latest_news_category_id);
-
                     $latest_news_category_name = $latest_news_category_row['category_name'];
-
-                    ?>
+                ?>
                     <div class="col-md-4">
                         <div class="news-home-box">
                             <div class="im">
-                                <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $latest_news_row['news_image']; ?>"
-                                    alt="">
+                                <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $latest_news_row['news_image']; ?>" alt="">
                             </div>
                             <div class="txt">
                                 <span class="news-cate"><?php echo $latest_news_category_name; ?></span>
@@ -330,7 +309,7 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                             <a href="<?php echo $NEWS_DETAIL_URL . urlModifier($latest_news_row['news_slug']); ?>" class="fclick"></a>
                         </div>
                     </div>
-                    <?php
+                <?php
                 }
                 ?>
             </div>
@@ -338,7 +317,6 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
     </div>
 </section>
 <!--END-->
-
 <?php
 include "../footer.php";
 ?>
@@ -348,8 +326,12 @@ include "../footer.php";
 <script src="<?php echo $slash; ?>js/popper.min.js"></script>
 <script src="<?php echo $slash; ?>js/bootstrap.min.js"></script>
 <script src="<?php echo $slash; ?>js/jquery-ui.js"></script>
-<script type="text/javascript">var webpage_full_link = '<?php echo $webpage_full_link;?>';</script>
-<script type="text/javascript">var login_url = '<?php echo $LOGIN_URL;?>';</script>
+<script type="text/javascript">
+    var webpage_full_link = '<?php echo $webpage_full_link; ?>';
+</script>
+<script type="text/javascript">
+    var login_url = '<?php echo $LOGIN_URL; ?>';
+</script>
 <script src="<?php echo $slash; ?><?php echo $slash; ?>js/slick.js"></script>
 <script src="<?php echo $slash; ?>js/custom.js"></script>
 <script src="<?php echo $slash; ?>js/jquery.validate.min.js"></script>
@@ -369,10 +351,8 @@ include "../footer.php";
                 centerMode: false
             }
         }]
-
     });
 </script>
-
 </body>
 
 </html>
