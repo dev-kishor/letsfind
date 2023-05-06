@@ -1273,6 +1273,21 @@ jQuery(document).ready(function ($) {
         var expert_select_search = $("#place-text-search").val();
         window.location.href = link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search;
     });
+
+    // $("#blog-text-search").on('click', function () {
+        $('#blog-text-search').submit(function(event){
+        event.preventDefault();
+        
+        if (webpage_full_link != null) {
+            var link = webpage_full_link;
+        } else {
+            var link = '';
+        }
+
+        var explor_select = 9;
+        var expert_select_search = $("#blog-search").val();
+        window.location.href = link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search;
+    });
 })
 
 //************************* Kishor Changes *************************
