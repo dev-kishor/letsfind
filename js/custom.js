@@ -929,8 +929,6 @@ jQuery(document).ready(function ($) {
         var explor_select = $("#explor_select").val();
         var expert_select_search = $("#search-text").val();
         var select_city = $("#city_check").val();
-        // console.log(link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search + "&select_city=" + select_city);
-        // return false
         window.location.href = link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search + "&select_city=" + select_city;
 
     });
@@ -1260,4 +1258,21 @@ setInterval(() => {
 }, 3 * 60 * 1000);
 
 showExpertProfile()
+
+jQuery(document).ready(function ($) {
+    $("#place_filter_sbmit").on('click', function () {
+        event.preventDefault();
+        
+        if (webpage_full_link != null) {
+            var link = webpage_full_link;
+        } else {
+            var link = '';
+        }
+
+        var explor_select = 4;
+        var expert_select_search = $("#place-text-search").val();
+        window.location.href = link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search;
+    });
+})
+
 //************************* Kishor Changes *************************

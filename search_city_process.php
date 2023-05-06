@@ -24,7 +24,6 @@ if ($type_id == 1) {     //Listings City
 } elseif ($type_id == 2) {  //Service Experts City
     ?>
     <option value="0">Select City</option>
-
     <?php
     foreach (getAllExpertsGroupByCity() as $expert_location_row) {
         $expert_location = $expert_location_row['city_id'];
@@ -35,7 +34,9 @@ if ($type_id == 1) {     //Listings City
     <?php
     }
 } elseif ($type_id == 3) {  //Jobs City
-
+    ?>
+    <option value="0">Select City</option>
+    <?php
     //get matched data from Jobs City table
     foreach (getAllJobGroupByCity() as $job_location_row) {
         $job_location = $job_location_row['job_location'];
