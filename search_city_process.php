@@ -47,8 +47,9 @@ if ($type_id == 1) {     //Listings City
     <?php
     }
 } elseif ($type_id == 5) {  //News City
-
-    //get matched data from News City table
+    ?>
+    <option value="0">Select City</option>
+    <?php
     foreach (getAllNewsCities() as $row) {
     ?>
         <option value="<?php echo $row['city_id']; ?>"><?php echo $row['city_name']; ?></option>
