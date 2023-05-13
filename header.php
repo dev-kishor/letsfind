@@ -739,9 +739,12 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                                 foreach (getAllListingPageCities() as $city_listrow) {
                                                     if (strpos($city_listrow['city_id'], ',') !== false) {
                                                         $city_id_array = array_unique(explode(',', $city_listrow['city_id']));
+                                                ?>
+                                                        <option value="0">Select City</option>
+                                                        <?php
                                                         foreach ($city_id_array as $places) {
                                                             $cityrow = getCity($places);
-                                                ?>
+                                                        ?>
                                                             <option <?php if ($_SESSION['city_check'] === $cityrow['city_id']) {
                                                                         echo 'selected';
                                                                     } ?> value="<?php echo $cityrow['city_id']; ?>"><?php echo $cityrow['city_name']; ?></option>

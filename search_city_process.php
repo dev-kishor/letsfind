@@ -8,13 +8,15 @@ if (file_exists('config/info.php')) {
 $type_id = $_POST['type_id'];
 
 if ($type_id == 1) {     //Listings City
-
+?>
+    <option value="0">Select City</option>
+    <?php
     foreach (getAllListingPageCities() as $city_listrow) {
         if (strpos($city_listrow['city_id'], ',') !== false) {
             $city_id_array = array_unique(explode(',', $city_listrow['city_id']));
             foreach ($city_id_array as $places) {
                 $row = getCity($places);
-?>
+    ?>
                 ?>
                 <option value="<?php echo $row['city_id']; ?>"><?php echo $row['city_name']; ?></option>
     <?php
