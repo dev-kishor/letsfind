@@ -33,8 +33,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
     $current_home_page = $footer_row['admin_home_page']; //To set Homepage type.
 }
 ?>
-
-
 <!doctype html>
 <html lang="en">
 
@@ -74,11 +72,9 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
         <div id="status">&nbsp;</div>
     </div>
     <!-- Button trigger modal -->
-
     <?php
     $get_user_type = getUser($_SESSION["user_id"])["user_type"];
     $current_page = basename($_SERVER['PHP_SELF']);
-
     if (isset($_SESSION["user_id"]) && $get_user_type === "Service expert" && $current_page !== "create-service-expert-profile.php") {
     ?>
         <input type="hidden" id="checkifexpertidfill" value="<?php echo getExpertInformation() == 1 ? "1" : "0"; ?>">
@@ -107,7 +103,6 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
     <?php
     }
     ?>
-
     <!-- START -->
     <section>
         <div class="str ind2-home">
