@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by Vignesh.
  * User: Vignesh
@@ -19,11 +20,11 @@ $webpage_full_link_url = "http://localhost/letsfind/";  #Important Please Paste 
 
 # Connection to the database. #
 $conn = mysqli_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD)
-or die('Unable to connect to MySQL');
+    or die('Unable to connect to MySQL');
 
 # Select a database to work with. #
 $selected = mysqli_select_db($conn, DB_NAME)
-or die('Unable to connect to Database');
+    or die('Unable to connect to Database');
 
 session_start(); # Session start. #
 
@@ -44,6 +45,18 @@ if ($webpage_full_link_url) {
 
     $webpage_full_link = $webpage_full_link_url;
 } else {
-    
+
     $webpage_full_link = $webpage_full_link_db;
+}
+
+function pr($arr)
+{
+    echo "<pre>";
+    print_r($arr);
+}
+function prx($arr)
+{
+    echo "<pre>";
+    print_r($arr);
+    die();
 }

@@ -780,27 +780,19 @@ jQuery(document).ready(function ($) {
 jQuery(document).ready(function ($) {
 
     $(function () {
-
         if (webpage_full_link != null) {
             var link = webpage_full_link + 'list_category_search.php';
         } else {
             var link = 'list_category_search.php';
         }
-
         $.ajax({
             url: link,
             success: function (response) {
+                var categoryArray = JSON.parse(response);
 
-                //var categoryArray = JSON.parse(response);
-                var categoryArray = response;
-
-                // var dataCountry = {};
-                // for (var i = 0; i < categoryArray.length; i++) {
-                //     dataCountry[categoryArray[i]] = undefined; //categoryArray[i].flag or null
-                // }
-                $('#top-select-search.autocomplete').autocomplete({ //Home Page City Search Box
+                $("#top-select-search").autocomplete({
                     source: categoryArray,
-                    limit: 10 // The max amount of results that can be shown at once. Default: Infinity.
+                    autoFocus: true
                 });
             }
         });
@@ -949,6 +941,8 @@ $('#top-select-search').keypress(function (e) {
         }
         var select_search = $("#top-select-search").val();
         var select_city = $("#select-city").val();
+        // console.log(link + "search_box_process.php?select_search=" + select_search + "&select_city=" + select_city);
+        // return false
         window.location.href = link + "search_box_process.php?select_search=" + select_search + "&select_city=" + select_city;
 
         //return false;
@@ -1262,7 +1256,7 @@ showExpertProfile()
 jQuery(document).ready(function ($) {
     $("#place_filter_sbmit").on('click', function () {
         event.preventDefault();
-        
+
         if (webpage_full_link != null) {
             var link = webpage_full_link;
         } else {
@@ -1275,9 +1269,9 @@ jQuery(document).ready(function ($) {
     });
 
     // $("#blog-text-search").on('click', function () {
-        $('#blog-text-search').submit(function(event){
+    $('#blog-text-search').submit(function (event) {
         event.preventDefault();
-        
+
         if (webpage_full_link != null) {
             var link = webpage_full_link;
         } else {
