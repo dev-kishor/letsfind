@@ -230,7 +230,8 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                 ?>
                                     <ul class="bl">
                                         <li>
-                                            <a href="<?php echo $webpage_full_link; ?>pricing-details"><?php echo $BIZBOOK['ADD_BUSINESS']; ?></a>
+                                            <!-- <a href="<?php //echo $webpage_full_link; ?>pricing-details"><?php //echo $BIZBOOK['ADD_BUSINESS']; ?></a> -->
+                                            <a href="<?php echo $webpage_full_link; ?>login"><?php echo $BIZBOOK['ADD_BUSINESS']; ?></a>
                                         </li>
                                         <li>
                                             <a href="<?php echo $webpage_full_link; ?>login"><?php echo $BIZBOOK['SIGN_IN']; ?></a>

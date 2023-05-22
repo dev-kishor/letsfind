@@ -637,7 +637,7 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 <div class="pglist-bg pglist-p-com"
                                      style="<?php if (empty($session_user_id) || $session_user_id == Null) {
                                          ?>
-                                         pointer-events:none; opacity: .5
+                                         pointer-events:none; opacity:.5
                                          <?php
                                      }
                                      ?>" id="ld-rev">
@@ -1103,7 +1103,7 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                         $company_row = getUserCompanyUser($list_user_id);
                         ?>
                         <!--LISTING DETAILS: COMPANY BADGE-->
-                        <div class="ld-rhs-pro pglist-bg pglist-p-com">
+                        <!-- <div class="ld-rhs-pro pglist-bg pglist-p-com">
                             <div class="lis-comp-badg">
                                 <div class="s1">
                                     <div>
@@ -1183,7 +1183,7 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                     } ?>#home_enquiry_form"><?php echo $BIZBOOK['LISTING_DETAILS_GET_IN_TOUCH']; ?></a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!--END LISTING DETAILS: COMPANY BADGE-->
                         <?php
                     } ?>
@@ -1285,7 +1285,7 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
 
                         ?>
                         <!--LISTING DETAILS: LEFT PART 7-->
-                        <div class="ld-rhs-pro pglist-bg pglist-p-com">
+                        <!-- <div class="ld-rhs-pro pglist-bg pglist-p-com">
                             <div class="lis-pro-badg">
                                 <div>
                                     <span class="rat" alt="User rating">4.2</span>
@@ -1305,7 +1305,7 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                    class="fclick"
                                    target="_blank">&nbsp;</a>
                             </div>
-                        </div>
+                        </div> -->
                         <!--END LISTING DETAILS: LEFT PART 7-->
                         <?php
                     }
