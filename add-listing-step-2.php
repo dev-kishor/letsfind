@@ -222,9 +222,7 @@ if (isset($_POST['listing_submit'])) {
                             <ul>
                                 <?php
                                 $service_id_1 = $_SESSION['service_id'];
-                                echo $service_id_1;
-                                echo "JI";
-                                die();
+                          
                                 $service_id_count = count($service_id_1);
 
                                 if ($service_id_count != 0) {

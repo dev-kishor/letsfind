@@ -71,6 +71,58 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
     <div id="preloader">
         <div id="status">&nbsp;</div>
     </div>
+    <!-- Chat box on bottom -->
+    <div class="chat_box">
+        <div class="chat_head"> Chat Box</div>
+        <div class="chat_body">
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+            <div class="user"> Krishna Teja</div>
+        </div>
+    </div>
+
+    <div class="msg_box" style="right:290px">
+        <div class="msg_head">Krishna Teja
+            <div class="close">x</div>
+        </div>
+        <div class="msg_wrap">
+            <div class="msg_body">
+                <div class="msg_a">This is from A </div>
+                <div class="msg_a">This is from A </div>
+                <div class="msg_a">This is from A </div>
+                <div class="msg_a">This is from A </div>
+                <div class="msg_b">This is from B, and its amazingly kool nah... i know it even i liked it :)</div>
+                <div class="msg_a">Wow, Thats great to hear from you man </div>
+                <div class="msg_push"></div>
+            </div>
+            <div class="msg_footer"><textarea class="msg_input" rows="4"></textarea></div>
+        </div>
+    </div>
+    <!-- Chat box on bottom -->
+
     <!-- Button trigger modal -->
     <?php
     $get_user_type = getUser($_SESSION["user_id"])["user_type"];
@@ -230,7 +282,9 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                 ?>
                                     <ul class="bl">
                                         <li>
-                                            <!-- <a href="<?php //echo $webpage_full_link; ?>pricing-details"><?php //echo $BIZBOOK['ADD_BUSINESS']; ?></a> -->
+                                            <!-- <a href="<?php //echo $webpage_full_link; 
+                                                            ?>pricing-details"><?php //echo $BIZBOOK['ADD_BUSINESS']; 
+                                                                                ?></a> -->
                                             <a href="<?php echo $webpage_full_link; ?>login"><?php echo $BIZBOOK['ADD_BUSINESS']; ?></a>
                                         </li>
                                         <li>
@@ -244,9 +298,9 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                 } else {
                                     include("top-notifications.php");
                                 ?>
-                                    <div class="chatheader">
+                                    <!-- <div class="chatheader">
                                         <a href="chat/index">Chat</a>
-                                    </div>
+                                    </div> -->
                                     <div class="al">
                                         <div class="head-pro">
                                             <img src="<?php echo $slash; ?>images/user/<?php if (($user_details_row['profile_image'] == NULL) || empty($user_details_row['profile_image'])) {
