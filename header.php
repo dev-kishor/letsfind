@@ -72,7 +72,7 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
         <div id="status">&nbsp;</div>
     </div>
     <!-- Chat box on bottom -->
-    <div class="chat_box">
+    <!-- <div class="chat_box">
         <div class="chat_head"> Chat Box</div>
         <div class="chat_body">
             <div class="user"> Krishna Teja</div>
@@ -120,7 +120,7 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
             </div>
             <div class="msg_footer"><textarea class="msg_input" rows="4"></textarea></div>
         </div>
-    </div>
+    </div> -->
     <!-- Chat box on bottom -->
 
     <!-- Button trigger modal -->

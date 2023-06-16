@@ -16,7 +16,7 @@ if (isset($_GET['category'])) {
         $category_id = $cat_search_row['category_id'];
     }
     $category_search_name = $cat_search_row['category_name'];
-    $category_search_query = "WHERE category_id in ($category_id)";
+    $category_search_query = "category_id in ($category_id) or";
 }
 ?>
 <style>
@@ -60,7 +60,7 @@ if (isset($_GET['category'])) {
                                         <input type="text" class="place-text-search" id="place-text-search" placeholder="<?php echo $BIZBOOK['PLACE-HOME-SEARCH-OPTION-1']; ?>">
                                     </li>
                                     <li class="sr-btn">
-                                        <button id="place_filter_sbmit" type="submit" ><i class="material-icons">search</i></button>
+                                        <button id="place_filter_sbmit" type="submit"><i class="material-icons">search</i></button>
                                     </li>
                                 </ul>
                             </form>
@@ -85,7 +85,7 @@ if (isset($_GET['category'])) {
                     <ul>
                         <?php
                         $si = 1;
-                        $placesql = "SELECT * FROM " . TBL . "places $category_search_query or place_name like '%$category_search_slug%' ORDER BY place_id DESC";
+                        $placesql = "SELECT * FROM " . TBL . "places WHERE $category_search_query place_name like '%$category_search_slug%' ORDER BY place_id DESC";
                         $placers = mysqli_query($conn, $placesql);
                         if (mysqli_num_rows($placers) > 0) {
                             while ($placerow = mysqli_fetch_array($placers)) {
@@ -122,6 +122,7 @@ if (isset($_GET['category'])) {
                         ?>
                     </ul>
                 </div>
+                <div id="all-list-pagination-container"></div>
             </div>
         </div>
     </div>
@@ -188,6 +189,7 @@ if (isset($_GET['category'])) {
                                                                                                                                                                                                 ?> <?php echo $BIZBOOK['LOG_IN_TO_SUBMIT']; ?> <?php } else { ?><?php echo $BIZBOOK['SUBMIT']; ?> <?php } ?></button>
                     </form>
                 </div>
+             
             </div>
         </div>
     </div>
@@ -211,6 +213,28 @@ include "../footer.php";
 <script src="<?php echo $slash; ?>js/custom.js"></script>
 <script src="<?php echo $slash; ?>js/jquery.validate.min.js"></script>
 <script src="<?php echo $slash; ?>js/custom_validation.js"></script>
+<script src="<?php echo $slash; ?>js/jquery.simplePagination.min.js"></script>
+<script>
+    var items = $(".plac-hom-all-pla .plac-hom-box");
+    var numItems = items.length;
+    var perPage = 7;
+    items.slice(perPage).hide();
+    $('#all-list-pagination-container').pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        prevText: "&laquo;",
+        nextText: "&raquo;",
+        onPageClick: function(pageNumber) {
+            var showFrom = perPage * (pageNumber - 1);
+            var showTo = showFrom + perPage;
+            items.hide().slice(showFrom, showTo).show();
+            $("html, body").animate({
+                scrollTop: 0
+            }, "fast");
+            return false;
+        }
+    });
+</script>
 </body>
 
 </html>

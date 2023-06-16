@@ -58,23 +58,38 @@ placedetailpageview($place_id); //Function To Find Page View
                 </div>
                 <div class="plac-det-ban-inn">
                     <div class="plac-det-ban-im">
-                        <img
-                            src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $place_row['place_gallery_image'])[0]; ?>"
-                            alt="">
-                        <span class="share-new-top" data-toggle="modal" data-target="#sharepop"><i
-                                class="material-icons">share</i></span>
+                        <img src="<?php echo $slash; ?>places/images/banner/<?php echo $place_row['place_banner_image']; ?>" alt="">
+                        <span class="share-new-top" data-toggle="modal" data-target="#sharepop"><i class="material-icons">share</i></span>
                         <div class="plac-det-tit">
                             <h1><?php echo stripslashes($place_row['place_name']); ?></h1>
                             <h4><?php echo $place_row['place_tags']; ?></h4>
                         </div>
                     </div>
                     <div class="plac-det-ban-sub">
+
                         <ul>
-                            <li><span><?php echo $BIZBOOK['PLACE-STATUS']; ?>: <?php
+                            <li><span><?php echo $BIZBOOK['PLACE-STATUS']; ?>:
+                                    <?php
                                     if ($place_row['place_status'] == 1) {
-                                        echo $BIZBOOK['PLACE-ACTIVE'];
+                                        $currentDateTime = new DateTime(); // Get the current time
+                                        $openingTime = new DateTime($place_row['opening_time']); // Set the opening time
+                                        $closingTime = new DateTime($place_row['closing_time']); // Set the closing time
+
+                                        if ($currentDateTime >= $openingTime && $currentDateTime <= $closingTime) {
+                                            echo $BIZBOOK['PLACE-OPEN'];
+                                        } else {
+                                            echo $BIZBOOK['PLACE-CLOSED'];
+                                        }
                                     } elseif ($place_row['place_status'] == 2) {
-                                        echo $BIZBOOK['PLACE-OPEN'];
+                                        $currentDateTime = new DateTime(); // Get the current time
+                                        $openingTime = new DateTime($place_row['opening_time']); // Set the opening time
+                                        $closingTime = new DateTime($place_row['closing_time']); // Set the closing time
+
+                                        if ($currentDateTime >= $openingTime && $currentDateTime <= $closingTime) {
+                                            echo $BIZBOOK['PLACE-OPEN'];
+                                        } else {
+                                            echo $BIZBOOK['PLACE-CLOSED'];
+                                        }
                                     } elseif ($place_row['place_status'] == 3) {
                                         echo $BIZBOOK['PLACE-CLOSED'];
                                     } elseif ($place_row['place_status'] == 4) {
@@ -85,13 +100,37 @@ placedetailpageview($place_id); //Function To Find Page View
                                     ?></span></li>
                             <li><span><?php echo $BIZBOOK['PLACE-OPEN-TIME']; ?>: <?php echo $place_row['opening_time']; ?></span></li>
                             <li><span><?php echo $BIZBOOK['PLACE-CLOSE-TIME']; ?>: <?php echo $place_row['closing_time']; ?></span></li>
-                            <li><span><?php echo $BIZBOOK['PLACE-TOURISM-FEE']; ?>: <?php echo $place_row['place_fee']; ?></span></li>
+                            <li><span><?php echo $BIZBOOK['PLACE-TOURISM-FEE']; ?>: <?php echo $place_row['place_fee'] == 1 ? "Free" : "Paid"; ?></span></li>
                             <li><a href="<?php echo $place_row['google_map']; ?>" target="_blank"><?php echo $BIZBOOK['PLACE-DIRECTION']; ?></a></li>
                             <li><a href="#near" class="cta-near"><?php echo $BIZBOOK['PLACE-NEAR-BY-SERVICES']; ?></a></li>
                         </ul>
                     </div>
                 </div>
+                <?php
+                if (strlen($place_row['place_description']) != 0) {
+                ?>
+                    <div class="all-list-bres">
+                        <p><?php echo substr($place_row['place_description'], 0, 400) ?> <span id="extend" class="readmoreless">... READ MORE</span> <span id="restextendtext"><?php echo substr($place_row['place_description'], 50) ?> <span id="minmize" class="readmoreless">READ LESS</span></span></p>
+                    </div>
+                <?php
+                }
+                ?>
+
             </div>
+            <?php
+            if ($place_row['place_fee'] != 1) {
+            ?>
+                <div class="">
+                    <ul>
+                        <li>Child : <?php echo $place_row['min_child'] ?> yrs to <?php echo $place_row['max_child'] ?> yrs <?php echo $place_row['fee_child'] ?> $</li>
+                        <li>Adult : <?php echo $place_row['min_adult'] ?> yrs to <?php echo $place_row['max_adult'] ?> yrs <?php echo $place_row['fee_adult'] ?> $</li>
+                        <li>Senior Citizen : <?php echo $place_row['min_senior'] ?> yrs to <?php echo $place_row['max_senior'] ?> yrs <?php echo $place_row['fee_senior'] ?> $</li>
+                    </ul>
+                </div>
+            <?php
+            }
+            ?>
+
         </div>
     </div>
 </section>
@@ -111,16 +150,14 @@ placedetailpageview($place_id); //Function To Find Page View
                         $gallery_image_array = $place_row['place_gallery_image'];
                         $gallery_image = explode(',', $gallery_image_array);
                         foreach ($gallery_image as $item) {
-                            ?>
+                        ?>
                             <div class="plac-gal-imag">
                                 <div class="img-wrapper">
-                                    <a href="<?php echo $slash; ?>places/images/places/<?php echo $item; ?>"><img
-                                            src="<?php echo $slash; ?>places/images/places/<?php echo $item; ?>"
-                                            class="img-responsive"></a>
+                                    <a href="<?php echo $slash; ?>places/images/places/<?php echo $item; ?>"><img src="<?php echo $slash; ?>places/images/places/<?php echo $item; ?>" class="img-responsive"></a>
                                     <div class="img-overlay"><i class="material-icons">fullscreen</i></div>
                                 </div>
                             </div>
-                            <?php
+                        <?php
                         }
                         ?>
                     </div><!-- End container -->
@@ -132,7 +169,7 @@ placedetailpageview($place_id); //Function To Find Page View
 <!--END-->
 <?php
 if ((!empty($place_row['place_discover']))) {
-    ?>
+?>
     <!--START-->
     <section>
         <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com plac-pad-top">
@@ -151,24 +188,21 @@ if ((!empty($place_row['place_discover']))) {
                                 $place_discover = getIdPlaces($item);
                                 $place_discover_category_id = $place_discover['category_id'];
                                 $place_discover_category_row = getPlaceCategory($place_discover_category_id);
-                                ?>
+                            ?>
                                 <li>
                                     <div class="plac-hom-box">
                                         <div class="plac-hom-box-im">
-                                            <img
-                                                src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $place_discover['place_gallery_image'])[0]; ?>"
-                                                alt="">
+                                            <img src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $place_discover['place_gallery_image'])[0]; ?>" alt="">
                                             <h4><?php echo stripslashes($place_discover['place_name']); ?></h4>
                                         </div>
                                         <div class="plac-hom-box-txt">
                                             <span><?php echo $place_discover_category_row['category_name']; ?></span>
                                             <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
                                         </div>
-                                        <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($place_discover['place_slug']); ?>"
-                                           class="fclick"></a>
+                                        <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($place_discover['place_slug']); ?>" class="fclick"></a>
                                     </div>
                                 </li>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>
@@ -178,10 +212,10 @@ if ((!empty($place_row['place_discover']))) {
         </div>
     </section>
     <!--END-->
-    <?php
+<?php
 }
 if ((!empty($place_row['place_info_question']))) {
-    ?>
+?>
     <!--START-->
     <section>
         <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com plac-pad-top-30">
@@ -203,14 +237,14 @@ if ((!empty($place_row['place_info_question']))) {
                                     $tuple[0]; // Info question
                                     $tuple[1]; // Info Answer
                                     if ($tuple[0] != NULL) {
-                                        ?>
+                                ?>
                                         <li>
                                             <h4 class="<?php if ($si == 1) { ?> colact <?php } ?>"><?php echo stripslashes($tuple[0]); ?></h4>
-                                            <div <?php if ($si == 1){ ?>style="display: block;"<?php } ?>>
+                                            <div <?php if ($si == 1) { ?>style="display: block;" <?php } ?>>
                                                 <p><?php echo stripslashes($tuple[1]); ?></p>
                                             </div>
                                         </li>
-                                        <?php
+                                <?php
                                     }
                                     $si++;
                                 }
@@ -223,10 +257,10 @@ if ((!empty($place_row['place_info_question']))) {
         </div>
     </section>
     <!--END-->
-    <?php
+<?php
 }
 if ((!empty($place_row['place_related']))) {
-    ?>
+?>
     <!--START-->
     <section>
         <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com plac-pad-top">
@@ -245,24 +279,21 @@ if ((!empty($place_row['place_related']))) {
                                 $place_related = getIdPlaces($item);
                                 $place_related_category_id = $place_related['category_id'];
                                 $place_related_category_row = getPlaceCategory($place_related_category_id);
-                                ?>
+                            ?>
                                 <li>
                                     <div class="plac-hom-box">
                                         <div class="plac-hom-box-im">
-                                            <img
-                                                src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $place_related['place_gallery_image'])[0]; ?>"
-                                                alt="">
+                                            <img src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $place_related['place_gallery_image'])[0]; ?>" alt="">
                                             <h4><?php echo stripslashes($place_related['place_name']); ?></h4>
                                         </div>
                                         <div class="plac-hom-box-txt">
                                             <span><?php echo $place_related_category_row['category_name']; ?></span>
                                             <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
                                         </div>
-                                        <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($place_related['place_slug']); ?>"
-                                           class="fclick"></a>
+                                        <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($place_related['place_slug']); ?>" class="fclick"></a>
                                     </div>
                                 </li>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>
@@ -272,10 +303,10 @@ if ((!empty($place_row['place_related']))) {
         </div>
     </section>
     <!--END-->
-    <?php
+<?php
 }
 if ((!empty($place_row['place_listings']))) {
-    ?>
+?>
 
     <!--START-->
     <section>
@@ -307,7 +338,6 @@ if ((!empty($place_row['place_listings']))) {
                                         //$star_rate_one = (($Star_rate_value)/5)*100;
                                         $star_rate_two = number_format($star_rate_one, 1);
                                         $star_rate = floatval($star_rate_two);
-
                                     } else {
                                         $rate_times = 0;
                                         $rate_value = 0;
@@ -316,66 +346,61 @@ if ((!empty($place_row['place_listings']))) {
                                     }
                                 }
 
-                                ?>
+                            ?>
                                 <li>
                                     <div class="plac-hom-box">
                                         <div class="plac-hom-box-im">
-                                            <img
-                                                src="<?php echo $slash; ?><?php if ($place_listings['profile_image'] != NULL || !empty($place_listings['profile_image'])) {
-                                                    echo "images/listings/" . $place_listings['profile_image'];
-                                                } else {
-                                                    echo "images/listings/hot4.jpg";
-                                                } ?>"
-                                                alt="">
+                                            <img src="<?php echo $slash; ?><?php if ($place_listings['profile_image'] != NULL || !empty($place_listings['profile_image'])) {
+                                                                                echo "images/listings/" . $place_listings['profile_image'];
+                                                                            } else {
+                                                                                echo "images/listings/hot4.jpg";
+                                                                            } ?>" alt="">
                                             <h4><?php echo $place_listings['listing_name']; ?></h4>
-                                            <span
-                                                class="plac-det-cate"><?php echo $place_listings_category_row['category_name']; ?></span>
+                                            <span class="plac-det-cate"><?php echo $place_listings_category_row['category_name']; ?></span>
                                         </div>
                                         <div class="plac-hom-box-txt">
                                             <div class="revi-box-1">
                                                 <?php
                                                 if ($star_rate != 0) {
-                                                    ?>
+                                                ?>
                                                     <b><?php echo $star_rate_two; ?></b>
-                                                    <?php
+                                                <?php
                                                 } ?>
                                                 <?php
                                                 if ($star_rate != 0) {
-                                                    ?>
+                                                ?>
                                                     <label class="rat">
                                                         <?php
                                                         for ($i = 1; $i <= ceil($star_rate); $i++) {
-                                                            ?>
+                                                        ?>
                                                             <i class="material-icons">star</i>
-                                                            <?php
+                                                        <?php
                                                         }
                                                         $bal_star_rate = abs(ceil($star_rate) - 5);
 
                                                         for ($i = 1; $i <= $bal_star_rate; $i++) {
-                                                            ?>
+                                                        ?>
                                                             <i class="material-icons ratstar">star</i>
-                                                            <?php
+                                                        <?php
                                                         }
                                                         ?>
                                                     </label>
-                                                    <?php
+                                                <?php
                                                 }
                                                 ?>
                                                 <?php
                                                 if ($star_rate != 0) {
-                                                    ?>
-                                                    <span
-                                                        class="re-cnt"><?php echo $review_count; ?><?php echo $BIZBOOK['REVIEWS']; ?></span>
-                                                    <?php
+                                                ?>
+                                                    <span class="re-cnt"><?php echo $review_count; ?><?php echo $BIZBOOK['REVIEWS']; ?></span>
+                                                <?php
                                                 } ?>
                                             </div>
                                             <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
                                         </div>
-                                        <a href="<?php echo $LISTING_URL . urlModifier($place_listings['listing_slug']); ?>"
-                                           class="fclick"></a>
+                                        <a href="<?php echo $LISTING_URL . urlModifier($place_listings['listing_slug']); ?>" class="fclick"></a>
                                     </div>
                                 </li>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>
@@ -385,10 +410,10 @@ if ((!empty($place_row['place_listings']))) {
         </div>
     </section>
     <!--END-->
-    <?php
+<?php
 }
 if ((!empty($place_row['place_events']))) {
-    ?>
+?>
     <!--START-->
     <section>
         <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com">
@@ -406,7 +431,7 @@ if ((!empty($place_row['place_events']))) {
                             foreach ($place_events as $item) {
 
                                 $place_events = getEvent($item);
-                                ?>
+                            ?>
                                 <li>
                                     <div class="plac-hom-box">
                                         <div class="plac-hom-box-im">
@@ -417,7 +442,7 @@ if ((!empty($place_row['place_events']))) {
                                         <a href="<?php echo $EVENT_URL . urlModifier($place_events['event_slug']); ?>" class="fclick"></a>
                                     </div>
                                 </li>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>
@@ -428,10 +453,10 @@ if ((!empty($place_row['place_events']))) {
     </section>
     <!--END-->
 
-    <?php
+<?php
 }
 if ((!empty($place_row['place_experts']))) {
-    ?>
+?>
     <!--START-->
     <section>
         <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com">
@@ -448,10 +473,10 @@ if ((!empty($place_row['place_experts']))) {
                             $place_experts = explode(',', $place_experts_array);
                             foreach ($place_experts as $item) {
 
-                            $place_experts = getIdExpert($item);
-                            $place_experts_category_id = $place_experts['category_id'];
-                            $place_experts_category = getExpertCategory($place_experts_category_id);
-                            $place_experts_expert_id = $place_experts['expert_id'];
+                                $place_experts = getIdExpert($item);
+                                $place_experts_category_id = $place_experts['category_id'];
+                                $place_experts_category = getExpertCategory($place_experts_category_id);
+                                $place_experts_expert_id = $place_experts['expert_id'];
 
                                 // Service Expert Rating. for Rating of Star Starts
 
@@ -462,7 +487,6 @@ if ((!empty($place_row['place_experts']))) {
                                         $star_rate_one = $star_sum_rates / $star_rate_times;
                                         $star_rate_two = number_format($star_rate_one, 1);
                                         $star_rate = floatval($star_rate_two);
-
                                     } else {
                                         $rate_times = 0;
                                         $rate_value = 0;
@@ -473,58 +497,56 @@ if ((!empty($place_row['place_experts']))) {
                                 // Service Expert Rating. for Rating of Star Ends
 
                             ?>
-                            <li>
-                                <div class="plac-hom-box">
-                                    <div class="plac-hom-box-im">
-                                        <img loading="lazy" src="<?php echo $slash; ?>service-experts/images/services/<?php echo $place_experts['profile_image']; ?>"
-                                             alt="">
-                                        <h4><?php echo $place_experts['profile_name']; ?></h4>
-                                        <span class="plac-det-cate"><?php echo $place_experts_category['category_name']; ?></span>
-                                    </div>
-                                    <div class="plac-hom-box-txt">
-                                        <div class="revi-box-1">
-                                            <?php
-                                            if ($star_rate != 0) {
-                                                ?>
-                                                <b><?php echo $star_rate_two; ?></b>
-                                                <?php
-                                            } ?>
-                                            <?php
-                                            if ($star_rate != 0) {
-                                                ?>
-                                                <label class="rat">
-                                                    <?php
-                                                    for ($i = 1; $i <= ceil($star_rate); $i++) {
-                                                        ?>
-                                                        <i class="material-icons">star</i>
-                                                        <?php
-                                                    }
-                                                    $bal_star_rate = abs(ceil($star_rate) - 5);
-
-                                                    for ($i = 1; $i <= $bal_star_rate; $i++) {
-                                                        ?>
-                                                        <i class="material-icons ratstar">star</i>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </label>
-                                                <?php
-                                            }
-                                            ?>
-                                            <?php
-                                            if ($star_rate != 0) {
-                                                ?>
-                                                <span
-                                                    class="re-cnt"><?php echo $review_count; ?><?php echo $BIZBOOK['REVIEWS']; ?></span>
-                                                <?php
-                                            } ?>
+                                <li>
+                                    <div class="plac-hom-box">
+                                        <div class="plac-hom-box-im">
+                                            <img loading="lazy" src="<?php echo $slash; ?>service-experts/images/services/<?php echo $place_experts['profile_image']; ?>" alt="">
+                                            <h4><?php echo $place_experts['profile_name']; ?></h4>
+                                            <span class="plac-det-cate"><?php echo $place_experts_category['category_name']; ?></span>
                                         </div>
-                                        <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
+                                        <div class="plac-hom-box-txt">
+                                            <div class="revi-box-1">
+                                                <?php
+                                                if ($star_rate != 0) {
+                                                ?>
+                                                    <b><?php echo $star_rate_two; ?></b>
+                                                <?php
+                                                } ?>
+                                                <?php
+                                                if ($star_rate != 0) {
+                                                ?>
+                                                    <label class="rat">
+                                                        <?php
+                                                        for ($i = 1; $i <= ceil($star_rate); $i++) {
+                                                        ?>
+                                                            <i class="material-icons">star</i>
+                                                        <?php
+                                                        }
+                                                        $bal_star_rate = abs(ceil($star_rate) - 5);
+
+                                                        for ($i = 1; $i <= $bal_star_rate; $i++) {
+                                                        ?>
+                                                            <i class="material-icons ratstar">star</i>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </label>
+                                                <?php
+                                                }
+                                                ?>
+                                                <?php
+                                                if ($star_rate != 0) {
+                                                ?>
+                                                    <span class="re-cnt"><?php echo $review_count; ?><?php echo $BIZBOOK['REVIEWS']; ?></span>
+                                                <?php
+                                                } ?>
+                                            </div>
+                                            <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
+                                        </div>
+                                        <a href="<?php echo $SERVICE_EXPERT_URL . urlModifier($place_experts['expert_slug']); ?>" class="fclick"></a>
                                     </div>
-                                    <a href="<?php echo $SERVICE_EXPERT_URL . urlModifier($place_experts['expert_slug']); ?>" class="fclick"></a>
-                                </div>
-                            </li>
-                                <?php
+                                </li>
+                            <?php
                             }
                             ?>
                         </ul>
@@ -534,10 +556,10 @@ if ((!empty($place_row['place_experts']))) {
         </div>
     </section>
     <!--END-->
-    <?php
+<?php
 }
 if ((!empty($place_row['places_news']))) {
-    ?>
+?>
     <!--START-->
     <section>
         <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com">
@@ -557,7 +579,7 @@ if ((!empty($place_row['places_news']))) {
                                 $places_news = getIdNews($item);
                                 $places_news_category_id = $places_news['category_id'];
                                 $places_news_category = getNewsCategory($places_news_category_id);
-                                ?>
+                            ?>
                                 <li>
                                     <div class="plac-hom-box">
                                         <div class="plac-hom-box-im">
@@ -568,7 +590,7 @@ if ((!empty($place_row['places_news']))) {
                                         <a href="<?php echo $NEWS_DETAIL_URL . urlModifier($places_news['news_slug']); ?>" class="fclick"></a>
                                     </div>
                                 </li>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>
@@ -578,7 +600,7 @@ if ((!empty($place_row['places_news']))) {
         </div>
     </section>
     <!--END-->
-    <?php
+<?php
 }
 ?>
 <section>
@@ -587,8 +609,7 @@ if ((!empty($place_row['places_news']))) {
             <div class="plac-hom-tit plac-hom-tit-ic-sugg">
                 <h2><?php echo $BIZBOOK['PLACE-HOME-H-3-1']; ?></h2>
                 <p><?php echo $BIZBOOK['PLACE-HOME-P-3-1']; ?> <b><?php echo $BIZBOOK['PLACE-HOME-B-3-1']; ?></b></p>
-                <span data-toggle="modal"
-                      data-target="#addplacepop"><?php echo $BIZBOOK['PLACE-HOME-SPAN-3-1']; ?></span>
+                <span data-toggle="modal" data-target="#addplacepop"><?php echo $BIZBOOK['PLACE-HOME-SPAN-3-1']; ?></span>
             </div>
         </div>
     </div>
@@ -612,55 +633,36 @@ if ((!empty($place_row['places_news']))) {
                     <div id="place_pop_enq_fail" class="log" style="display: none;">
                         <p><?php echo $BIZBOOK['OOPS_SOMETHING_WENT_WRONG']; ?></p>
                     </div>
-                    <form method="post" name="place_add_request_form" id="place_add_request_form"
-                          class="place_add_request_form">
-                        <input type="hidden" class="form-control"
-                               name="enquiry_sender_id"
-                               value="<?php echo $session_user_id; ?>"
-                               placeholder=""
-                               required>
+                    <form method="post" name="place_add_request_form" id="place_add_request_form" class="place_add_request_form">
+                        <input type="hidden" class="form-control" name="enquiry_sender_id" value="<?php echo $session_user_id; ?>" placeholder="" required>
                         <div class="form-group">
-                            <input type="text" name="place_name" class="form-control"
-                                   placeholder="<?php echo $BIZBOOK['PLACE-PLACE-NAME-LABEL']; ?>" required>
+                            <input type="text" name="place_name" class="form-control" placeholder="<?php echo $BIZBOOK['PLACE-PLACE-NAME-LABEL']; ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="place_address" class="form-control"
-                                   placeholder="<?php echo $BIZBOOK['PLACE-PLACE-ADDRESS-LABEL']; ?>" required>
+                            <input type="text" name="place_address" class="form-control" placeholder="<?php echo $BIZBOOK['PLACE-PLACE-ADDRESS-LABEL']; ?>" required>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" rows="3" name="place_description"
-                                      placeholder="<?php echo $BIZBOOK['PLACE-PLACE-DESCRIPTION-LABEL']; ?>"></textarea>
+                            <textarea class="form-control" rows="3" name="place_description" placeholder="<?php echo $BIZBOOK['PLACE-PLACE-DESCRIPTION-LABEL']; ?>"></textarea>
                         </div>
                         <div class="form-group">
                             <div class="fil-img-uplo">
                                 <span class="dumfil"><?php echo $BIZBOOK['PLACE-PLACE-IMAGE-LABEL']; ?></span>
-                                <input type="file" name="place_image" accept="image/*,.jpg,.jpeg,.png"
-                                       class="form-control" required="">
+                                <input type="file" name="place_image" accept="image/*,.jpg,.jpeg,.png" class="form-control" required="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="enquiry_name" class="form-control"
-                                   placeholder="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-NAME-LABEL']; ?>" required>
+                            <input type="text" name="enquiry_name" class="form-control" placeholder="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-NAME-LABEL']; ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control"
-                                   placeholder="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-EMAIL-LABEL']; ?>"
-                                   required="required" value="" name="enquiry_email"
-                                   pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$"
-                                   title="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-INVALID-EMAIL-TITLE']; ?>">
+                            <input type="email" class="form-control" placeholder="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-EMAIL-LABEL']; ?>" required="required" value="" name="enquiry_email" pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$" title="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-INVALID-EMAIL-TITLE']; ?>">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" value="" name="enquiry_mobile"
-                                   placeholder="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-MOBILE-LABEL']; ?>"
-                                   pattern="[7-9]{1}[0-9]{9}"
-                                   title="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-INVALID-MOBILE-TITLE']; ?>" required>
+                            <input type="text" class="form-control" value="" name="enquiry_mobile" placeholder="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-MOBILE-LABEL']; ?>" pattern="[7-9]{1}[0-9]{9}" title="<?php echo $BIZBOOK['PLACE-PLACE-ENQUIRY-INVALID-MOBILE-TITLE']; ?>" required>
                         </div>
                         <input type="hidden" id="source">
                         <button <?php if ($session_user_id == NULL || empty($session_user_id)) {
-                            ?> disabled="disabled" <?php } ?> type="submit" id="place_add_request_submit"
-                                                              name="place_add_request_submit"
-                                                              class="place_add_request_submit btn btn-primary"><?php if ($session_user_id == NULL || empty($session_user_id)) {
-                                ?><?php echo $BIZBOOK['LOG_IN_TO_SUBMIT']; ?><?php } else { ?><?php echo $BIZBOOK['SUBMIT']; ?><?php } ?></button>
+                                ?> disabled="disabled" <?php } ?> type="submit" id="place_add_request_submit" name="place_add_request_submit" class="place_add_request_submit btn btn-primary"><?php if ($session_user_id == NULL || empty($session_user_id)) {
+                                                                                                                                                                                                ?><?php echo $BIZBOOK['LOG_IN_TO_SUBMIT']; ?><?php } else { ?><?php echo $BIZBOOK['SUBMIT']; ?><?php } ?></button>
                     </form>
                 </div>
             </div>
@@ -704,8 +706,12 @@ include "../footer.php";
 <script src="<?php echo $slash; ?>js/bootstrap.min.js"></script>
 <script src="<?php echo $slash; ?>js/jquery-ui.js"></script>
 <script src="<?php echo $slash; ?>js/select-opt.js"></script>
-<script type="text/javascript">var webpage_full_link = '<?php echo $webpage_full_link;?>';</script>
-<script type="text/javascript">var login_url = '<?php echo $LOGIN_URL;?>';</script>
+<script type="text/javascript">
+    var webpage_full_link = '<?php echo $webpage_full_link; ?>';
+</script>
+<script type="text/javascript">
+    var login_url = '<?php echo $LOGIN_URL; ?>';
+</script>
 <script src="<?php echo $slash; ?>js/slick.js"></script>
 <script src="<?php echo $slash; ?>js/custom.js"></script>
 <script src="<?php echo $slash; ?>js/jquery.validate.min.js"></script>
@@ -730,10 +736,15 @@ include "../footer.php";
 
     // Gallery image hover
     $(".img-wrapper").hover(
-        function () {
-            $(this).find(".img-overlay").animate({opacity: 1}, 600);
-        }, function () {
-            $(this).find(".img-overlay").animate({opacity: 0}, 600);
+        function() {
+            $(this).find(".img-overlay").animate({
+                opacity: 1
+            }, 600);
+        },
+        function() {
+            $(this).find(".img-overlay").animate({
+                opacity: 0
+            }, 600);
         }
     );
 
@@ -752,7 +763,7 @@ include "../footer.php";
     $overlay.hide();
 
     // When an image is clicked
-    $(".img-overlay").click(function (event) {
+    $(".img-overlay").click(function(event) {
         event.preventDefault();
         var imageLocation = $(this).prev().attr("href");
         $image.attr("src", imageLocation);
@@ -760,12 +771,12 @@ include "../footer.php";
     });
 
     // When the overlay is clicked
-    $overlay.click(function () {
+    $overlay.click(function() {
         $(this).fadeOut("slow");
     });
 
     // When next button is clicked
-    $nextButton.click(function (event) {
+    $nextButton.click(function(event) {
         $("#overlay img").hide();
         var $currentImgSrc = $("#overlay img").attr("src");
         var $currentImg = $('#image-gallery img[src="' + $currentImgSrc + '"]');
@@ -780,7 +791,7 @@ include "../footer.php";
     });
 
     // When previous button is clicked
-    $prevButton.click(function (event) {
+    $prevButton.click(function(event) {
         $("#overlay img").hide();
         var $currentImgSrc = $("#overlay img").attr("src");
         var $currentImg = $('#image-gallery img[src="' + $currentImgSrc + '"]');
@@ -789,17 +800,18 @@ include "../footer.php";
         event.stopPropagation();
     });
 
-    $exitButton.click(function () {
+    $exitButton.click(function() {
         $("#overlay").fadeOut("slow");
     });
 
-    $(document).on('click', 'a[href^="#"]', function (event) {
+    $(document).on('click', 'a[href^="#"]', function(event) {
         event.preventDefault();
 
         $('html, body').animate({
             scrollTop: $($.attr(this, 'href')).offset().top
         }, 500);
     });
+    // console.log('huygug');
 </script>
 </body>
 

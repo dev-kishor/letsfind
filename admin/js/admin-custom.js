@@ -22,11 +22,11 @@ $(document).ready(function () {
     $('.multi-del-btn').prop('disabled', true);*/
     $('.ad-menu ul li a.mact').siblings().slideDown();
     $('.ad-menu ul li a').on('click', function () {
-        if($(this).hasClass("mact")){
+        if ($(this).hasClass("mact")) {
             $(".ad-menu ul li div").slideUp();
             $('.ad-menu ul li a').removeClass('mact');
         }
-        else{
+        else {
             $(".ad-menu ul li div").slideUp();
             $('.ad-menu ul li a').removeClass('mact');
             $(this).addClass('mact');
@@ -140,25 +140,25 @@ $(document).ready(function () {
     //SUB CATEGORY REMOVE - APPEND
     $(".scat-rem-btn").click(function () {
         var _listsubcate = $(".add-ncate ul li").length;
-        if(_listsubcate >= 2){
+        if (_listsubcate >= 2) {
             $(".add-ncate ul li:last-child").remove();
         }
-        else{
+        else {
             alert("Sorry! you are not allowed to remove the last one.");
         }
     });
 
     //VIDEO LIST ADD - APPEND
-    $(".lis-add-oadvideo").on('click', function() {
+    $(".lis-add-oadvideo").on('click', function () {
         $(".add-list-map ul li:last-child").after('<li> <div class="row"> <div class="col-md-12"> <div class="form-group"> <textarea id="listing_video" name="listing_video[]" class="form-control" placeholder="Paste Your Youtube Url here"></textarea> </div> </div> </div> </li>');
     });
     //VIDEO LIST REMOVE - APPEND
-    $(".lis-add-orevideo").on('click', function() {
+    $(".lis-add-orevideo").on('click', function () {
         var _listvido = $(".add-list-map ul li").length;
-        if(_listvido >= 2){
+        if (_listvido >= 2) {
             $(".add-list-map ul li:last-child").remove();
         }
-        else{
+        else {
             alert("Sorry! you are not allowed to remove the last one.");
         }
     });
@@ -167,31 +167,31 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     //PRODUCT SPECIFICATION LIST ADD - APPEND
-    $(".prod-add-oad").on('click', function() {
+    $(".prod-add-oad").on('click', function () {
         $(".add-prod-oth ul li:last-child").after('<li> <div class="row"> <div class="col-md-5"> <div class="form-group"> <input type="text" name="product_info_question[]" class="form-control" placeholder="Type your information"> </div> </div><div class="col-md-2"> <div class="form-group"> <i class="material-icons">arrow_forward</i> </div> </div> <div class="col-md-5"> <div class="form-group"> <input type="text" name="product_info_answer[]" class="form-control" placeholder="yes"> </div> </div> </div> </li>');
     });
     //PRODUCT SPECIFICATION LIST REMOVE - APPEND
-    $(".prod-add-ore").on('click', function() {
+    $(".prod-add-ore").on('click', function () {
         var _prodspec = $(".add-prod-oth ul li").length;
-        if(_prodspec >= 2){
+        if (_prodspec >= 2) {
             $(".add-prod-oth ul li:last-child").remove();
         }
-        else{
+        else {
             alert("Sorry! you are not allowed to remove the last one.");
         }
     });
 
     //PRODUCT HIGHLIGHTS LIST ADD - APPEND
-    $(".prod-add-high-oad").on('click', function() {
+    $(".prod-add-high-oad").on('click', function () {
         $(".add-prod-high-oth ul li:last-child").after('<li> <div class="row"> <div class="col-md-12"> <div class="form-group"> <input type="text" name="product_highlights[]" class="form-control" placeholder="Type your highlights"> </div> </div> </div> </li>');
     });
     //PRODUCT HIGHLIGHTS LIST REMOVE - APPEND
-    $(".prod-add-high-ore").on('click', function() {
+    $(".prod-add-high-ore").on('click', function () {
         var _prohig = $(".add-prod-high-oth ul li").length;
-        if(_prohig >= 2){
+        if (_prohig >= 2) {
             $(".add-prod-high-oth ul li:last-child").remove();
         }
-        else{
+        else {
             alert("Sorry! you are not allowed to remove the last one.");
         }
     });
@@ -208,27 +208,27 @@ $(document).ready(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
-    
+
     //IMAGE FILE UPLOAD GET FILE NAME
-    $(".fil-img-uplo input").on("change", function(){
+    $(".fil-img-uplo input").on("change", function () {
         var _upldfname = $(this).val().replace(/C:\\fakepath\\/i, '');
         $(this).siblings(".dumfil").html(_upldfname);
     });
     //PLACE - WHAT PEOPLE ASK - APPEND
-    $(".plac-ask-add").on('click', function() {
+    $(".plac-ask-add").on('click', function () {
         $(".plac-ask-que li:last-child").after('<li> <div class="col-md-4"> <div class="form-group"> <label>Question:</label> <input type="text" name="place_info_question[]" required="required" class="form-control"> </div></div><div class="col-md-8"> <div class="form-group"> <label>Answer:</label> <input type="text" name="place_info_answer[]" required="required" class="form-control"> </div></div></li>');
     });
     //PLACE - WHAT PEOPLE ASK REMOVE - APPEND
-    $(".plac-ask-remov").on('click', function() {
+    $(".plac-ask-remov").on('click', function () {
         var _placque = $(".plac-ask-que li").length;
-        if(_placque >= 2){
+        if (_placque >= 2) {
             $(".plac-ask-que li:last-child").remove();
         }
-        else{
+        else {
             alert("Sorry! you are not allowed to remove the last one.");
         }
     });
-    
+
     //ADS TOTAL DAYS CALCULATION
     $("#stdate, #endate, #adposi").change(function () {
         var firstDate = $("#stdate").val();
@@ -332,14 +332,14 @@ jQuery(document).ready(function ($) {
     });
 });
 
-$(function() {
+$(function () {
     $('.chosen-select').chosen();
 });
 
 var url = window.location.pathname;
-var nav_nave = url.substring(url.lastIndexOf('/')+1);
-$(".ad-menu ul li a").each(function(){
-    if($(this).attr("href") == nav_nave){
+var nav_nave = url.substring(url.lastIndexOf('/') + 1);
+$(".ad-menu ul li a").each(function () {
+    if ($(this).attr("href") == nav_nave) {
         $(this).addClass('s-act');
     }
 })
@@ -362,16 +362,16 @@ var htmlElement = document.getElementById("res");
 
 
 //SEARCH EVENTS
-$(".search-field").focus(function(){
+$(".search-field").focus(function () {
     $(".tser-res").addClass("act");
 });
-$(".search-field").click(function(){
+$(".search-field").click(function () {
     $(".tser-res").addClass("act");
 });
-$(".ad-dash").click(function(){
+$(".ad-dash").click(function () {
     $(".tser-res").removeClass("act");
 });
-$(".head-s2").mouseleave(function(){
+$(".head-s2").mouseleave(function () {
     $(".tser-res").removeClass("act");
 });
 
@@ -408,14 +408,14 @@ setTimeout(function () {
 
 // Mutliple delete related function starts
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    $('#checkall').change(function() {
-        if(this.checked) {
+    $('#checkall').change(function () {
+        if (this.checked) {
             $('.delete_check').prop('checked', true);
             $('.multi-del-btn').css("display", "block");
             $('.multi-del-btn').removeAttr('disabled');
-        }else{
+        } else {
             $('.delete_check').prop('checked', false);
             $('.multi-del-btn').css("display", "none");
         }
@@ -424,28 +424,28 @@ $(document).ready(function() {
 });
 
 
-function checkcheckbox(){
+function checkcheckbox() {
     // Total checkboxes
     var length = $('.delete_check').length;
 
     // Total checked checkboxes
     var totalchecked = 0;
-    $('.delete_check').each(function(){
-        if($(this).is(':checked')){
-            totalchecked+=1;
+    $('.delete_check').each(function () {
+        if ($(this).is(':checked')) {
+            totalchecked += 1;
         }
     });
 
     // Checked unchecked checkbox
-    if(totalchecked == length){
+    if (totalchecked == length) {
         $("#checkall").prop('checked', true);
-    }else{
+    } else {
         $('#checkall').prop('checked', false);
     }
 
-    if(totalchecked == 0){
+    if (totalchecked == 0) {
         $('.multi-del-btn').css("display", "none");
-    }else{
+    } else {
         $('.multi-del-btn').css("display", "block");
         $('.multi-del-btn').removeAttr('disabled');
     }
@@ -455,10 +455,10 @@ function checkcheckbox(){
 
 //MENU AUTO SCROLL
 var container = $('.ad-menu-lhs'),
-scrollTo = $('.mact');
+    scrollTo = $('.mact');
 
 container.animate({
-    scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - 95
+    scrollTop: scrollTo.offset()?.top - container.offset()?.top + container.scrollTop() - 95
 });
 
 //PROFILE PAGE NUMBER COUNT
@@ -473,3 +473,42 @@ $('.count1').each(function () {
         }
     });
 });
+
+$('#banner_img').on('change', function () {
+    var fileInput = this;
+    imageSizeAndFormateVaidation(fileInput, 1)
+});
+$('.place_gallery_image').on('change', function () {
+    var fileInput = this;
+    imageSizeAndFormateVaidation(fileInput, 1)
+});
+
+// =============== Image validate EX: size & formate =============== 
+
+function imageSizeAndFormateVaidation(fileInput, allowMB) {
+    let file_size = parseFloat(fileInput.files[0].size / (1024 * 1024)).toFixed(2)
+    if (file_size >= allowMB) {
+        showToast("Image size should be not greater than 1 MB ...")
+        fileInput.value = '';
+        return false;
+    } else {
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            showToast("Image should be in .jpg, .jpeg, .png ...")
+            fileInput.value = '';
+            return false;
+        }
+    }
+}
+
+function showToast(text) {
+    var x = document.getElementById("toastbar");
+    x.className = "show";
+    x.innerText = text;
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 3000);
+}
+
+// =============== Image validate EX: size & formate =============== 

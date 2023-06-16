@@ -280,8 +280,13 @@ $(document).ready(function () {
     //IMAGE FILE UPLOAD GET FILE NAME
     $(".fil-img-uplo input").on("change", function () {
         var _upldfname = $(this).val().replace(/C:\\fakepath\\/i, '');
-        $(this).siblings(".dumfil").html(_upldfname);
+        if (_upldfname != "") {
+            $(this).siblings(".dumfil").html(_upldfname);
+        } else {
+            $(this).siblings(".dumfil").html("Upload a file");
+        }
     });
+
     //MOBILE SEARCH SHOW
     $(".mob-sear").on('click', function () {
         $(".top-ser").toggleClass("top-ser-act");;
@@ -1124,10 +1129,10 @@ function rungetchatapi(userid) {
             }
         }
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("incoming_id=" + userid+"&thread="+thread_list);
+        xhr.send("incoming_id=" + userid + "&thread=" + thread_list);
     }, 1000);
 }
-$(document).ready(function () {
+jQuery(document).ready(function ($) {
     let sendmsgbtn = document.querySelector("#sendmsgbtn")
     sendmsgbtn.onclick = () => {
         let list_user_main = $(".list-user-main").val()
@@ -1181,5 +1186,60 @@ $(document).ready(function () {
             }
         });
 });
-    // Chat box on bottom
-    //************************* Kishor Changes *************************
+// Chat box on bottom
+
+$(document).ready(function () {
+    $('#extend').click(function () {
+        this.style.display = "none"
+        document.getElementById("restextendtext").style.display = "initial"
+        console.log('ok');
+    })
+    $('#minmize').click(function () {
+        document.getElementById("restextendtext").style.display = "none"
+        document.getElementById("extend").style.display = "initial"
+    })
+})
+
+
+//************************* Kishor Changes *************************
+
+
+$('#profile_image').on('change', function () {
+    var fileInput = this;
+    imageSizeAndFormateVaidation(fileInput, 1)
+});
+
+$('#cover_image').on('change', function () {
+    var fileInput = this;
+    imageSizeAndFormateVaidation(fileInput, 1)
+});
+
+// =============== Image validate EX: size & formate =============== 
+
+function imageSizeAndFormateVaidation(fileInput, allowMB) {
+    let file_size = parseFloat(fileInput.files[0].size / (1024 * 1024)).toFixed(2)
+    if (file_size >= allowMB) {
+        showToast("Image size should be not greater than 1 MB ...")
+        fileInput.value = '';
+        return false;
+    } else {
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            showToast("Image should be in .jpg, .jpeg, .png ...")
+            fileInput.value = '';
+            return false;
+        }
+    }
+}
+
+function showToast(text) {
+    var x = document.getElementById("toastbar");
+    x.className = "show";
+    x.innerText = text;
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 3000);
+}
+
+// =============== Image validate EX: size & formate =============== 

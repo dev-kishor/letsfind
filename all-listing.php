@@ -160,7 +160,7 @@ if (isset($query['city'])) {
                                 <!--END-->
                             <?php } ?>
 
-                           
+
 
                             <!--START-->
                             <div class="filt-com lhs-ads">
