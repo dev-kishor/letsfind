@@ -1205,6 +1205,7 @@ $(document).ready(function () {
 
 
 $('#profile_image').on('change', function () {
+    console.log('OKOK');
     var fileInput = this;
     imageSizeAndFormateVaidation(fileInput, 1)
 });

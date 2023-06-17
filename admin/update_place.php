@@ -100,25 +100,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         $place_name1 = trim(preg_replace('/[^A-Za-z0-9]/', ' ', $place_name));
         $place_slug = checkPlaceSlugs($place_name1, $place_id);
-        $place_banner_image = '';
         // ************************  Gallery Image Upload starts  **************************
         $all_place_gallery_image = $_FILES['place_gallery_image'];
         $all_place_gallery_image23 = $_FILES['place_gallery_image']['name'];
-        $banner_img = $_FILES['banner'];
-        if (!empty($banner_img['name'])) {
-            $file1 = rand(1000, 100000) . $banner_img['name'];
-            $file_loc1 = $banner_img['tmp_name'];
-            $file_size1 = $banner_img['size'];
-            $file_type1 = $banner_img['type'];
-            $allowed = array("image/jpeg", "image/png", "image/jpg");
-            if (in_array($file_type1, $allowed)) {
-                $folder1 = "../places/images/banner/";
-                $new_size = $file_size1 / 1024;
-                $new_file_name1 = strtolower($file1);
-                $event_image1 = str_replace(' ', '-', $new_file_name1);
-                $place_banner_image = compressImage($event_image1, $file_loc1, $folder1, $new_size);
+
+        if ($_FILES['banner']['name'] == "") {
+            $place_banner_image = $place_banner_image_old;
+        } else {
+            $banner_img = $_FILES['banner'];
+            if (!empty($banner_img['name'])) {
+                $file1 = rand(1000, 100000) . $banner_img['name'];
+                $file_loc1 = $banner_img['tmp_name'];
+                $file_size1 = $banner_img['size'];
+                $file_type1 = $banner_img['type'];
+                $allowed = array("image/jpeg", "image/png", "image/jpg");
+                if (in_array($file_type1, $allowed)) {
+                    $folder1 = "../places/images/banner/";
+                    $new_size = $file_size1 / 1024;
+                    $new_file_name1 = strtolower($file1);
+                    $event_image1 = str_replace(' ', '-', $new_file_name1);
+                    $place_banner_image = compressImage($event_image1, $file_loc1, $folder1, $new_size);
+                }
             }
         }
+
         if (count(array_filter($_FILES['place_gallery_image']['name'])) <= 0) {
             $place_gallery_image = $place_gallery_image_old;
         } else {

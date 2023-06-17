@@ -210,7 +210,7 @@ if ($listing_count_user >= $plan_type_listing_count) {
                                         <label><?php echo $BIZBOOK['CHOOSE_PROFILE_IMAGE']; ?></label>
                                         <div class="fil-img-uplo">
                                             <span class="dumfil"><?php echo $BIZBOOK['UPLOAD_A_FILE'];  ?></span>
-                                            <input type="file" name="profile_image" accept="image/png,image/jpg,image/jpeg" class="form-control">
+                                            <input type="file" name="profile_image" accept="image/png,image/jpg,image/jpeg" class="form-control" id="profile_image">
                                             <!-- <input type="file" name="profile_image" id="profile_image" accept="image/*,.jpg,.jpeg,.png" class="form-control"> -->
                                         </div>
                                     </div>

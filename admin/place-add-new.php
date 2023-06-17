@@ -106,21 +106,21 @@ include "header.php";
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="min_child" required="required" class="form-control" placeholder="5" id="minmaxfee">
+                                                                                <input type="text" name="min_child" class="form-control feest" placeholder="5" id="minmaxfee">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="max_child" required="required" class="form-control" placeholder="15" id="minmaxfee">
+                                                                                <input type="text" name="max_child" class="form-control feest" placeholder="15" id="minmaxfee">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="fee_child" required="required" class="form-control" placeholder="100$" id="minmaxfee">
+                                                                                <input type="text" name="fee_child" class="form-control feest" placeholder="100$" id="minmaxfee">
                                                                             </div>
                                                                         </div>
                                                                     </th>
@@ -130,21 +130,21 @@ include "header.php";
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="min_adult" required="required" class="form-control" placeholder="15" id="minmaxfee">
+                                                                                <input type="text" name="min_adult" class="form-control feest" placeholder="15" id="minmaxfee">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="max_adult" required="required" class="form-control" placeholder="45" id="minmaxfee">
+                                                                                <input type="text" name="max_adult" class="form-control feest" placeholder="45" id="minmaxfee">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="fee_adult" required="required" class="form-control" placeholder="150$" id="minmaxfee">
+                                                                                <input type="text" name="fee_adult" class="form-control feest" placeholder="150$" id="minmaxfee">
                                                                             </div>
                                                                         </div>
                                                                     </th>
@@ -154,21 +154,21 @@ include "header.php";
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="min_senior" required="required" class="form-control" placeholder="45" id="minmaxfee">
+                                                                                <input type="text" name="min_senior" class="form-control feest" placeholder="45" id="minmaxfee">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="max_senior" required="required" class="form-control" placeholder="100" id="minmaxfee">
+                                                                                <input type="text" name="max_senior" class="form-control feest" placeholder="100" id="minmaxfee">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="fee_senior" required="required" class="form-control" placeholder="20$" id="minmaxfee">
+                                                                                <input type="text" name="fee_senior" class="form-control feest" placeholder="20$" id="minmaxfee">
                                                                             </div>
                                                                         </div>
                                                                     </th>
@@ -373,7 +373,7 @@ include "header.php";
                                                             <h6>Photo gallery</h6>
                                                             <!--FILED END-->
                                                             <div>
-                                                                <input type="file" name="place_gallery_image[]" required="required"  class="form-control" id="place_gallery_image" accept="image/*,.jpg,.jpeg,.png" multiple>
+                                                                <input type="file" name="place_gallery_image[]" required="required" class="form-control place_gallery_image" id="place_gallery_image" accept="image/*,.jpg,.jpeg,.png" multiple>
                                                             </div>
                                                             <!--FILED START-->
                                                         </div>
@@ -487,8 +487,10 @@ include "header.php";
             let fee_structure = document.getElementById("fee_structure");
             if (selected_fee === "1") {
                 fee_structure.style.display = "none";
+                $(".feest").prop('required',false);
             } else {
                 fee_structure.style.display = "block";
+                $(".feest").prop('required',true);
             }
             console.log(this.value);
         })

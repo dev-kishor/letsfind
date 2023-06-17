@@ -22,6 +22,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                 <div class="login">
                                     <?php include "../page_level_message.php"; ?>
                                     <form name="place_form" id="place_form" method="post" action="update_place.php" enctype="multipart/form-data">
+                                        <input type="hidden" id="place_banner_image_old" value="<?php echo $place_row['place_banner_image']; ?>" name="place_banner_image_old" class="validate">
                                         <input type="hidden" id="place_gallery_image_old" value="<?php echo $place_row['place_gallery_image']; ?>" name="place_gallery_image_old" class="validate">
                                         <input type="hidden" id="place_id" value="<?php echo $place_row['place_id']; ?>" name="place_id" class="validate">
                                         <ul>
@@ -32,7 +33,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                         <div class="form-group">
                                                             <h6>Place details & Info</h6>
                                                             <label>Place name</label>
-                                                            <input type="text" value="<?php echo $place_row['place_name']; ?>" name="place_name" kish class="form-control">
+                                                            <input type="text" value="<?php echo $place_row['place_name']; ?>" name="place_name" required="required" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -42,7 +43,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Category</label>
-                                                            <select name="category_id" kish class="chosen-select form-control">
+                                                            <select name="category_id" required="required" class="chosen-select form-control">
                                                                 <option value="">Select place category</option>
                                                                 <?php
                                                                 foreach (getAllPlaceCategories() as $row) {
@@ -59,7 +60,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tag name</label>
-                                                            <input type="text" name="place_tags" kish class="form-control" value="<?php echo $place_row['place_tags']; ?>" placeholder="Ex: Group of three waterfalls, Best spot in canada">
+                                                            <input type="text" name="place_tags" required="required" class="form-control" value="<?php echo $place_row['place_tags']; ?>" placeholder="Ex: Group of three waterfalls, Best spot in canada">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -69,7 +70,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Status</label>
-                                                            <select name="place_status" kish class="chosen-select form-control">
+                                                            <select name="place_status" required="required" class="chosen-select form-control">
                                                                 <option <?php if ($place_row['place_status'] == 1) {
                                                                             echo "selected";
                                                                         } ?> value="1">Active</option>
@@ -91,7 +92,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tourism fee</label>
-                                                            <select name="place_fee" kish class="chosen-select form-control" id="place_fee">
+                                                            <select name="place_fee" required="required" class="chosen-select form-control" id="place_fee">
                                                                 <option value="1" <?php if ($place_row['place_fee'] == 1) {
                                                                                         echo "selected";
                                                                                     } ?>>Free</option>
@@ -127,21 +128,21 @@ if ($footer_row['admin_place_show'] != 1) {
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="min_child" kish class="form-control" placeholder="5" id="minmaxfee" value="<?php echo $place_row['min_child'] ?>">
+                                                                                <input type="text" name="min_child" class="form-control feest" placeholder="5" id="minmaxfee" value="<?php echo $place_row['min_child'] ?>">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="max_child" kish class="form-control" placeholder="15" id="minmaxfee" value="<?php echo $place_row['max_child'] ?>">
+                                                                                <input type="text" name="max_child" class="form-control feest" placeholder="15" id="minmaxfee" value="<?php echo $place_row['max_child'] ?>">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="fee_child" kish class="form-control" placeholder="100$" id="minmaxfee" value="<?php echo $place_row['fee_child'] ?>">
+                                                                                <input type="text" name="fee_child" class="form-control feest" placeholder="100$" id="minmaxfee" value="<?php echo $place_row['fee_child'] ?>">
                                                                             </div>
                                                                         </div>
                                                                     </th>
@@ -151,21 +152,21 @@ if ($footer_row['admin_place_show'] != 1) {
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="min_adult" kish class="form-control" placeholder="15" id="minmaxfee" value="<?php echo $place_row['min_adult'] ?>">
+                                                                                <input type="text" name="min_adult" class="form-control feest" placeholder="15" id="minmaxfee" value="<?php echo $place_row['min_adult'] ?>">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="max_adult" kish class="form-control" placeholder="45" id="minmaxfee" value="<?php echo $place_row['max_adult'] ?>">
+                                                                                <input type="text" name="max_adult" class="form-control feest" placeholder="45" id="minmaxfee" value="<?php echo $place_row['max_adult'] ?>">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="fee_adult" kish class="form-control" placeholder="150$" id="minmaxfee" value="<?php echo $place_row['fee_adult'] ?>">
+                                                                                <input type="text" name="fee_adult" class="form-control feest" placeholder="150$" id="minmaxfee" value="<?php echo $place_row['fee_adult'] ?>">
                                                                             </div>
                                                                         </div>
                                                                     </th>
@@ -175,21 +176,21 @@ if ($footer_row['admin_place_show'] != 1) {
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="min_senior" kish class="form-control" placeholder="45" id="minmaxfee" value="<?php echo $place_row['min_senior'] ?>">
+                                                                                <input type="text" name="min_senior" class="form-control feest" placeholder="45" id="minmaxfee" value="<?php echo $place_row['min_senior'] ?>">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="max_senior" kish class="form-control" placeholder="100" id="minmaxfee" value="<?php echo $place_row['max_senior'] ?>">
+                                                                                <input type="text" name="max_senior" class="form-control feest" placeholder="100" id="minmaxfee" value="<?php echo $place_row['max_senior'] ?>">
                                                                             </div>
                                                                         </div>
                                                                     </th>
                                                                     <th>
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <input type="text" name="fee_senior" kish class="form-control" placeholder="20$" id="minmaxfee" value="<?php echo $place_row['fee_senior'] ?>">
+                                                                                <input type="text" name="fee_senior" class="form-control feest" placeholder="20$" id="minmaxfee" value="<?php echo $place_row['fee_senior'] ?>">
                                                                             </div>
                                                                         </div>
                                                                     </th>
@@ -204,7 +205,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Open time</label>
-                                                            <select name="opening_time" kish class="chosen-select form-control">
+                                                            <select name="opening_time" required="required" class="chosen-select form-control">
                                                                 <?php
                                                                 $time = '4:00'; // start
                                                                 for ($i = 0; $i <= 19; $i++) {
@@ -224,7 +225,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Close time</label>
-                                                            <select name="closing_time" kish class="chosen-select form-control" data-placeholder="Select places">
+                                                            <select name="closing_time" required="required" class="chosen-select form-control" data-placeholder="Select places">
                                                                 <?php
                                                                 $time = '5:00'; // start
                                                                 for ($i = 0; $i <= 18; $i++) {
@@ -248,7 +249,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Direction(Google map link)</label>
-                                                            <input type="text" name="google_map" kish value="<?php echo $place_row['google_map']; ?>" placeholder="Ex: https://goo.gl/maps/cUZ39XriLPf9HhKk7" class="form-control">
+                                                            <input type="text" name="google_map" required="required" value="<?php echo $place_row['google_map']; ?>" placeholder="Ex: https://goo.gl/maps/cUZ39XriLPf9HhKk7" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -256,7 +257,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>About Place</label>
-                                                            <textarea class="form-control" kish name="place_description" id="place_description" placeholder="Product details"><?php echo $place_row['place_description']; ?></textarea>
+                                                            <textarea class="form-control" required="required" name="place_description" id="place_description" placeholder="Product details"><?php echo $place_row['place_description']; ?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -414,7 +415,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                             <h6>Banner</h6>
                                                             <!--FILED END-->
                                                             <div>
-                                                                <input type="file" name="banner" kish class="form-control" id="banner_img" accept="image/*,.jpg,.jpeg,.png">
+                                                                <input type="file" name="banner" class="form-control" id="banner_img" accept="image/*,.jpg,.jpeg,.png">
                                                             </div>
                                                             <!--FILED START-->
                                                         </div>
@@ -426,7 +427,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                             <h6>Photo gallery</h6>
                                                             <!--FILED END-->
                                                             <div>
-                                                                <input type="file" name="place_gallery_image[]" class="form-control place_gallery_image"  multiple accept="image/*,.jpg,.jpeg,.png">
+                                                                <input type="file" name="place_gallery_image[]" class="form-control place_gallery_image" multiple accept="image/*,.jpg,.jpeg,.png">
                                                             </div>
                                                             <!--FILED START-->
                                                         </div>
@@ -532,18 +533,28 @@ if ($footer_row['admin_place_show'] != 1) {
 <script>
     // CKEDITOR.replace('place_description');
     $(document).ready(function() {
+        const place_fee_val = document.getElementById("place_fee").value
+        if (place_fee_val === "1") {
+            $(".feest").prop('required', false);
+        } else {
+            $(".feest").prop('required', true);
+        }
+
         $('#place_fee').change(function() {
             let selected_fee = this.value
             let fee_structure = document.getElementById("fee_structure");
             if (selected_fee === "1") {
                 fee_structure.style.display = "none";
+                $(".feest").prop('required', false);
             } else {
                 fee_structure.style.display = "block";
+                $(".feest").prop('required', true);
             }
             console.log(this.value);
         })
     })
     var minmaxfee = document.querySelectorAll('#minmaxfee');
+
     function selectValue() {
         let minmaxfeeVal = this;
         minmaxfeeVal.value = minmaxfeeVal.value.replace(/[^0-9\^]/g, "");
@@ -552,4 +563,5 @@ if ($footer_row['admin_place_show'] != 1) {
         btn.onkeyup = selectValue;
 </script>
 </body>
+
 </html>
