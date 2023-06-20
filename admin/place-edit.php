@@ -531,7 +531,7 @@ if ($footer_row['admin_place_show'] != 1) {
 </script>
 <script src="ckeditor/ckeditor.js"></script>
 <script>
-    // CKEDITOR.replace('place_description');
+    CKEDITOR.replace('place_description');
     $(document).ready(function() {
         const place_fee_val = document.getElementById("place_fee").value
         if (place_fee_val === "1") {

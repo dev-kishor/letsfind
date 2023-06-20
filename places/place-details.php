@@ -110,7 +110,10 @@ placedetailpageview($place_id); //Function To Find Page View
                 if (strlen($place_row['place_description']) != 0) {
                 ?>
                     <div class="all-list-bres">
-                        <p><?php echo substr($place_row['place_description'], 0, 400) ?> <span id="extend" class="readmoreless">... READ MORE</span> <span id="restextendtext"><?php echo substr($place_row['place_description'], 50) ?> <span id="minmize" class="readmoreless">READ LESS</span></span></p>
+                        <?php echo $place_row['place_description']; ?>
+                        <!-- <p><?php //echo substr($place_row['place_description'], 0, 400) 
+                                ?> <span id="extend" class="readmoreless">... READ MORE</span> <span id="restextendtext"><?php //echo substr($place_row['place_description'], 50) 
+                                                                                                                                                                                        ?> <span id="minmize" class="readmoreless">READ LESS</span></span></p> -->
                     </div>
                 <?php
                 }

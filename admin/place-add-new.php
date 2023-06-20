@@ -480,7 +480,7 @@ include "header.php";
 </script>
 <script src="ckeditor/ckeditor.js"></script>
 <script>
-    // CKEDITOR.replace('place_description');
+    CKEDITOR.replace('place_description');
     $(document).ready(function() {
         $('#place_fee').change(function() {
             let selected_fee = this.value
