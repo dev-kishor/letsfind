@@ -60,3 +60,20 @@ function prx($arr)
     print_r($arr);
     die();
 }
+
+// Retrieve the user's IP address
+$ipAddress = $_SERVER['REMOTE_ADDR'];
+$logFileName = 'ip_log.txt';
+$logFilePath = __DIR__ . '/' . $logFileName;
+
+// Log the IP address to a file or database
+$logMessage = "IP: " . $ipAddress . " Date " . date("Y-m-d") . " Time " . date("h:i:sa");
+file_put_contents($logFilePath, $logMessage . PHP_EOL, FILE_APPEND);
+// $done = file_put_contents($logFilePath, $logMessage . PHP_EOL, FILE_APPEND);
+// if ($done) {
+//    echo "!";
+// } else {
+//     echo 'n';
+//     # code...
+// }
+// die();

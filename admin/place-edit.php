@@ -244,6 +244,23 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     </div>
                                                 </div>
                                                 <!--FILED END-->
+
+                                                 <!--FILED START-->
+                                                 <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Address</label>
+                                                            <input type="text" name="address" required="required" placeholder="Ex: A 778-B abcarea, 3003" class="form-control" value="<?php echo $place_row['place_address']; ?>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Pincode</label>
+                                                            <input type="text" name="pincode" required="required" placeholder="Ex: 3003" class="form-control" id="pincode" value="<?php echo $place_row['place_pincode']; ?>">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <!--FILED START-->
                                                 <div class="row">
                                                     <div class="col-md-12">
@@ -554,6 +571,7 @@ if ($footer_row['admin_place_show'] != 1) {
         })
     })
     var minmaxfee = document.querySelectorAll('#minmaxfee');
+    document.getElementById('pincode').onkeyup = selectValue
 
     function selectValue() {
         let minmaxfeeVal = this;

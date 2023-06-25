@@ -221,6 +221,22 @@ include "header.php";
 
                                                 <!--FILED START-->
                                                 <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Address</label>
+                                                            <input type="text" name="address" required="required" placeholder="Ex: A 778-B abcarea, 3003" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Pincode</label>
+                                                            <input type="text" name="pincode" required="required" placeholder="Ex: 3003" class="form-control" id="pincode">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!--FILED START-->
+                                                <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Direction(Google map link)</label>
@@ -487,16 +503,17 @@ include "header.php";
             let fee_structure = document.getElementById("fee_structure");
             if (selected_fee === "1") {
                 fee_structure.style.display = "none";
-                $(".feest").prop('required',false);
+                $(".feest").prop('required', false);
             } else {
                 fee_structure.style.display = "block";
-                $(".feest").prop('required',true);
+                $(".feest").prop('required', true);
             }
             console.log(this.value);
         })
     })
 
     var minmaxfee = document.querySelectorAll('#minmaxfee');
+    document.getElementById('pincode').onkeyup = selectValue
 
     function selectValue() {
         let minmaxfeeVal = this;

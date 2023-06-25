@@ -70,6 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $opening_time = $_POST["opening_time"];
         $closing_time = $_POST["closing_time"];
         $google_map = $_POST["google_map"];
+        $address = $_POST["address"];
+        $pincode = $_POST["pincode"];
         // Place Other Information
         $place_info_question123 = $_POST["place_info_question"];
         $prefix1 = $fruitList = '';
@@ -169,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             , place_listings='" . $place_listings . "', place_related='" . $place_related . "'
             , place_discover='" . $place_discover . "', place_banner_image='" . $place_banner_image . "'
             , place_gallery_image='" . $place_gallery_image . "', opening_time='" . $opening_time . "'
-            , closing_time ='" . $closing_time . "', google_map ='" . $google_map . "', place_status ='" . $place_status . "'
+            , closing_time ='" . $closing_time . "', google_map ='" . $google_map . "',place_address ='" . $address . "',place_pincode ='" . $pincode . "', place_status ='" . $place_status . "'
             , place_info_question ='" . $place_info_question . "', place_info_answer ='" . $place_info_answer . "'
             , place_slug ='" . $place_slug . "' where place_id ='" . $place_id . "'";
         $place_res = mysqli_query($conn, $place_qry);
