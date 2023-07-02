@@ -128,7 +128,7 @@ if ($listing_count_user >= $plan_type_listing_count) {
                             </div>
                             <!--FILED START-->
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <select onChange="getCities(this.value);" name="country_id" required="required" id="country_id" class="chosen-select form-control">
                                             <option value=""><?php echo $BIZBOOK['SELECT_YOUR_COUNTRY']; ?></option>
@@ -147,6 +147,11 @@ if ($listing_count_user >= $plan_type_listing_count) {
                                             }
                                             ?>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="listing_pincode" class="form-control" value="<?php echo $_SESSION['listing_pincode'] ?>" placeholder="Pincode" id="pincode">
                                     </div>
                                 </div>
                             </div>
@@ -301,6 +306,12 @@ include "footer.php";
         });
     }
 
+    document.getElementById('pincode').onkeyup = selectValue
+
+    function selectValue() {
+        let minmaxfeeVal = this;
+        minmaxfeeVal.value = minmaxfeeVal.value.replace(/[^0-9\^]/g, "");
+    }
 </script>
 </body>
 

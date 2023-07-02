@@ -37,6 +37,7 @@ if (isset($_POST['listing_submit'])) {
     $_SESSION['category_id'] = $_POST["category_id"];
     $_SESSION['sub_category_id'] = $_POST["sub_category_id"];
     $_SESSION['country_id'] = $_POST["country_id"];
+    $_SESSION['listing_pincode'] = $_POST["listing_pincode"];
     $_SESSION['service_locations'] = $_POST["service_locations"];
     //        $state_id = $_POST["state_id"];
     $_SESSION['state_id'] = "1";

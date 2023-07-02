@@ -28,8 +28,8 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
 <!-- START -->
 <!--PRICING DETAILS-->
 <section class="<?php if ($footer_row['admin_language'] == 2) {
-    echo "lg-arb";
-} ?> login-reg">
+                    echo "lg-arb";
+                } ?> login-reg">
     <div class="container">
         <div class="row">
             <div class="add-list-ste">
@@ -88,33 +88,20 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                         $listings_a_row = getListing($listing_codea);
 
                         ?>
-                        <form action="listing_update.php" id="listing_form_1"
-                              name="listing_form_1" method="post" enctype="multipart/form-data">
+                        <form action="listing_update.php" id="listing_form_1" name="listing_form_1" method="post" enctype="multipart/form-data">
 
-                            <input type="hidden" id="src_path" value="edit-1"
-                                   name="src_path" class="validate">
-                            <input type="hidden" id="listing_codea" value="<?php echo $listing_codea; ?>"
-                                   name="listing_codea" class="validate">
-                            <input type="hidden" id="listing_id" value="<?php echo $listings_a_row['listing_id']; ?>"
-                                   name="listing_id" class="validate">
-                            <input type="hidden" id="listing_code"
-                                   value="<?php echo $listings_a_row['listing_code']; ?>"
-                                   name="listing_code" class="validate">
-                            <input type="hidden" id="profile_image_old"
-                                   value="<?php echo $listings_a_row['profile_image']; ?>" name="profile_image_old"
-                                   class="validate">
-                            <input type="hidden" id="cover_image_old"
-                                   value="<?php echo $listings_a_row['cover_image']; ?>" name="cover_image_old"
-                                   class="validate">
+                            <input type="hidden" id="src_path" value="edit-1" name="src_path" class="validate">
+                            <input type="hidden" id="listing_codea" value="<?php echo $listing_codea; ?>" name="listing_codea" class="validate">
+                            <input type="hidden" id="listing_id" value="<?php echo $listings_a_row['listing_id']; ?>" name="listing_id" class="validate">
+                            <input type="hidden" id="listing_code" value="<?php echo $listings_a_row['listing_code']; ?>" name="listing_code" class="validate">
+                            <input type="hidden" id="profile_image_old" value="<?php echo $listings_a_row['profile_image']; ?>" name="profile_image_old" class="validate">
+                            <input type="hidden" id="cover_image_old" value="<?php echo $listings_a_row['cover_image']; ?>" name="cover_image_old" class="validate">
 
                             <!--FILED START-->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input id="listing_name" name="listing_name" type="text" required="required"
-                                               value="<?php echo $listings_a_row['listing_name']; ?>"
-                                               class="form-control"
-                                               placeholder="<?php echo $BIZBOOK['LISTING_NAME_STAR']; ?>">
+                                        <input id="listing_name" name="listing_name" type="text" required="required" value="<?php echo $listings_a_row['listing_name']; ?>" class="form-control" placeholder="<?php echo $BIZBOOK['LISTING_NAME_STAR']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -123,17 +110,12 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input id="listing_mobile" name="listing_mobile" type="text"
-                                               value="<?php echo $listings_a_row['listing_mobile']; ?>"
-                                               class="form-control"
-                                               placeholder="<?php echo $BIZBOOK['PHONE_NUMBER']; ?>">
+                                        <input id="listing_mobile" name="listing_mobile" type="text" value="<?php echo $listings_a_row['listing_mobile']; ?>" class="form-control" placeholder="<?php echo $BIZBOOK['PHONE_NUMBER']; ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input id="listing_email" name="listing_email" type="text"
-                                               value="<?php echo $listings_a_row['listing_email']; ?>"
-                                               class="form-control" placeholder="<?php echo $BIZBOOK['EMAIL_ID']; ?>">
+                                        <input id="listing_email" name="listing_email" type="text" value="<?php echo $listings_a_row['listing_email']; ?>" class="form-control" placeholder="<?php echo $BIZBOOK['EMAIL_ID']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -142,10 +124,7 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input id="listing_whatsapp" name="listing_whatsapp" type="text"
-                                               value="<?php echo $listings_a_row['listing_whatsapp']; ?>"
-                                               class="form-control"
-                                               placeholder="<?php echo "Whatsapp Number (e.g. +919876543210)"; ?>">
+                                        <input id="listing_whatsapp" name="listing_whatsapp" type="text" value="<?php echo $listings_a_row['listing_whatsapp']; ?>" class="form-control" placeholder="<?php echo "Whatsapp Number (e.g. +919876543210)"; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -154,10 +133,7 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input id="listing_website" name="listing_website" type="text"
-                                               value="<?php echo $listings_a_row['listing_website']; ?>"
-                                               class="form-control"
-                                               placeholder="<?php echo $BIZBOOK['WEBSITE']; ?>">
+                                        <input id="listing_website" name="listing_website" type="text" value="<?php echo $listings_a_row['listing_website']; ?>" class="form-control" placeholder="<?php echo $BIZBOOK['WEBSITE']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -166,39 +142,38 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" id="listing_address" name="listing_address"
-                                               required="required"
-                                               value="<?php echo $listings_a_row['listing_address']; ?>"
-                                               class="form-control"
-                                               placeholder="<?php echo $BIZBOOK['SHOP_ADDRESS']; ?>">
+                                        <input type="text" id="listing_address" name="listing_address" required="required" value="<?php echo $listings_a_row['listing_address']; ?>" class="form-control" placeholder="<?php echo $BIZBOOK['SHOP_ADDRESS']; ?>">
                                     </div>
                                 </div>
                             </div>
                             <!--FILED END-->
                             <!--FILED START-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="form-group">-->
-<!--                                        <input type="text" name="listing_lat" class="form-control"-->
-<!--                                               value="--><?php //echo $listings_a_row['listing_lat'] ?><!--"-->
-<!--                                               placeholder="--><?php //echo $BIZBOOK['LATITUDE_PLACEHOLDER']; ?><!--">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="form-group">-->
-<!--                                        <input type="text" name="listing_lng" class="form-control"-->
-<!--                                               value="--><?php //echo $listings_a_row['listing_lng'] ?><!--"-->
-<!--                                               placeholder="--><?php //echo $BIZBOOK['LONGITUDE_PLACEHOLDER']; ?><!--">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                            <div class="row">-->
+                            <!--                                <div class="col-md-6">-->
+                            <!--                                    <div class="form-group">-->
+                            <!--                                        <input type="text" name="listing_lat" class="form-control"-->
+                            <!--                                               value="--><?php //echo $listings_a_row['listing_lat'] 
+                                                                                            ?><!--"-->
+                            <!--                                               placeholder="--><?php //echo $BIZBOOK['LATITUDE_PLACEHOLDER']; 
+                                                                                                ?><!--">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="col-md-6">-->
+                            <!--                                    <div class="form-group">-->
+                            <!--                                        <input type="text" name="listing_lng" class="form-control"-->
+                            <!--                                               value="--><?php //echo $listings_a_row['listing_lng'] 
+                                                                                            ?><!--"-->
+                            <!--                                               placeholder="--><?php //echo $BIZBOOK['LONGITUDE_PLACEHOLDER']; 
+                                                                                                ?><!--">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                             <!--FILED END-->
                             <!--FILED START-->
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <select onChange="getCities(this.value);" name="country_id" required="required"
-                                                class="chosen-select form-control">
+                                        <select onChange="getCities(this.value);" name="country_id" required="required" class="chosen-select form-control">
                                             <option value=""><?php echo $BIZBOOK['SELECT_YOUR_COUNTRY']; ?></option>
                                             <?php
                                             //Countries Query
@@ -207,40 +182,40 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                                             foreach ($catArray as $cat_Array) {
 
                                                 foreach (getMultipleCountry($cat_Array) as $countries_row) {
-                                                    ?>
+                                            ?>
                                                     <option <?php if ($listings_a_row['country_id'] == $countries_row['country_id']) {
-                                                        echo "selected";
-                                                    } ?>
-                                                        value="<?php echo $countries_row['country_id']; ?>"><?php echo $countries_row['country_name']; ?></option>
-                                                    <?php
+                                                                echo "selected";
+                                                            } ?> value="<?php echo $countries_row['country_id']; ?>"><?php echo $countries_row['country_name']; ?></option>
+                                            <?php
                                                 }
                                             }
                                             ?>
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input id="listing_pincode" name="listing_pincode" type="text" value="<?php echo $listings_a_row['listing_pincode']; ?>" class="form-control" placeholder="Pincode" id="pincode">
+                                    </div>
+                                </div>
                             </div>
                             <!--FILED END-->
-                            
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <select data-placeholder="<?php echo $BIZBOOK['SELECT_YOUR_CITY']; ?>"
-                                                name="city_id[]" id="city_id"
-                                                multiple required="required"
-                                                class="chosen-select form-control">
+                                        <select data-placeholder="<?php echo $BIZBOOK['SELECT_YOUR_CITY']; ?>" name="city_id[]" id="city_id" multiple required="required" class="chosen-select form-control">
                                             <?php
                                             $cityArray = explode(',', $listings_a_row['city_id']);
                                             foreach ($cityArray as $cit_Array) {
-                                                ?>
+                                            ?>
                                                 <option <?php
-                                                echo "selected";
+                                                        echo "selected";
 
-                                                $city_row = getCity($cit_Array);
+                                                        $city_row = getCity($cit_Array);
 
-                                                ?>
-                                                    value="<?php echo $city_row['city_id']; ?>"><?php echo $city_row['city_name']; ?></option>
-                                                <?php
+                                                        ?> value="<?php echo $city_row['city_id']; ?>"><?php echo $city_row['city_name']; ?></option>
+                                            <?php
                                             }
                                             ?>
 
@@ -252,17 +227,15 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <select onChange="getSubCategory(this.value);" name="category_id"
-                                                id="category_id" class="chosen-select form-control">
+                                        <select onChange="getSubCategory(this.value);" name="category_id" id="category_id" class="chosen-select form-control">
                                             <option value=""><?php echo $BIZBOOK['SELECT_CATEGORY']; ?></option>
                                             <?php
                                             foreach (getAllCategories() as $categories_row) {
-                                                ?>
+                                            ?>
                                                 <option <?php if ($listings_a_row['category_id'] == $categories_row['category_id']) {
-                                                    echo "selected";
-                                                } ?>
-                                                    value="<?php echo $categories_row['category_id']; ?>"><?php echo $categories_row['category_name']; ?></option>
-                                                <?php
+                                                            echo "selected";
+                                                        } ?> value="<?php echo $categories_row['category_id']; ?>"><?php echo $categories_row['category_name']; ?></option>
+                                            <?php
                                             }
                                             ?>
                                         </select>
@@ -275,22 +248,18 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <select name="sub_category_id[]" id="sub_category_id" multiple
-                                                class="chosen-select form-control">
-                                           
+                                        <select name="sub_category_id[]" id="sub_category_id" multiple class="chosen-select form-control">
+
                                             <?php
                                             foreach (getCategorySubCategories($listings_a_row['category_id']) as $sub_categories_row) {
-                                                ?>
+                                            ?>
                                                 <option <?php $catArray = explode(',', $listings_a_row['sub_category_id']);
-                                                foreach ($catArray as $cat_Array) {
-                                                    if ($sub_categories_row['sub_category_id'] == $cat_Array) {
-                                                        echo "selected";
-
-                                                    }
-
-                                                } ?>
-                                                    value="<?php echo $sub_categories_row['sub_category_id']; ?>"><?php echo $sub_categories_row['sub_category_name']; ?></option>
-                                                <?php
+                                                        foreach ($catArray as $cat_Array) {
+                                                            if ($sub_categories_row['sub_category_id'] == $cat_Array) {
+                                                                echo "selected";
+                                                            }
+                                                        } ?> value="<?php echo $sub_categories_row['sub_category_id']; ?>"><?php echo $sub_categories_row['sub_category_name']; ?></option>
+                                            <?php
                                             }
                                             ?>
                                         </select>
@@ -302,9 +271,7 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                                <textarea class="form-control" id="listing_description"
-                                                          name="listing_description"
-                                                          placeholder="<?php echo $BIZBOOK['DETAILS_ABOUT_LISTING']; ?>"><?php echo $listings_a_row['listing_description']; ?></textarea>
+                                        <textarea class="form-control" id="listing_description" name="listing_description" placeholder="<?php echo $BIZBOOK['DETAILS_ABOUT_LISTING']; ?>"><?php echo $listings_a_row['listing_description']; ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -335,9 +302,7 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <textarea class="form-control" id="service_locations"
-                                                  name="service_locations"
-                                                  placeholder="<?php echo $BIZBOOK['ENTER_SERVICE_LOCATION']; ?>"><?php echo $listings_a_row['service_locations']; ?></textarea>
+                                        <textarea class="form-control" id="service_locations" name="service_locations" placeholder="<?php echo $BIZBOOK['ENTER_SERVICE_LOCATION']; ?>"><?php echo $listings_a_row['service_locations']; ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -345,12 +310,10 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                             <!--FILED START-->
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button name="listing_submit" type="submit"
-                                            class="btn btn-primary"><?php echo $BIZBOOK['SAVE_AND_EXIT']; ?></button>
+                                    <button name="listing_submit" type="submit" class="btn btn-primary"><?php echo $BIZBOOK['SAVE_AND_EXIT']; ?></button>
                                 </div>
                                 <div class="col-md-12">
-                                    <a href="edit-listing-step-2?row=<?php echo $_GET['row']; ?>"
-                                       class="skip"><?php echo $BIZBOOK['SKIP_THIS']; ?>>></a>
+                                    <a href="edit-listing-step-2?row=<?php echo $_GET['row']; ?>" class="skip"><?php echo $BIZBOOK['SKIP_THIS']; ?>>></a>
                                 </div>
                                 <div class="col-md-12">
                                     <a href="dashboard" class="skip"><?php echo $BIZBOOK['GO_TO_USER_DASHBOARD']; ?>
@@ -378,8 +341,12 @@ include "footer.php";
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script src="js/select-opt.js"></script>
-<script type="text/javascript">var webpage_full_link = '<?php echo $webpage_full_link;?>';</script>
-<script type="text/javascript">var login_url = '<?php echo $LOGIN_URL;?>';</script>
+<script type="text/javascript">
+    var webpage_full_link = '<?php echo $webpage_full_link; ?>';
+</script>
+<script type="text/javascript">
+    var login_url = '<?php echo $LOGIN_URL; ?>';
+</script>
 <script src="js/custom.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/custom_validation.js"></script>
@@ -389,7 +356,7 @@ include "footer.php";
             type: "POST",
             url: "sub_category_process.php",
             data: 'category_id=' + val,
-            success: function (data) {
+            success: function(data) {
                 $("#sub_category_id").html(data);
                 $('#sub_category_id').trigger("chosen:updated");
             }
@@ -406,11 +373,18 @@ include "footer.php";
             type: "POST",
             url: "city_process.php",
             data: 'country_id=' + val,
-            success: function (data) {
+            success: function(data) {
                 $("#city_id").html(data);
                 $('#city_id').trigger("chosen:updated");
             }
         });
+    }
+
+    document.getElementById('pincode').onkeyup = selectValue
+
+    function selectValue() {
+        let minmaxfeeVal = this;
+        minmaxfeeVal.value = minmaxfeeVal.value.replace(/[^0-9\^]/g, "");
     }
 </script>
 </body>

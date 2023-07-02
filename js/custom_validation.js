@@ -78,12 +78,14 @@ $(document).ready(function () {
             listing_name: { required: true },
             listing_address: { required: true },
             country_id: { required: true },
+            listing_pincode: { required: true },
 
         },
         messages: {
             listing_name: { required: "Listing Name is Required" },
             listing_address: { required: "Listing Address is Required" },
             country_id: { required: "Country is Required" },
+            listing_pincode: { required: "Pincode is Required" },
 
         },
         submitHandler: function (form) { // for demo

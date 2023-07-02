@@ -1207,12 +1207,12 @@ $(document).ready(function () {
 $('#profile_image').on('change', function () {
     console.log('OKOK');
     var fileInput = this;
-    imageSizeAndFormateVaidation(fileInput, 1)
+    imageSizeAndFormateVaidation(fileInput, 20)
 });
 
 $('#cover_image').on('change', function () {
     var fileInput = this;
-    imageSizeAndFormateVaidation(fileInput, 1)
+    imageSizeAndFormateVaidation(fileInput, 20)
 });
 
 // =============== Image validate EX: size & formate =============== 
@@ -1220,7 +1220,7 @@ $('#cover_image').on('change', function () {
 function imageSizeAndFormateVaidation(fileInput, allowMB) {
     let file_size = parseFloat(fileInput.files[0].size / (1024 * 1024)).toFixed(2)
     if (file_size >= allowMB) {
-        showToast("Image size should be not greater than 1 MB ...")
+        showToast(`Image size should be not greater than ${allowMB} MB ...`)
         fileInput.value = '';
         return false;
     } else {

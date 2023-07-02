@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
             $listing_type_id = 1;
         }
         $country_id = $_SESSION["country_id"];
+        $listing_pincode = $_SESSION["listing_pincode"];
         $service_locations = $_SESSION["service_locations"];
 
         $state_id = "1";
@@ -267,14 +268,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
         $listing_qry = "INSERT INTO " . TBL . "listings 
 					(user_id, category_id, sub_category_id, service_id, service_image, listing_type_id, listing_name, listing_mobile, listing_email
-					, listing_website, listing_whatsapp, listing_description, listing_address, listing_lat, listing_lng, service_locations, country_id, state_id, city_id, profile_image, cover_image
+					, listing_website, listing_whatsapp, listing_description, listing_address, listing_lat, listing_lng, service_locations, country_id,listing_pincode, state_id, city_id, profile_image, cover_image
 					, gallery_image, opening_days, opening_time, closing_time, fb_link, twitter_link, gplus_link, google_map
 					, 360_view, listing_video, service_1_name, service_1_price, service_1_detail, service_1_image, service_1_view_more, service_2_name,service_2_price, service_2_image, service_3_name,service_3_price, service_3_image
 					, service_4_name,service_4_price,service_4_image,service_5_name,service_5_price, service_5_image, service_6_name,service_6_price, service_6_image, listing_status
 					, listing_info_question , listing_info_answer, payment_status, listing_slug, listing_cdt) 
 					VALUES 
 					('$user_id', '$category_id', '$sub_category_id', '$service_id', '$service_image', '$listing_type_id', '$listing_name', '$listing_mobile', '$listing_email', '$listing_website', '$listing_whatsapp', '$listing_description', '$listing_address'
-					, '$listing_lat', '$listing_lng', '$service_locations', '$country_id', $state_id, '$city_id', '$profile_image', '$cover_image'
+					, '$listing_lat', '$listing_lng', '$service_locations', '$country_id','$listing_pincode', $state_id, '$city_id', '$profile_image', '$cover_image'
 					,'$gallery_image', '$opening_days', '$opening_time', '$closing_time', '$fb_link', '$twitter_link', '$gplus_link', '$google_map'
 					,'$threesixty_view', '$listing_video', '$service_1_name', '$service_1_price', '$service_1_detail', '$service_1_image', '$service_1_view_more', '$service_2_name', '$service_2_price', '$service_2_image', '$service_3_name', '$service_3_price', '$service_3_image'
 					, '$service_4_name', '$service_4_price', '$service_4_image', '$service_5_name', '$service_5_price', '$service_5_image', '$service_6_name', '$service_6_price', '$service_6_image', '$listing_status'
@@ -435,6 +436,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
             unset($_SESSION['sub_category_id']);
 
             unset($_SESSION['country_id']);
+            unset($_SESSION['listing_pincode']);
             unset($_SESSION['service_locations']);
             unset($_SESSION['state_id']);
             unset($_SESSION['city_id']);
