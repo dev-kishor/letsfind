@@ -217,7 +217,7 @@ include "../footer.php";
 <script>
     var items = $(".plac-hom-all-pla .plac-hom-box");
     var numItems = items.length;
-    var perPage = 7;
+    var perPage = 6;
     items.slice(perPage).hide();
     $('#all-list-pagination-container').pagination({
         items: numItems,
