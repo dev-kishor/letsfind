@@ -1,16 +1,11 @@
 <?php
 include "header.php";
-
 include "home_page_inline_css.php";
-
 include "home_page_top_section.php";
 ?>
 <?php
-
 if ($current_home_page != '2' && $current_home_page != '3') {
-
 ?>
-
     <div class="ban-ql">
         <div class="container">
             <div class="row">
@@ -29,13 +24,10 @@ if ($current_home_page != '2' && $current_home_page != '3') {
                     <?php
                     }
                     ?>
-
                 </ul>
-
             </div>
         </div>
     </div>
-
     <!-- START -->
     <section>
         <div class="str">
@@ -49,23 +41,17 @@ if ($current_home_page != '2' && $current_home_page != '3') {
                         <ul>
                             <?php
                             if ($current_home_page == '3' || $current_home_page == '4' || $current_home_page == '5' || $current_home_page == '6' || $current_home_page == '7' || $current_home_page == '8' || $current_home_page == '9') {
-
                                 $all_cat_function = getAllCategoriesPos();
                             } else {
                                 $all_cat_function = getAllTopCategories();
                             }
-
                             foreach ($all_cat_function as $toprow) {
-
                                 $category_name = $toprow['category_name'];
-
                                 if ($current_home_page == '3' || $current_home_page == '4' || $current_home_page == '5' || $current_home_page == '6' || $current_home_page == '7' || $current_home_page == '8' || $current_home_page == '9') {
-
                                     $category_sql_row = getNameCategory($category_name);
                                 } else {
                                     $category_sql_row = getCategory($category_name);
                                 }
-
                             ?>
                                 <li>
                                     <div class="land-pack-grid">
@@ -77,12 +63,27 @@ if ($current_home_page != '2' && $current_home_page != '3') {
                                                 <?php
                                                 if ($current_home_page == '3' || $current_home_page == '4' || $current_home_page == '5' || $current_home_page == '6' || $current_home_page == '7' || $current_home_page == '8' || $current_home_page == '9') {
                                                 ?>
-                                                    <span class="dir-ho-cat"><?php echo $BIZBOOK['LISTINGS']; ?> <?php echo AddingZero_BeforeNumber(getCountCategoryListing($category_sql_row['category_id'])); ?></span>
+                                                    <span class="dir-ho-cat"><?php echo $BIZBOOK['LISTINGS']; ?>
+                                                        <?php
+                                                        if (getCountCategoryListing($category_sql_row['category_id']) === 0) {
+                                                            echo "";
+                                                        } else {
+                                                            echo AddingZero_BeforeNumber(getCountCategoryListing($category_sql_row['category_id']));
+                                                        }
+                                                        ?>
+                                                    </span>
                                                 <?php
                                                 } else {
                                                 ?>
-                                                    <span class="dir-ho-cat"><?php echo $BIZBOOK['SHOW_ALL']; ?> (<?php echo AddingZero_BeforeNumber(getCountCategoryListing($category_sql_row['category_id'])); ?>
-                                                        )</span>
+                                                    <span class="dir-ho-cat"><?php echo $BIZBOOK['SHOW_ALL']; ?>
+                                                        <?php
+                                                        if (getCountCategoryListing($category_sql_row['category_id']) === 0) {
+                                                            echo "";
+                                                        } else {
+                                                            echo "(" . AddingZero_BeforeNumber(getCountCategoryListing($category_sql_row['category_id'])) . ")";
+                                                        }
+                                                        ?>
+                                                    </span>
                                                 <?php
                                                 }
                                                 ?>
@@ -108,7 +109,6 @@ if ($current_home_page != '2' && $current_home_page != '3') {
 <?php
 include "home_page_mid_section.php"
 ?>
-
 <!-- START -->
 <section>
     <div class="hom-ads">
@@ -123,7 +123,6 @@ include "home_page_mid_section.php"
                         ?>
                         <a href="<?php echo stripslashes($get_ad_row['ad_link']); ?>">
                             <span><?php echo $BIZBOOK['AD']; ?></span>
-
                             <img src="<?php echo $webpage_full_link; ?>images/ads/<?php if ($ad_enquiry_photo != NULL || !empty($ad_enquiry_photo)) {
                                                                                         echo $ad_enquiry_photo;
                                                                                     } else {
@@ -137,7 +136,6 @@ include "home_page_mid_section.php"
     </div>
 </section>
 <!-- END -->
-
 <!-- START -->
 <div class="ani-quo">
     <div class="ani-q1">
@@ -150,11 +148,9 @@ include "home_page_mid_section.php"
     </div>
 </div>
 <!-- END -->
-
 <?php
 include "footer.php";
 ?>
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="<?php echo $webpage_full_link; ?>js/jquery.min.js"></script>
@@ -184,7 +180,6 @@ include "home_page_inline_js.php"
             $(".hom-top").removeClass("dmact");
         }
     });
-
     $('.travel-sliser').slick({
         infinite: true,
         slidesToShow: 3,
@@ -199,7 +194,6 @@ include "home_page_inline_js.php"
                 centerMode: false
             }
         }]
-
     });
     $('.travel-sliser-auto').slick({
         infinite: true,
@@ -215,9 +209,7 @@ include "home_page_inline_js.php"
                 centerMode: false
             }
         }]
-
     });
-
     $('.multiple-items').slick({
         infinite: true,
         slidesToShow: 4,
@@ -232,7 +224,6 @@ include "home_page_inline_js.php"
                 centerMode: false,
             }
         }]
-
     });
     //test
     $('.multiple-items2').slick({
@@ -249,9 +240,7 @@ include "home_page_inline_js.php"
                 centerMode: false,
             }
         }]
-
     });
-
     $('.multiple-items1').slick({
         infinite: true,
         slidesToShow: 3,
@@ -266,9 +255,7 @@ include "home_page_inline_js.php"
                 centerMode: false,
             }
         }]
-
     });
 </script>
 </body>
-
 </html>

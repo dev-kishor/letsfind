@@ -12,65 +12,54 @@ if (isset($_GET["page"])) {
     $page = 1;
 };
 $start_from = ($page - 1) * $limit;
-
 //Pagination Code Ends Here
-
 ?>
-
 <?php
 if (isset($_GET['category'])) {
-
-
     $category_search_slug1 = str_replace('-', ' ', $_GET['category']);
-
     $category_search_slug = str_replace('.php', '', $category_search_slug1);
-
-    $cat_search_row = getSlugCategory($category_search_slug);  //Fetch Category Id using category name
-
-    $category_id = $cat_search_row['category_id'];
-
+    $cat_search_row = getSlugCategoryLike($category_search_slug);  //Fetch Category Id using category name
+    if ($cat_search_row['category_id'] == "") {
+        $category_id = 0;
+    } else {
+        $category_id = $cat_search_row['category_id'];
+    }
     $category_search_name = $cat_search_row['category_name'];
-
-    $category_search_query = "AND FIND_IN_SET($category_id, category_id)";
+    $category_search_query = "AND (category_id in ($category_id) or listing_name like '%$category_search_slug%' or listing_description like '%$category_search_slug%')";
 
     categorypageview($category_id); //Function To Find Page View
-
 }
 
 if (isset($_GET['subcategory'])) {
     //Sub category process From GET
-
     $subcategory_search_slug1 = str_replace('-', ' ', $_GET['subcategory']);
-
     $subcategory_search_slug = str_replace('.php', '', $subcategory_search_slug1);
-
     $subcat_search_row = getSlugSubCategory($subcategory_search_slug);  //Fetch Sub Category Id using sub category name
-
     $subcategory_id = $subcat_search_row['sub_category_id'];
-
     $sub_category_search_query = "AND FIND_IN_SET($subcategory_id, sub_category_id)";
 }
-
-
+if (isset($_GET['verify'])) {
+    $place_search_slug1 = str_replace('-', ' ', $_GET['verify']);
+    $place_search_slug = str_replace('.php', '', $place_search_slug1);
+    $placename_search_row = getSlugPlaces($place_search_slug);
+    $place_pincode = $placename_search_row['place_pincode'];
+    $place_pincode_query = "and listing_pincode = $place_pincode";
+}
 //To get City value in URL starts
-
 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $parts = parse_url($actual_link);
 parse_str($parts['query'], $query);
-
 //To get City value in URL ends
-
 if (isset($query['city'])) {
     //city process from GET
     $city1 = str_replace('-', ' ', $query['city']);
-
     $city_search_row = getCityName($city1);  //Fetch Sub Category Id using sub category name
-
     $city_id = $city_search_row['city_id'];
-
     $city_search_query = "AND FIND_IN_SET($city_id, city_id)";
 }
+
 ?>
+
 <!-- START -->
 <section>
     <div class="all-listing all-listing-pg">
@@ -113,7 +102,6 @@ if (isset($query['city'])) {
             <div class="row">
                 <?php
                 foreach (getAllListingFilter() as $all_listing_filter_row) {
-
                 ?>
                     <div class="col-md-3 fil-mob-view">
                         <div class="all-filt">
@@ -129,13 +117,9 @@ if (isset($query['city'])) {
                                         <ul>
                                             <?php
                                             $nearby_listsql = "SELECT " . TBL . "listings.*, " . TBL . "users.user_plan FROM " . TBL . "listings
-
                                             LEFT JOIN " . TBL . "users ON " . TBL . "listings.user_id = " . TBL . "users.user_id  WHERE " . TBL . "listings.listing_status= 'Active'
-
                                             AND " . TBL . "listings.listing_is_delete != '2' $category_search_query $sub_category_search_query
-
                                             ORDER BY " . TBL . "users.user_plan DESC," . TBL . "listings.listing_id DESC LIMIT 5 ";
-
                                             $nearby_listrs = mysqli_query($conn, $nearby_listsql);
                                             while ($nearby_listrow = mysqli_fetch_array($nearby_listrs)) {
                                             ?>
@@ -164,7 +148,6 @@ if (isset($query['city'])) {
                                         </ul>
                                     </div>
                                 </div>
-
                                 <!--END-->
                                 <!--START-->
                                 <div class="filt-com lhs-search">
@@ -179,184 +162,11 @@ if (isset($query['city'])) {
                                         </ul>
                                     </form>
                                 </div>
-
                                 <!--END-->
-                            <?php }
-                            if ($all_listing_filter_row['category_filter'] == "Active") {
-                            ?>
-                                <!--START-->
-                                <div class="filt-com lhs-cate">
-                                    <h4><?php echo $BIZBOOK['ALL-LISTING-CATEGORIES']; ?></h4>
-                                    <div class="dropdown">
-                                        <select onChange="SubcategoryFilter(this.value);" class="cat_check chosen-select" name="cat_check" id="cat_check">
-                                            <option value=""><?php echo $BIZBOOK['SELECT_CATEGORY']; ?></option>
-                                            <?php
-                                            foreach (getAllActiveCategoriesPos() as $categories_row) {
-                                            ?>
-                                                <option <?php if ($category_id === $categories_row['category_id']) {
-                                                            echo 'selected';
-                                                        } ?> value="<?php echo $categories_row['category_id']; ?>"><?php echo $categories_row['category_name']; ?></option>
-                                            <?php
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!--END-->
+                            <?php } ?>
 
-                                <!--START-->
-                                <div class="sub_cat_section filt-com lhs-sub">
-                                    <h4><?php echo $BIZBOOK['ALL-LISTING-SUB-CATEGORY']; ?></h4>
-                                    <ul>
-                                        <?php
-                                        if (isset($_GET['category'])) {
-                                            $sub_category_qry = getCategorySubCategories($category_id);
-                                        } else {
-                                            $sub_category_qry = getAllSubCategories();
-                                        }
-                                        foreach ($sub_category_qry as $sub_category_row) { ?>
-                                            <li>
-                                                <div class="chbox">
-                                                    <input type="checkbox" class="sub_cat_check" name="sub_cat_check" value="<?php echo $sub_category_row['sub_category_id']; ?>" <?php if (isset($_GET['subcategory'])) {
-                                                                                                                                                                                        if ($subcategory_id == $sub_category_row['sub_category_id']) {
-                                                                                                                                                                                            echo "checked";
-                                                                                                                                                                                        }
-                                                                                                                                                                                    } ?> id="<?php echo $sub_category_row['sub_category_name']; ?>" />
-                                                    <label for="<?php echo $sub_category_row['sub_category_name']; ?>"><?php echo $sub_category_row['sub_category_name']; ?></label>
-                                                </div>
-                                            </li>
-                                        <?php
-                                        }
-                                        ?>
-                                    </ul>
-                                </div>
-                                <!--END-->
 
-                            <?php }
-                            if ($all_listing_filter_row['feature_filter'] == "Active") {
-                            ?>
-                                <!--START-->
-                                <div class="filt-com lhs-featu">
-                                    <h4><?php echo $BIZBOOK['ALL-LISTING-FEATURES']; ?></h4>
-                                    <ul>
-                                        <?php
-                                        foreach (getAllActiveFeaturedFilter() as $featuredfilterrow) {
-                                        ?>
 
-                                            <li>
-                                                <div class="chbox">
-                                                    <input type="checkbox" name="feature_check" value="<?php echo $featuredfilterrow['all_featured_filter_value']; ?>" class="feature_check" id="<?php echo $featuredfilterrow['all_featured_filter_value']; ?>" />
-                                                    <label for="<?php echo $featuredfilterrow['all_featured_filter_value']; ?>"><?php echo $featuredfilterrow['all_featured_filter_name']; ?></label>
-                                                </div>
-                                            </li>
-                                        <?php
-                                        }
-                                        ?>
-                                    </ul>
-                                </div>
-                                <!--END-->
-                            <?php }
-
-                            ?>
-
-                            <!--START-->
-                            <div class="filt-com lhs-cate">
-                                <h4><?php echo $BIZBOOK['CITIES']; ?></h4>
-                                <div class="dropdown">
-                                    <select id="city_check" name="city_check" class="chosen-select">
-                                        <option value=""><?php echo $BIZBOOK['SELECT_CITY']; ?></option>
-                                        <?php
-                                        foreach (getAllListingPageCities() as $city_listrow) {
-
-                                            if (strpos($city_listrow['city_id'], ',') !== false) {
-                                                $city_id_array = array_unique(explode(',', $city_listrow['city_id']));
-                                                foreach ($city_id_array as $places) {
-                                                    $cityrow = getCity($places);
-                                        ?>
-                                                    <option <?php if ($city_id === $cityrow['city_id']) {
-                                                                echo 'selected';
-                                                            } ?> value="<?php echo $cityrow['city_id']; ?>"><?php echo $cityrow['city_name']; ?></option>
-                                        <?php
-                                                }
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <?php
-                            if ($all_listing_filter_row['rating_filter'] == "Active") {
-                            ?>
-                                <!--START-->
-                                <div class="filt-com lhs-rati">
-                                    <h4><?php echo $BIZBOOK['RATINGS']; ?></h4>
-                                    <ul>
-                                        <li>
-                                            <div class="rbbox">
-                                                <input type="radio" value="5" name="rating_check" class="rating_check" id="rb1" />
-                                                <label for="rb1">
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="rbbox">
-                                                <input type="radio" value="4" name="rating_check" class="rating_check" id="rb2" />
-                                                <label for="rb2">
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star_border</i>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="rbbox">
-                                                <input type="radio" value="3" name="rating_check" class="rating_check" id="rb3" />
-                                                <label for="rb3">
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star_border</i>
-                                                    <i class="material-icons">star_border</i>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="rbbox">
-                                                <input type="radio" value="2" name="rating_check" class="rating_check" id="rb4" />
-                                                <label for="rb4">
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star_border</i>
-                                                    <i class="material-icons">star_border</i>
-                                                    <i class="material-icons">star_border</i>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="rbbox">
-                                                <input type="radio" value="1" name="rating_check" class="rating_check" id="rb5" />
-                                                <label for="rb5">
-                                                    <i class="material-icons">star</i>
-                                                    <i class="material-icons">star_border</i>
-                                                    <i class="material-icons">star_border</i>
-                                                    <i class="material-icons">star_border</i>
-                                                    <i class="material-icons">star_border</i>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!--END-->
-                            <?php
-                            }
-                            ?>
                             <!--START-->
                             <div class="filt-com lhs-ads">
                                 <ul>
@@ -369,7 +179,6 @@ if (isset($query['city'])) {
                                             ?>
                                             <a href="<?php echo stripslashes($get_ad_row['ad_link']); ?>">
                                                 <span><?php echo $BIZBOOK['AD']; ?></span>
-
                                                 <img src="<?php echo $slash; ?>images/ads/<?php if ($ad_enquiry_photo != NULL || !empty($ad_enquiry_photo)) {
                                                                                                 echo $ad_enquiry_photo;
                                                                                             } else {
@@ -378,11 +187,9 @@ if (isset($query['city'])) {
                                             </a>
                                         </div>
                                     </li>
-
                                 </ul>
                             </div>
                             <!--END-->
-
                             <div class="all-list-filt-form">
                                 <div class="tit">
                                     <h3><?php echo $BIZBOOK['HOM-WHAT-SER']; ?>
@@ -508,34 +315,19 @@ if (isset($query['city'])) {
                     </div>
                     <!-- Loader Image -->
                     <div class="all-list-sh all-listing-total">
-
                         <ul class="all-list-wrapper">
                             <?php
-                            //                            $listsql = "SELECT *
-                            //										FROM " . TBL . "listings  WHERE listing_status= 'Active' AND listing_is_delete != '2'
-                            //
-                            //										$category_search_query $city_search_query ORDER BY listing_id DESC LIMIT $start_from, $limit";
-
-                            $listsql = "SELECT " . TBL . "listings.*, " . TBL . "users.user_plan FROM " . TBL . "listings
-                            
- LEFT JOIN " . TBL . "users ON " . TBL . "listings.user_id = " . TBL . "users.user_id  WHERE " . TBL . "listings.listing_status= 'Active' 
- 
- AND " . TBL . "listings.listing_is_delete != '2' $category_search_query $sub_category_search_query $city_search_query 
- 
- ORDER BY " . TBL . "listings.display_position DESC," . TBL . "users.user_plan DESC," . TBL . "listings.listing_id DESC";
+                             $listsql = "SELECT " . TBL . "listings.*, " . TBL . "users.user_plan FROM " . TBL . "listings
+                            LEFT JOIN " . TBL . "users ON " . TBL . "listings.user_id = " . TBL . "users.user_id  WHERE " . TBL . "listings.listing_status= 'Active' AND " . TBL . "listings.listing_is_delete != '2' $category_search_query $place_pincode_query $sub_category_search_query $city_search_query ORDER BY " . TBL . "listings.display_position DESC," . TBL . "users.user_plan DESC," . TBL . "listings.listing_id DESC";
+                            // die();
 
                             $listrs = mysqli_query($conn, $listsql);
                             $total_listings = mysqli_num_rows($listrs);
-
                             if (mysqli_num_rows($listrs) > 0) {
-
                                 while ($listrow = mysqli_fetch_array($listrs)) {
-
                                     $listing_id = $listrow['listing_id'];
                                     $list_user_id = $listrow['user_id'];
-
                                     $usersqlrow = getUser($list_user_id); // To Fetch particular User Data
-
                                     // $star_rating_row = getListingReview($listing_id); // List Rating. for Rating of Star
                                     foreach (getListingReview($listing_id) as $star_rating_row) {
                                         if ($star_rating_row["rate_cnt"] > 0) {
@@ -552,11 +344,8 @@ if (isset($query['city'])) {
                                             $star_rate = 0;
                                         }
                                     }
-
                                     $review_count = getCountListingReview($listing_id); //Listing Reviews Count
-
                                     $listing_likes_total = getCountUserLikedListing($listing_id, $session_user_id); // To get count of likes
-
                                     if ($listing_likes_total >= 1) {
                                         $check_listing_likes_total = 0;
                                         $active_listing_likes = 'sav-act';
@@ -564,11 +353,8 @@ if (isset($query['city'])) {
                                         $check_listing_likes_total = 1;
                                         $active_listing_likes = '';
                                     }
-
-
                                     //Likes Query Ends
                             ?>
-
                                     <li class="all-list-item">
                                         <div class="eve-box">
                                             <!---LISTING IMAGE--->
@@ -581,17 +367,14 @@ if (isset($query['city'])) {
                                                 }
                                                 ?>
                                                 <a href="<?php echo $LISTING_URL . urlModifier($listrow['listing_slug']); ?>">
-
                                                     <img src="<?php echo $slash; ?><?php if ($listrow['profile_image'] != NULL || !empty($listrow['profile_image'])) {
                                                                                         echo "images/listings/" . $listrow['profile_image'];
                                                                                     } else {
                                                                                         echo "images/listings/hot4.jpg";
                                                                                     } ?>">
                                                 </a>
-
                                             </div>
                                             <!---END LISTING IMAGE--->
-
                                             <!---LISTING NAME--->
                                             <div class="list-con">
                                                 <h4>
@@ -618,7 +401,6 @@ if (isset($query['city'])) {
                                                             <?php
                                                             }
                                                             $bal_star_rate = abs(ceil($star_rate) - 5);
-
                                                             for ($i = 1; $i <= $bal_star_rate; $i++) {
                                                             ?>
                                                                 <i class="material-icons ratstar">star</i>
@@ -643,7 +425,6 @@ if (isset($query['city'])) {
                                                 <span class="addr"><?php echo $listrow['listing_address']; ?></span>
                                                 <span class="pho"><?php
                                                                     if ($listrow['listing_mobile'] != NULL || $usersqlrow['mobile_number'] != NULL) {
-
                                                                         if ($list_user_id == 1) {
                                                                             echo $listrow['listing_mobile'];
                                                                         } else {
@@ -656,7 +437,6 @@ if (isset($query['city'])) {
                                                 if ($listrow['listing_email'] != NULL) { ?>
                                                     <span class="mail"> <?php echo $listrow['listing_email']; ?></span>
                                                 <?php } ?>
-
                                                 <div class="links">
                                                     <?php
                                                     if ($listrow['listing_email'] != NULL || $listrow['listing_email'] != '') {
@@ -676,9 +456,6 @@ if (isset($query['city'])) {
                                                     <?php
                                                     }
                                                     ?>
-
-
-
                                                     <a href="<?php echo $BIZBOOK['TEL']; ?>:<?php
                                                                                             if ($listrow['listing_mobile'] != NULL || $usersqlrow['mobile_number'] != NULL) {
                                                                                                 if ($list_user_id == 1) {
@@ -691,7 +468,6 @@ if (isset($query['city'])) {
                                                                                 echo $listrow['listing_whatsapp'];
                                                                             } else {
                                                                                 if ($listrow['listing_mobile'] != NULL || $usersqlrow['mobile_number'] != NULL) {
-
                                                                                     if ($list_user_id == 1) {
                                                                                         echo $listrow['listing_mobile'];
                                                                                     } else {
@@ -701,18 +477,14 @@ if (isset($query['city'])) {
                                                                             }
                                                                             ?>" class="what" target="_blank"><?php echo $BIZBOOK['WHATSAPP']; ?></a>
                                                 </div>
-
                                             </div>
                                             <!---END LISTING NAME--->
-
                                             <!---SAVE--->
                                             <span class="enq-sav" data-toggle="tooltip" title="<?php if ($active_listing_likes == '') { ?>Click to like this listing<?php } else { ?> Click to Unlike this listing <?php } ?>">
                                                 <i class="l-like Animatedheartfunc<?php echo $listing_id ?> <?php echo $active_listing_likes; ?>" data-for="<?php echo listing_total_like_count($listing_id); ?>" data-section="<?php echo $check_listing_likes_total; ?>" data-num="<?php echo $list_user_id; ?>" data-item="<?php echo $session_user_id; ?>" data-id='<?php echo $listing_id ?>'><img src="<?php echo $slash; ?>images/icon/svg/like.svg"></i></span>
                                             <!---END SAVE--->
                                         </div>
                                     </li>
-
-
                                     <!--  Get Quote Pop up box starts  -->
                                     <section>
                                         <div class="pop-ups pop-quo">
@@ -764,11 +536,8 @@ if (isset($query['city'])) {
                                                 </div>
                                             </div>
                                         </div>
-
                                     </section>
                                     <!--  Get Quote Pop up box ends  -->
-
-
                                 <?php
                                 }
                                 ?>
@@ -785,9 +554,7 @@ if (isset($query['city'])) {
                             <?php
                             }
                             ?>
-
                         </ul>
-
                         <!--ADS-->
                         <div class="ban-ati-com ads-all-list">
                             <?php
@@ -810,7 +577,6 @@ if (isset($query['city'])) {
     </div>
 </section>
 <!-- END -->
-
 <!-- START -->
 <section>
     <div class="list-map">
@@ -820,7 +586,6 @@ if (isset($query['city'])) {
     </div>
 </section>
 <!-- END -->
-
 <!-- START -->
 <section>
     <div class="list-foot">
@@ -831,8 +596,6 @@ if (isset($query['city'])) {
                     $sum = $count = 0; // initiate interger variables
                     foreach (getAllListingCategory($cat_search_row['category_id']) as $categorywise_listings) {
                         $categorywise_listing_id = $categorywise_listings['listing_id'];
-
-
                         foreach (getListingReview($categorywise_listing_id) as $star_rating_row) {
                             if ($star_rating_row["rate_cnt"] > 0) {
                                 $star_rate_times = $star_rating_row["rate_cnt"];
@@ -862,7 +625,6 @@ if (isset($query['city'])) {
                     } else {
                         $new_review_count = $review_count45;
                     }
-
                     ?>
                     <div class="list-rat-all">
                         <h4><?php echo $BIZBOOK['ALL-LISTING-OVERALL-RATING']; ?></h4>
@@ -871,7 +633,6 @@ if (isset($query['city'])) {
                             } else {
                                 echo $BIZBOOK['ALL-LISTING-0-RATINGS'];
                             } ?></b>
-
                         <?php
                         if ($new_star_rate != 0) {
                         ?>
@@ -883,7 +644,6 @@ if (isset($query['city'])) {
                                 <?php
                                 }
                                 $bal_star_rate = abs(ceil($new_star_rate) - 5);
-
                                 for ($i = 1; $i <= $bal_star_rate; $i++) {
                                 ?>
                                     <i class="material-icons ratstar">star</i>
@@ -935,7 +695,6 @@ if (isset($query['city'])) {
                                         <?php } ?>
                                     </li>
                                 <?php } ?>
-
                                 <?php if ($cat_search_row['category_faq_2_ques'] != NULL) { ?>
                                     <li>
                                         <h4><?php echo $cat_search_row['category_faq_2_ques']; ?></h4>
@@ -946,7 +705,6 @@ if (isset($query['city'])) {
                                         <?php } ?>
                                     </li>
                                 <?php } ?>
-
                                 <?php if ($cat_search_row['category_faq_3_ques'] != NULL) { ?>
                                     <li>
                                         <h4><?php echo $cat_search_row['category_faq_3_ques']; ?></h4>
@@ -957,7 +715,6 @@ if (isset($query['city'])) {
                                         <?php } ?>
                                     </li>
                                 <?php } ?>
-
                                 <?php if ($cat_search_row['category_faq_4_ques'] != NULL) { ?>
                                     <li>
                                         <h4><?php echo $cat_search_row['category_faq_4_ques']; ?></h4>
@@ -968,7 +725,6 @@ if (isset($query['city'])) {
                                         <?php } ?>
                                     </li>
                                 <?php } ?>
-
                                 <?php if ($cat_search_row['category_faq_5_ques'] != NULL) { ?>
                                     <li>
                                         <h4><?php echo $cat_search_row['category_faq_5_ques']; ?></h4>
@@ -979,7 +735,6 @@ if (isset($query['city'])) {
                                         <?php } ?>
                                     </li>
                                 <?php } ?>
-
                                 <?php if ($cat_search_row['category_faq_6_ques'] != NULL) { ?>
                                     <li>
                                         <h4><?php echo $cat_search_row['category_faq_6_ques']; ?></h4>
@@ -990,7 +745,6 @@ if (isset($query['city'])) {
                                         <?php } ?>
                                     </li>
                                 <?php } ?>
-
                                 <?php if ($cat_search_row['category_faq_7_ques'] != NULL) { ?>
                                     <li>
                                         <h4><?php echo $cat_search_row['category_faq_7_ques']; ?></h4>
@@ -1001,7 +755,6 @@ if (isset($query['city'])) {
                                         <?php } ?>
                                     </li>
                                 <?php } ?>
-
                                 <?php if ($cat_search_row['category_faq_8_ques'] != NULL) { ?>
                                     <li>
                                         <h4><?php echo $cat_search_row['category_faq_8_ques']; ?></h4>
@@ -1012,7 +765,6 @@ if (isset($query['city'])) {
                                         <?php } ?>
                                     </li>
                                 <?php } ?>
-
                             </ul>
                         </div>
                     </div>
@@ -1024,11 +776,9 @@ if (isset($query['city'])) {
     </div>
 </section>
 <!-- END -->
-
 <?php
 include "footer.php";
 ?>
-
 <!-- START -->
 <section>
     <div class="str">
@@ -1039,8 +789,6 @@ include "footer.php";
     </div>
 </section>
 <!-- END -->
-
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="<?php echo $slash; ?>js/jquery.min.js"></script>
@@ -1063,9 +811,7 @@ include "footer.php";
     var items = $(".all-list-wrapper .all-list-item");
     var numItems = items.length;
     var perPage = 10;
-
     items.slice(perPage).hide();
-
     $('#all-list-pagination-container').pagination({
         items: numItems,
         itemsOnPage: perPage,
@@ -1088,7 +834,6 @@ include "footer.php";
     ?>
         $(".all-list-bre, .all-listing").hide();
         $(".list-map").show();
-
     <?php
     }
     if (isset($_GET['grid'])) {
@@ -1097,7 +842,6 @@ include "footer.php";
         $(".all-list-bre, .all-listing").show();
         $('.all-list-sh').removeClass('cview3');
         $('.all-list-sh').addClass('cview1');
-
     <?php
     }
     if (isset($_GET['list'])) {
@@ -1106,11 +850,9 @@ include "footer.php";
         $(".all-list-bre, .all-listing").show();
         $('.all-list-sh').removeClass('cview1');
         $('.all-list-sh').removeClass('cview3');
-
     <?php
     } ?>
 </script>
-
 <!--on page scroll load data ends-->
 <script>
     function SubcategoryFilter(val) {
@@ -1131,12 +873,10 @@ include "footer.php";
                     $(".sub_cat_section").html(data);
                     $(".sub_cat_section").css("opacity", 1);
                 }
-
             }
         });
     }
 </script>
-
 <script>
     function breadcrumbs(val) {
         $(".sec-all-list-bre").css("opacity", 0);
@@ -1151,7 +891,6 @@ include "footer.php";
                     $(".sec-all-list-bre").html(data);
                     $(".sec-all-list-bre").css("opacity", 1);
                 }
-
             }
         });
     }
@@ -1170,12 +909,10 @@ include "footer.php";
                     $(".sec-all-foot-cat-info").html(data);
                     $(".sec-all-foot-cat-info").css("opacity", 1);
                 }
-
             }
         });
     }
 </script>
-
 <script>
     function topServiceCategory(val) {
         $(".top-ser-secti-prov").css("opacity", 0);
@@ -1190,12 +927,10 @@ include "footer.php";
                     $(".top-ser-secti-prov").html(data);
                     $(".top-ser-secti-prov").css("opacity", 1);
                 }
-
             }
         });
     }
 </script>
-
 <script>
     var scr_he = window.innerHeight;
     var fiscr_he = scr_he;
@@ -1212,15 +947,11 @@ if ($cat_search_row['category_google_schema'] != NULL) {
 <?php
 }
 ?>
-
 <script>
     <?php
     $listsql_review_schema = "SELECT " . TBL . "listings.*, " . TBL . "users.user_plan FROM " . TBL . "listings LEFT JOIN " . TBL . "users ON " . TBL . "listings.user_id = " . TBL . "users.user_id  WHERE " . TBL . "listings.listing_status= 'Active' AND " . TBL . "listings.listing_is_delete != '2' $category_search_query $sub_category_search_query $city_search_query ORDER BY " . TBL . "users.user_plan DESC," . TBL . "listings.listing_id DESC LIMIT 1";
-
     $listrs_review_schema = mysqli_query($conn, $listsql_review_schema);
-
     if (mysqli_num_rows($listrs_review_schema) > 0) {
-
         while ($listrow_review_schema = mysqli_fetch_array($listrs_review_schema)) {
             $listrs_review_schema_listing_id = $listrow_review_schema['listing_id'];
             $total_reviews = getCountListingReview($listrs_review_schema_listing_id);
@@ -1243,13 +974,11 @@ if ($cat_search_row['category_google_schema'] != NULL) {
             } else {
                 $new_count = $total_reviews;
             }
-
             if ($star_rate_review_schema == 0) {
                 $new_star_rate_review_schemat = 1;
             } else {
                 $new_star_rate_review_schemat = $star_rate_review_schema;
             }
-
     ?>
 </script>
 <script type="application/ld+json">
@@ -1270,7 +999,6 @@ if ($cat_search_row['category_google_schema'] != NULL) {
                 "addressLocality": "<?php echo $listrow_review_schema['listing_address']; ?>",
                 "telephone": "<?php echo $listrow_review_schema['listing_mobile']; ?>"
             },
-
             "priceRange": "1"
         },
         "author": "Users",
@@ -1282,8 +1010,6 @@ if ($cat_search_row['category_google_schema'] != NULL) {
         }
     }
 </script>
-
-
 <!-- ORGANIZATION SCHEMA -->
 <script type="application/ld+json">
     [{
@@ -1307,14 +1033,12 @@ if ($cat_search_row['category_google_schema'] != NULL) {
         }
     }
 ?>
-
 <!-- LIST ITEM SCHEMA -->
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "ItemList",
         "itemListElement": [
-
             <?php
             $listsql_list_item_schema = "SELECT " . TBL . "listings.*, " . TBL . "users.user_plan FROM " . TBL . "listings
                             
@@ -1323,14 +1047,12 @@ if ($cat_search_row['category_google_schema'] != NULL) {
  AND " . TBL . "listings.listing_is_delete != '2' $category_search_query $sub_category_search_query $city_search_query 
  
  ORDER BY " . TBL . "users.user_plan DESC," . TBL . "listings.listing_id DESC LIMIT 10";
-
             $listrs_list_item_schema = mysqli_query($conn, $listsql_list_item_schema);
             $si = 1;
             $comma = ',';
             if (mysqli_num_rows($listrs_list_item_schema) > 0) {
                 $total_count_list = mysqli_num_rows($listrs_list_item_schema);
                 while ($listrow_list_item_schema = mysqli_fetch_array($listrs_list_item_schema)) {
-
             ?> {
                         "@type": "ListItem",
                         "position": <?php echo $si; ?>,
@@ -1339,7 +1061,6 @@ if ($cat_search_row['category_google_schema'] != NULL) {
                     <?php if ($total_count_list != $si) {
                         echo $comma;
                     } ?>
-
             <?php
                     $si++;
                 }
@@ -1348,7 +1069,6 @@ if ($cat_search_row['category_google_schema'] != NULL) {
         ]
     }
 </script>
-
 </body>
 
 </html>

@@ -77,28 +77,16 @@ $(document).ready(function () {
         rules: {
             listing_name: { required: true },
             listing_address: { required: true },
-            // listing_lat: {required: true},
-            // listing_lng: {required: true},
-            event_image: { required: true },
-            event_address: { required: true },
-            event_start_date: { required: true },
-            event_time: { required: true },
-            event_description: { required: true },
-            event_email: { required: true, email: true },
-            event_mobile: { required: true }
+            country_id: { required: true },
+            listing_pincode: { required: true },
+
         },
         messages: {
             listing_name: { required: "Listing Name is Required" },
-            event_contact_name: { required: "Contact Person Name is Required" },
-            event_image: { required: "Event Image is Required" },
             listing_address: { required: "Listing Address is Required" },
-            // listing_lat: {required: "Listing Latitude is Required"},
-            // listing_lng: {required: "Listing Longitude is Required"},
-            event_start_date: { required: "Event Date is Required" },
-            event_time: { required: "Event Time is Required" },
-            event_description: { required: "Event Description is Required" },
-            event_email: { required: "Event Email ID is Required" },
-            event_mobile: { required: "Phone Number is Required" }
+            country_id: { required: "Country is Required" },
+            listing_pincode: { required: "Pincode is Required" },
+
         },
         submitHandler: function (form) { // for demo
             form.submit();

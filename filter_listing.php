@@ -218,7 +218,6 @@ $total_count_listings = mysqli_num_rows($query);
 
                 $listing_id = $listrow['listing_id'];
                 $list_user_id = $listrow['user_id'];
-
                 $usersqlrow = getUser($list_user_id); // To Fetch particular User Data
 
 //                $star_rating_row = getListingReview($listing_id); // List Rating. for Rating of Star
@@ -331,19 +330,15 @@ $total_count_listings = mysqli_num_rows($query);
                                                 if ($list_user_id == 1) {
                                                     echo $listrow['listing_mobile'];
                                                 } else {
-                                                    echo $usersqlrow['mobile_number'];
+                                                    echo $listrow['listing_mobile'];
                                                 } ?>
                                                 <?php
                                             }
                                             ?></span>
-                                        <span class="mail"><?php
-                                            if ($usersqlrow['email_id'] != NULL) {
-
-                                                echo $usersqlrow['email_id'];
-                                                ?>
-                                                <?php
-                                            }
-                                            ?></span>
+                                        <?php
+                                                if ($listrow['listing_email'] != NULL) { ?>
+                                                    <span class="mail"> <?php echo $listrow['listing_email']; ?></span>
+                                                <?php } ?>
 
                             <div class="links">
                                 <?php if ($session_user_id != NULL || !empty($session_user_id)) {
@@ -367,7 +362,7 @@ $total_count_listings = mysqli_num_rows($query);
                                     if ($list_user_id == 1) {
                                         echo $listrow['listing_mobile'];
                                     } else {
-                                        echo $usersqlrow['mobile_number'];
+                                        echo $listrow['listing_mobile'];
                                     } ?> <?php } ?>"><?php echo $BIZBOOK['CALL_NOW']; ?></a>
                                 <a href="https://wa.me/<?php
                                 if ($listrow['listing_whatsapp'] != NULL) {
@@ -378,7 +373,7 @@ $total_count_listings = mysqli_num_rows($query);
                                         if ($list_user_id == 1) {
                                             echo $listrow['listing_mobile'];
                                         } else {
-                                            echo $usersqlrow['mobile_number'];
+                                            echo $listrow['listing_mobile'];
                                         }
                                     }
                                 }

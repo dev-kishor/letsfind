@@ -1,44 +1,29 @@
 <?php
 include "header.php";
-
 if (file_exists('config/user_authentication.php')) {
     include('config/user_authentication.php');
 }
-
 if (file_exists('config/general_user_authentication.php')) {
     include('config/general_user_authentication.php');
 }
-
 if (file_exists('config/listing_page_authentication.php')) {
     include('config/listing_page_authentication.php');
 }
 //To check the listings count with current plan starts
-
 $plan_type_listing_count = $user_plan_type['plan_type_listing_count'];
 $listing_count_user = getCountUserListing($_SESSION['user_id']);
-
 if ($listing_count_user >= $plan_type_listing_count) {
-
     $_SESSION['status_msg'] = $BIZBOOK['LISTINGS_LIMIT_EXCEED_MESSAGE'];
-
     header('Location: db-all-listing');
 }
-//To check the listings count with current plan ends
-
-//Get & Process Listing Data
-
-
 if (isset($_POST['listing_submit'])) {
-
     // Basic Personal Details
     $_SESSION['first_name'] = $_POST["first_name"];
     $_SESSION['last_name'] = $_POST["last_name"];
     $_SESSION['mobile_number'] = $_POST["mobile_number"];
     $_SESSION['email_id'] = $_POST["email_id"];
-
     $_SESSION['register_mode'] = "Direct";
     $_SESSION['user_status'] = "Inactive";
-
     // Common Listing Details
     $_SESSION['listing_name'] = $_POST["listing_name"];
     $_SESSION['listing_mobile'] = $_POST["listing_mobile"];
@@ -52,17 +37,12 @@ if (isset($_POST['listing_submit'])) {
     $_SESSION['category_id'] = $_POST["category_id"];
     $_SESSION['sub_category_id'] = $_POST["sub_category_id"];
     $_SESSION['country_id'] = $_POST["country_id"];
+    $_SESSION['listing_pincode'] = $_POST["listing_pincode"];
     $_SESSION['service_locations'] = $_POST["service_locations"];
     //        $state_id = $_POST["state_id"];
-
-
     $_SESSION['state_id'] = "1";
-
     $_SESSION['city_id'] = $_POST["city_id"];
-
-
     //************************  Profile Image Upload starts  **************************
-
     if (!empty($_FILES['profile_image']['name'])) {
         $file = rand(1000, 100000) . $_FILES['profile_image']['name'];
         $file_loc = $_FILES['profile_image']['tmp_name'];
@@ -80,13 +60,9 @@ if (isset($_POST['listing_submit'])) {
             $profile_image = '';
         }
     }
-
     $_SESSION['profile_image'] = $profile_image;
-
     //************************  Profile Image Upload Ends  **************************
-
     //************************  Cover Image Upload starts  **************************
-
     if (!empty($_FILES['cover_image']['name'])) {
         $file = rand(1000, 100000) . $_FILES['cover_image']['name'];
         $file_loc = $_FILES['cover_image']['tmp_name'];
@@ -104,20 +80,13 @@ if (isset($_POST['listing_submit'])) {
             $cover_image = '';
         }
     }
-
     $_SESSION['cover_image'] = $cover_image;
-
     //************************  Cover Image Upload ends  **************************
-
-
     if ($_SESSION['listing_name'] == NULL || empty($_SESSION['listing_name'])) {
         header('Location: add-listing-step-1');
     }
 }
-
 ?>
-
-
 <!-- START -->
 <!--PRICING DETAILS-->
 <section class="<?php if ($footer_row['admin_language'] == 2) {
@@ -179,54 +148,35 @@ if (isset($_POST['listing_submit'])) {
                         <span class="add-list-add-btn lis-ser-add-btn" title="add new offer">+</span>
                         <span class="add-list-rem-btn lis-ser-rem-btn" title="remove offer">-</span>
                         <form action="add-listing-step-3.php" class="listing_form_2" id="listing_form_2" name="listing_form_2" method="post" enctype="multipart/form-data">
-
                             <input id="listing_name" name="listing_name" type="hidden" value="<?php echo $_SESSION['listing_name']; ?>" required="required" class="validate">
-
                             <input id="listing_mobile" name="listing_mobile" type="hidden" value="<?php echo $_SESSION['listing_mobile']; ?>" required="required" class="validate">
-
                             <input id="listing_email" name="listing_email" type="hidden" value="<?php echo $_SESSION['listing_email']; ?>" required="required" class="validate">
-
-
                             <input id="listing_website" name="listing_website" type="hidden" value="<?php echo $_SESSION['listing_website']; ?>" required="required" class="validate">
-
                             <input id="category_id" name="category_id" type="hidden" value="<?php echo $_SESSION['category_id']; ?>" required="required" class="validate">
-
                             <input id="sub_category_id" name="sub_category_id" type="hidden" value="<?php echo $_SESSION['sub_category_id']; ?>" required="required" class="validate">
-
                             <input id="listing_description" name="listing_description" type="hidden" value="<?php echo $_SESSION['listing_description']; ?>" required="required" class="validate">
-
                             <input id="mobile_number" <?php if (!empty($_SESSION['user_name'])) {
                                                             echo "readonly";
                                                         } ?> name="mobile_number" value="<?php if (!empty($_SESSION['user_name'])) {
                                                                                                 echo $user_details_row['mobile_number'];
                                                                                             } else {
                                                                                             } ?>" required="required" type="hidden" class="validate">
-
                             <input id="email_id" <?php if (!empty($_SESSION['user_name'])) {
                                                         echo "readonly";
                                                     } ?> name="email_id" value="<?php if (!empty($_SESSION['user_name'])) {
                                                                                     echo $user_details_row['email_id'];
                                                                                 } else {
                                                                                 } ?>" required="required" type="hidden" class="validate">
-
                             <input id="listing_address" name="listing_address" value="<?php echo $_SESSION['listing_address']; ?>" required="required" type="hidden" class="validate">
-
                             <input id="city_id" name="city_id" value="<?php echo $_SESSION['city_id']; ?>" required="required" type="hidden" class="validate">
-
                             <input id="country_id" name="country_id" value="<?php echo $_SESSION['country_id']; ?>" required="required" type="hidden" class="validate">
-
                             <input id="profile_image" name="profile_image" value="<?php echo $_SESSION['profile_image']; ?>" required="required" type="hidden" class="validate">
-
                             <input id="cover_image" name="cover_image" value="<?php echo $_SESSION['cover_image']; ?>" required="required" type="hidden" class="validate">
-
                             <ul>
                                 <?php
                                 $service_id_1 = $_SESSION['service_id'];
-                                echo $service_id_1;
-                                echo "JI";
-                                die();
-                                $service_id_count = count($service_id_1);
 
+                                $service_id_count = count($service_id_1);
                                 if ($service_id_count != 0) {
                                     foreach ($service_id_1 as $service_Array) {
                                 ?>
@@ -330,8 +280,6 @@ if (isset($_POST['listing_submit'])) {
 <?php
 include "footer.php";
 ?>
-
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="js/jquery.min.js"></script>

@@ -98,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $listing_type_id = 1;
 
             $country_id = $_POST["country_id"];
+            $listing_pincode = $_POST["listing_pincode"];
             $service_locations = $_POST["service_locations"];
             $state_id = "1";
 
@@ -192,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  listing_type_id='" . $listing_type_id . "', listing_mobile='" . $listing_mobile . "', listing_email='" . $listing_email . "', service_locations='" . $service_locations . "' 
     , listing_website='" . $listing_website . "', listing_whatsapp='" . $listing_whatsapp . "', listing_name='" . $listing_name . "',listing_description='" . $listing_description . "', listing_address='" . $listing_address . "'
     , listing_lat='" . $listing_lat . "', listing_lng='" . $listing_lng . "', listing_slug ='" . $listing_slug . "'
-    ,country_id='" . $country_id . "',state_id='" . $state_id . "',city_id='" . $city_id . "',profile_image='" . $profile_image . "', cover_image='" . $cover_image . "' 
+    ,country_id='" . $country_id . "',listing_pincode='" . $listing_pincode . "',state_id='" . $state_id . "',city_id='" . $city_id . "',profile_image='" . $profile_image . "', cover_image='" . $cover_image . "' 
     where listing_id='" . $listing_id . "'";
 
         }
@@ -550,6 +551,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 unset($_SESSION['sub_category_id']);
 
                 unset($_SESSION['country_id']);
+                unset($_SESSION['listing_pincode']);
                 unset($_SESSION['state_id']);
                 unset($_SESSION['city_id']);
                 unset($_SESSION['profile_image']);
@@ -596,6 +598,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 unset($_SESSION['sub_category_id']);
 
                 unset($_SESSION['country_id']);
+                unset($_SESSION['listing_pincode']);
                 unset($_SESSION['state_id']);
                 unset($_SESSION['city_id']);
                 unset($_SESSION['profile_image']);

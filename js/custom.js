@@ -11,7 +11,6 @@ $(document).ready(function () {
     setTimeout(function () {
         $(".btn-ser-need-ani").fadeIn();
     }, 15000);
-
     //TOP MENU OPEN AND CLOSE
     $('.menu').on('click', function () {
         //$('.pop-menu').fadeIn();
@@ -33,13 +32,21 @@ $(document).ready(function () {
     $('.db-menu-clo').on('click', function () {
         $('.db-menu, .top-noti-win').removeClass("act");
     });
-
-
     $('.ani-quo, .btn-ser-need-ani').on('click', function () {
-        $('.ani-quo-form').addClass('ani-quo-form-act');
+        $('.help').addClass('ani-quo-form-act');
+        $('.chatwindow').removeClass('ani-quo-form-act');
     });
     $('.ani-req-clo').on('click', function () {
-        $('.ani-quo-form').removeClass('ani-quo-form-act');
+        $('.help').removeClass('ani-quo-form-act');
+    });
+    $('.inablechat').on('click', function () {
+        let list_user_main = $(".list-user-main").val()
+        rungetchatapi(list_user_main)
+        $('.help').removeClass('ani-quo-form-act');
+        $('.chatwindow').addClass('ani-quo-form-act');
+    });
+    $('.closechat').on('click', function () {
+        $('.chatwindow').removeClass('ani-quo-form-act');
     });
     // $('.qvv').on('click', function() {
     //     $('.list-qview').addClass('qview-show');
@@ -77,7 +84,6 @@ $(document).ready(function () {
     $('.fil-mob-clo').on('click', function () {
         $('.fil-mob-view').removeClass("fil-mmob-act");
     });
-
     //ALL LISTING GRID AND LIST VIEW CHANGE
     $('.vfilter i').on('click', function () {
         $('.vfilter i').removeClass('act')
@@ -214,7 +220,6 @@ $(document).ready(function () {
     });
     //BOOTSTRAP TOOL TIP
     $('[data-toggle="tooltip"]').tooltip();
-
     //PRODUCT SPECIFICATION LIST ADD - APPEND
     $(".prod-add-oad").on('click', function () {
         $(".add-prod-oth ul li:last-child").after('<li> <div class="row"> <div class="col-md-5"> <div class="form-group"> <input type="text" name="product_info_question[]" class="form-control" placeholder="Type your information"> </div> </div><div class="col-md-2"> <div class="form-group"> <i class="material-icons">arrow_forward</i> </div> </div> <div class="col-md-5"> <div class="form-group"> <input type="text" name="product_info_answer[]" class="form-control" placeholder="yes"> </div> </div> </div> </li>');
@@ -228,7 +233,6 @@ $(document).ready(function () {
             alert("Sorry! you are not allowed to remove the last one.");
         }
     });
-
     //PRODUCT HIGHLIGHTS LIST ADD - APPEND
     $(".prod-add-high-oad").on('click', function () {
         $(".add-prod-high-oth ul li:last-child").after('<li> <div class="row"> <div class="col-md-12"> <div class="form-group"> <input type="text" name="product_highlights[]" class="form-control" placeholder="Type your highlights"> </div> </div> </div> </li>');
@@ -242,8 +246,6 @@ $(document).ready(function () {
             alert("Sorry! you are not allowed to remove the last one.");
         }
     });
-
-
     //VIDEO LIST ADD - APPEND
     $(".lis-add-oadvideo").on('click', function () {
         $(".add-list-map ul li:last-child").after('<li> <div class="row"> <div class="col-md-12"> <div class="form-group"> <textarea id="listing_video" name="listing_video[]" class="form-control" placeholder="Paste Your Youtube Url here"></textarea> </div> </div> </div> </li>');
@@ -257,17 +259,14 @@ $(document).ready(function () {
             alert("Sorry! you are not allowed to remove the last one.");
         }
     });
-
     //ENQUIRY AND REVIEW LIKE
     // $(".enq-sav i").click(function(){
     //   $(this).toggleClass('sav-act');
     // });
-
     //ENQUIRY AND REVIEW LIKE
     // $(".ldelik").click(function(){
     //   $(this).toggleClass('sav-act');
     // });
-
     //INPUT FOCUS TOOL TIP SHOW
     $(".form-group input, .form-group textarea").focus(function () {
         $(this).siblings(".inp-ttip").fadeIn();
@@ -278,18 +277,20 @@ $(document).ready(function () {
     $(".form-group input, .form-group textarea").mouseleave(function () {
         $(this).siblings(".inp-ttip").fadeOut();
     });
-
     //IMAGE FILE UPLOAD GET FILE NAME
     $(".fil-img-uplo input").on("change", function () {
         var _upldfname = $(this).val().replace(/C:\\fakepath\\/i, '');
-        $(this).siblings(".dumfil").html(_upldfname);
+        if (_upldfname != "") {
+            $(this).siblings(".dumfil").html(_upldfname);
+        } else {
+            $(this).siblings(".dumfil").html("Upload a file");
+        }
     });
 
     //MOBILE SEARCH SHOW
     $(".mob-sear").on('click', function () {
         $(".top-ser").toggleClass("top-ser-act");;
     });
-
     //ADS TOTAL DAYS CALCULATION
     $("#stdate, #endate, #adposi").change(function () {
         var firstDate = $("#stdate").val();
@@ -307,7 +308,6 @@ $(document).ready(function () {
         $(".ad-tcost").text(totcost);
         $("#ad_total_cost").val(totcost);
     });
-
     //ADS TOTAL DAYS CALCULATION
     $("#start-date, #end-date").change(function () {
         var firstDate = $("#start-date").val();
@@ -326,9 +326,7 @@ $(document).ready(function () {
         $(".ad-tcost").text(totcost);
         $("#ad_total_cost").val(totcost);
     });
-
     //Buy Point Cost CALCULATION Starts
-
     $('#new_points').on('input', function () {
         var new_points = $("#new_points").val();
         var cost_per_point = $("#cost_per_point").val();
@@ -338,19 +336,15 @@ $(document).ready(function () {
         $("#buy_points_submit").text(button_msg);
         $("#all_cost").val(totcost);
     });
-
     //Buy Point Cost CALCULATION Ends
-
     //COPY RIGHTS YEAR
     $('#cry').text("2050");
-
     //PRE LOADING
     $('#status').fadeOut();
     $('#preloader').delay(350).fadeOut('slow');
     $('body').delay(350).css({
         'overflow': 'visible'
     });
-
     //BLOG POST SEARCH - BLOG DETAIL PAGE
     $("#pg-sear").on("keyup", function () {
         var value = $(this).val().toLowerCase();
@@ -358,19 +352,15 @@ $(document).ready(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
-
     //BIZBOOK EDITOR
     $(".bixedtr-tools").html("<div class='fore-wrapper'><i class='material-icons' style='color:#10a5ef;'>format_color_text</i> <div class='fore-palette'> </div> </div> <div class='back-wrapper'><i class='material-icons' style='background:#cbeeff;'>format_color_text</i> <div class='back-palette'> </div> </div> <a href='javascript:void(0)' data-command='bold'><i class='material-icons'>format_bold</i></a> <a href='javascript:void(0)' data-command='italic'><i class='material-icons'>format_italic</i></a> <a href='javascript:void(0)' data-command='underline'><i class='material-icons'>format_underlined</i></a> <a href='javascript:void(0)' data-command='justifyLeft'><i class='material-icons'>format_align_left</i></a> <a href='javascript:void(0)' data-command='justifyCenter'><i class='material-icons'>format_align_center</i></a> <a href='javascript:void(0)' data-command='justifyRight'><i class='material-icons'>format_align_right</i></a> <a href='javascript:void(0)' data-command='justifyFull'><i class='material-icons'>format_align_justify</i></a> <a href='javascript:void(0)' data-command='indent'><i class='material-icons'>format_indent_increase</i></a> <a href='javascript:void(0)' data-command='outdent'><i class='material-icons'>format_indent_decrease</i></a> <a href='javascript:void(0)' data-command='insertUnorderedList'><i class='material-icons'>format_list_bulleted</i></a> <a href='javascript:void(0)' data-command='insertOrderedList'><i class='material-icons'>format_list_numbered</i></a> <a href='javascript:void(0)' data-command='h2'>H2</a> <a href='javascript:void(0)' data-command='h4'>H4</a> <a href='javascript:void(0)' data-command='createlink'><i class='material-icons'>insert_link</i></a> <a href='javascript:void(0)' data-command='unlink'><i class='material-icons'>leak_remove</i></a><a href='javascript:void(0)' data-command='p'>P</a>");
-
     var colorPalette = ['000000', 'FF9966', '6699FF', '99FF66', 'CC0000', '00CC00', '0000CC', '333333', '0066FF', 'FFFFFF', '004fff'];
     var forePalette = $('.fore-palette');
     var backPalette = $('.back-palette');
-
     for (var i = 0; i < colorPalette.length; i++) {
         forePalette.append('<a href="#" data-command="forecolor" data-value="' + '#' + colorPalette[i] + '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
         backPalette.append('<a href="#" data-command="backcolor" data-value="' + '#' + colorPalette[i] + '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
     }
-
     $('.biz-toolbar a').click(function (e) {
         var command = $(this).data('command');
         if (command == 'h2' || command == 'h4' || command == 'p') {
@@ -384,10 +374,7 @@ $(document).ready(function () {
             document.execCommand($(this).data('command'), false, url);
         } else document.execCommand($(this).data('command'), false, null);
     });
-
-
 });
-
 //COMMON DATEPICKER
 $(function () {
     $("#newdate").datepicker({
@@ -399,7 +386,6 @@ $(function () {
         });
     });
 });
-
 //GET URL SOURCE
 function urlParam(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -424,26 +410,21 @@ if (urlParam("features") == "trending") {
     $('.lhs-featu input:checkbox').removeAttr('checked');
     $('#trending').attr('checked', 'checked');
 }
-
 //SHARE URL
 var _cururl = window.location.href;
 $("#shareurl").val(_cururl);
-
 function shareurl() {
     var copyText = document.getElementById("shareurl");
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(copyText.value);
-
     var tooltip = document.getElementById("myTooltip");
     tooltip.innerHTML = "Copied";
 }
-
 function shareurlout() {
     var tooltip = document.getElementById("myTooltip");
     tooltip.innerHTML = "Copy to clipboard";
 }
-
 //SEARCH FUNCTION
 $(function () {
     var availlistings = [
@@ -475,7 +456,6 @@ $(function () {
         source: availlistings
     });
 });
-
 //CITY SEARCH
 $(function () {
     var availlcity = [
@@ -506,7 +486,6 @@ $(function () {
         source: availlcity
     });
 });
-
 //DATE PICKER
 $(function () {
     $("#event_start_date").datepicker({
@@ -525,10 +504,8 @@ $(function () {
         minDate: 0
     });
 });
-
 //All Listing Page LIKE ANIMATION
 $(".enq-sav i").on('click', function () {
-
     var listing_id = $(this).attr('data-id');
     var user_id = $(this).attr('data-item');
     var listing_user_id = $(this).attr('data-num');
@@ -539,13 +516,11 @@ $(".enq-sav i").on('click', function () {
             // alert("same user");
         } else {
             // alert("other user");
-
             if (webpage_full_link != null) {
                 var link = webpage_full_link + 'save_to_wishlist.php';
             } else {
                 var link = 'save_to_wishlist.php';
             }
-
             $.ajax({
                 type: 'POST',
                 url: link,
@@ -559,12 +534,9 @@ $(".enq-sav i").on('click', function () {
                 success: function (response) {
                     $(".Animatedheartfunc" + listing_id).toggleClass('sav-act');
                     if (response == 1) {
-
                         var total_likes1 = parseInt(total_likes) + 1;
-
                         $(".Animatedheartfunc" + listing_id).attr("data-for", total_likes1); //setter
                         $(".like-content" + listing_id).html(total_likes1 + " Likes");
-
                     } else {
                         var total_likes1 = parseInt(total_likes) - 1;
                         if (total_likes1 == -1) {
@@ -572,13 +544,9 @@ $(".enq-sav i").on('click', function () {
                         } else {
                             var total_likes2 = total_likes1;
                         }
-
                         $(".Animatedheartfunc" + listing_id).attr("data-for", total_likes2); //setter
-
                         $(".like-content" + listing_id).html(total_likes2 + " Likes");
                     }
-
-
                     //$(".enq-sav i").toggleClass('sav-act');
                 }
             });
@@ -586,13 +554,9 @@ $(".enq-sav i").on('click', function () {
     } else {
         window.location.href = login_url;
     }
-
 });
-
-
 //Listing Detail Page LIKE ANIMATION
 $(".ldelik").on('click', function () {
-
     var listing_id = $(this).attr('data-id');
     var user_id = $(this).attr('data-item');
     var listing_user_id = $(this).attr('data-num');
@@ -603,13 +567,11 @@ $(".ldelik").on('click', function () {
             // alert("same user");
         } else {
             // alert("other user");
-
             if (webpage_full_link != null) {
                 var link = webpage_full_link + 'save_to_wishlist.php';
             } else {
                 var link = 'save_to_wishlist.php';
             }
-
             $.ajax({
                 type: 'POST',
                 url: link,
@@ -622,12 +584,9 @@ $(".ldelik").on('click', function () {
                 success: function (response) {
                     $(".Animatedheartfunc" + listing_id).toggleClass('sav-act');
                     if (response == 1) {
-
                         var total_likes1 = parseInt(total_likes) + 1;
-
                         $(".Animatedheartfunc" + listing_id).attr("data-for", total_likes1); //setter
                         $(".like-content" + listing_id).html(total_likes1);
-
                     } else {
                         var total_likes1 = parseInt(total_likes) - 1;
                         if (total_likes1 == -1) {
@@ -635,33 +594,22 @@ $(".ldelik").on('click', function () {
                         } else {
                             var total_likes2 = total_likes1;
                         }
-
                         $(".Animatedheartfunc" + listing_id).attr("data-for", total_likes2); //setter
-
                         $(".like-content" + listing_id).html(total_likes2);
                     }
-
-
                     //$(".ldelik").toggleClass('sav-act');
                 }
             });
         }
     } else {
-
         window.location.href = login_url;
     }
-
 });
-
-
 //FOLLOW & UN FOLLOW Logic Starts
-
 $(".userfollow").on('click', function () {
-
     var user_id = $(this).attr('data-item'); //User Id
     var sender_user_id = $(this).attr('data-num'); //Sender User Id
     var like_status = $(this).attr('data-section');
-
     var status_msg_old = $(".follow-content" + user_id).html();
     if (status_msg_old == "Un-follow") {
         var status_msg = "Follow";
@@ -673,13 +621,11 @@ $(".userfollow").on('click', function () {
             // alert("same user");
         } else {
             // alert("other user");
-
             if (webpage_full_link != null) {
                 var link = webpage_full_link + 'follow_users.php';
             } else {
                 var link = 'follow_users.php';
             }
-
             $.ajax({
                 type: 'POST',
                 url: link,
@@ -692,11 +638,8 @@ $(".userfollow").on('click', function () {
                 success: function (response) {
                     // alert(response);
                     if (response == 1) {
-
                         $(".follow-content" + user_id).html(status_msg);
-
                     } else {
-
                         $(".follow-content" + user_id).html(status_msg);
                     }
                 }
@@ -705,33 +648,24 @@ $(".userfollow").on('click', function () {
     } else {
         window.location.href = login_url;
     }
-
 });
-
 //FOLLOW & UN FOLLOW Logic ends
-
 //Auto complete For City List Starts
-
 jQuery(document).ready(function ($) {
-
     $(function () {
-
         if (webpage_full_link != null) {
             var link = webpage_full_link + 'city_search.php';
         } else {
             var link = 'city_search.php';
         }
-
         $.ajax({
             url: link,
             success: function (response) {
                 var cityArray = JSON.parse(response);
-
                 // var dataCountry = {};
                 // for (var i = 0; i < cityArray.length; i++) {
                 //     dataCountry[cityArray[i]] = undefined; //cityArray[i].flag or null
                 // }
-
                 $('#select-city.autocomplete').autocomplete({ //Home Page City Search Box
                     source: cityArray,
                     minLength: 3, // The minimum number of characters to be entered
@@ -741,26 +675,19 @@ jQuery(document).ready(function ($) {
         });
     });
 });
-
 //Auto complete For Listing Name and Category Name Starts Header Page
-
 jQuery(document).ready(function ($) {
-
     $(function () {
-
         if (webpage_full_link != null) {
             var link = webpage_full_link + 'list_category_search.php';
         } else {
             var link = 'list_category_search.php';
         }
-
         $.ajax({
             url: link,
             success: function (response) {
-
                 // var categoryArray = JSON.parse(response);
                 var categoryArray = response;
-
                 // var dataCountry = {};
                 // for (var i = 0; i < categoryArray.length; i++) {
                 //     dataCountry[categoryArray[i]] = undefined; //categoryArray[i].flag or null
@@ -773,59 +700,38 @@ jQuery(document).ready(function ($) {
         });
     });
 });
-
-
 //Auto complete For Listing Name and Category Name Starts Top Header Page
-
 jQuery(document).ready(function ($) {
-
     $(function () {
-
         if (webpage_full_link != null) {
             var link = webpage_full_link + 'list_category_search.php';
         } else {
             var link = 'list_category_search.php';
         }
-
         $.ajax({
             url: link,
             success: function (response) {
-
-                //var categoryArray = JSON.parse(response);
-                var categoryArray = response;
-
-                // var dataCountry = {};
-                // for (var i = 0; i < categoryArray.length; i++) {
-                //     dataCountry[categoryArray[i]] = undefined; //categoryArray[i].flag or null
-                // }
-                $('#top-select-search.autocomplete').autocomplete({ //Home Page City Search Box
+                var categoryArray = JSON.parse(response);
+                $("#top-select-search").autocomplete({
                     source: categoryArray,
-                    limit: 10 // The max amount of results that can be shown at once. Default: Infinity.
+                    autoFocus: true
                 });
             }
         });
     });
 });
-
-
 //Auto complete For Event Name Starts Events Page
-
 jQuery(document).ready(function ($) {
-
     $(function () {
-
         if (webpage_full_link != null) {
             var link = webpage_full_link + 'event_search.php';
         } else {
             var link = 'event_search.php';
         }
-
         $.ajax({
             url: link,
             success: function (response) {
-
                 var eventArray = JSON.parse(response);
-
                 // var dataCountry = {};
                 // for (var i = 0; i < categoryArray.length; i++) {
                 //     dataCountry[categoryArray[i]] = undefined; //categoryArray[i].flag or null
@@ -842,25 +748,18 @@ jQuery(document).ready(function ($) {
     });
 });
 //Auto complete For Event Name ends Events Page
-
 //Auto complete For Blog Name Starts Blog-Posts Page
-
 jQuery(document).ready(function ($) {
-
     $(function () {
-
         if (webpage_full_link != null) {
             var link = webpage_full_link + 'blog_search.php';
         } else {
             var link = 'blog_search.php';
         }
-
         $.ajax({
             url: link,
             success: function (response) {
-
                 var blogArray = JSON.parse(response);
-
                 // var dataCountry = {};
                 // for (var i = 0; i < categoryArray.length; i++) {
                 //     dataCountry[categoryArray[i]] = undefined; //categoryArray[i].flag or null
@@ -877,7 +776,6 @@ jQuery(document).ready(function ($) {
     });
 });
 //Auto complete For Blog Name ends Blog-Posts Page
-
 //URL SOURCE TRACKING
 // function getsource() {
 //     var queryParams = {},
@@ -890,23 +788,18 @@ jQuery(document).ready(function ($) {
 //    document.getElementById("source").value = params;
 //     return params;
 // }
-
 //DOWNLOAD INVOICE
 $('#downloadPDF').on('click', function () {
     // alert("viki");
     domtoimage.toPng(document.getElementById('content2'))
         .then(function (blob) {
             var pdf = new jsPDF('l', 'pt', [$('#content2').width(), $('#content2').height()]);
-
             pdf.addImage(blob, 'PNG', 0, 0, $('#content2').width(), $('#content2').height());
             pdf.save("invoice.pdf");
-
             that.options.api.optionsChanged();
         });
 });
-
 //Number Only Input box
-
 function isNumber(evt) {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -915,29 +808,23 @@ function isNumber(evt) {
     }
     return true;
 }
-
 //Header Page Search Box Process Starts
 jQuery(document).ready(function ($) {
     $("#filter_submit").on('click', function () {
         event.preventDefault();
-
         if (webpage_full_link != null) {
             var link = webpage_full_link;
         } else {
             var link = '';
         }
-
         var explor_select = $("#explor_select").val();
-        var expert_select_search = $("#expert-select-search").val();
+        var expert_select_search = $("#search-text").val();
         var select_city = $("#city_check").val();
         window.location.href = link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search + "&select_city=" + select_city;
-
     });
 });
 //Header Page Search Box Process Ends
-
 //Header Page Top Search Box with enter key press Process Starts
-
 $('#top-select-search').keypress(function (e) {
     var key = e.which;
     if (key == 13) // the enter key code
@@ -950,103 +837,75 @@ $('#top-select-search').keypress(function (e) {
         }
         var select_search = $("#top-select-search").val();
         var select_city = $("#select-city").val();
+        // console.log(link + "search_box_process.php?select_search=" + select_search + "&select_city=" + select_city);
+        // return false
         window.location.href = link + "search_box_process.php?select_search=" + select_search + "&select_city=" + select_city;
-
         //return false;
     }
 });
 //Header Page Top Search Box with enter key press Process ends
-
 //Header Page Top Search Box Process Starts
 jQuery(document).ready(function ($) {
     $("#top_filter_submit").on('click', function () {
         event.preventDefault();
-
         if (webpage_full_link != null) {
             var link = webpage_full_link;
         } else {
             var link = '';
         }
-
         var select_search = $("#top-select-search").val();
         var select_city = $("#select-city").val();
-
         window.location.href = link + "search_box_process.php?select_search=" + select_search + "&select_city=" + select_city;
-
     });
 });
 //Header Page Top Search Box Process Ends
-
 //Job Page Top Search Box Process Starts
 jQuery(document).ready(function ($) {
     $("#job_filter_submit").on('click', function () {
-
         event.preventDefault();
-
         if (webpage_full_link != null) {
             var link = webpage_full_link;
         } else {
             var link = '';
         }
-
         var select_search = $("#job-select-search").val();
         var select_city = $("#job-select-city").val();
-
         //alert(select_search);
-
         window.location.href = link + "jobs/job_search_box_process.php?select_search=" + select_search + "&select_city=" + select_city;
-
     });
 });
 //Job Page Top Search Box Process Ends
-
-
 //Expert Page Top Search Box Process Starts
 jQuery(document).ready(function ($) {
     $("#expert_filter_submit").on('click', function () {
-
         event.preventDefault();
-
         if (webpage_full_link != null) {
             var link = webpage_full_link;
         } else {
             var link = '';
         }
-
         var select_search = $("#expert-select-search1").val();
         var select_city = $("#job-select-city").val();
-
         //  alert(select_search);
-
         window.location.href = link + "service-experts/expert_search_box_process.php?select_search=" + select_search + "&select_city=" + select_city;
-
     });
 });
 //Expert Page Top Search Box Process Ends
-
 //Places Page Top Search Box Process Starts
 jQuery(document).ready(function ($) {
     $("#place_filter_submit").on('click', function () {
-
         event.preventDefault();
-
         if (webpage_full_link != null) {
             var link = webpage_full_link;
         } else {
             var link = '';
         }
-
         var select_search = $("#place-select-search").val();
-
         //alert(select_search);
-
         window.location.href = link + "places/place_search_box_process.php?select_search=" + select_search;
-
     });
 });
 //Places Page Top Search Box Process Ends
-
-
 $('.count1').each(function () {
     $(this).prop('Counter', 0).animate({
         Counter: $(this).text()
@@ -1058,23 +917,18 @@ $('.count1').each(function () {
         }
     });
 });
-
 //Get User Location info
 // jQuery(document).ready(function ($) {
-
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
-
     function showPosition(position) {
         // alert("Latitude: " + position.coords.latitude +
         //     "<br>Longitude: " + position.coords.longitude);
-
         if (webpage_full_link != null) {
             var link = webpage_full_link + 'geo-location-process.php';
         } else {
             var link = 'geo-location-process.php';
         }
-
         var main_coordinates = "latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
         $.ajax({
             type: "POST",
@@ -1088,8 +942,6 @@ if (navigator.geolocation) {
     }
 }
 // });
-
-
 //HOME PAGE SEARCH - INTERNAL PAGE SEARCH
 $("#select-search").on("keyup", function () {
     var value = $(this).val().toLowerCase();
@@ -1097,7 +949,6 @@ $("#select-search").on("keyup", function () {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
-
 //HOME PAGE SEARCH - INTERNAL PAGE SEARCH
 $("#top-select-search").on("keyup", function () {
     var value = $(this).val().toLowerCase();
@@ -1105,7 +956,6 @@ $("#top-select-search").on("keyup", function () {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
-
 //SEARCH JS
 var htmlElement = document.getElementById("res");
 //SEARCH EVENTS
@@ -1121,7 +971,6 @@ $(".ad-dash").on('click', function () {
 $(".ban-search").mouseleave(function () {
     $(".tser-res1").removeClass("act");
 });
-
 $("#top-select-search").focus(function () {
     $(".tser-res2").addClass("act");
 });
@@ -1131,18 +980,14 @@ $("#top-select-search").on('click', function () {
 $(".hom-top").mouseleave(function () {
     $(".tser-res2").removeClass("act");
 });
-
-
 if ($(".chosen-select").length > 0) {
     $(function () {
         $('.chosen-select').chosen();
     });
 }
-
 var li = $('#tser-res li');
 var liSelected;
 $(window).keydown(function (e) {
-
     if (e.which === 40) {
         if (liSelected) {
             liSelected.removeClass('selected');
@@ -1169,15 +1014,12 @@ $(window).keydown(function (e) {
         }
     }
 });
-
 $("li.selected a").keypress(function (e) {
     if (e.keyCode == 13) {
         $(this).click();
     }
 });
-
 //Chat Box On Change ajax call starts
-
 $('#chat_to_user').change(function () {
     var sender_id = $(this).attr("data-id");
     var receiver_id = $(this).val();
@@ -1185,13 +1027,11 @@ $('#chat_to_user').change(function () {
     var receiver_checklist = "&receiver_id=" + receiver_id;
     var main_string = sender_checklist + receiver_checklist;
     main_string = main_string.substring(1, main_string.length);
-
     if (webpage_full_link != null) {
         var link = webpage_full_link + 'filter_chat.php';
     } else {
         var link = 'filter_chat.php';
     }
-
     $.ajax({
         type: "POST",
         url: link,
@@ -1201,26 +1041,19 @@ $('#chat_to_user').change(function () {
             //alert(html);
             $(".chat-box-messages").html(html);
             $(".chat-box-messages").css("opacity", 1);
-
             // $("#loaderID").css("opacity",0);
         }
     });
 });
-
 //Chat Box On Change ajax call ends
-
 //Clear All Notifications button On Click ajax call starts
-
 $('#noti-clr-noti').on('click', function () {
-
     var main_string = 1;
-
     if (webpage_full_link != null) {
         var link = webpage_full_link + 'clear_all_notification.php';
     } else {
         var link = 'clear_all_notification.php';
     }
-
     $.ajax({
         type: "POST",
         url: link,
@@ -1241,22 +1074,173 @@ $('#noti-clr-noti').on('click', function () {
         }
     });
 });
-
 //Clear All Notifications button On Click ajax call ends
-
-
 //************************* Kishor Changes *************************
-
 function showExpertProfile() {
-    let check = document.getElementById("checkifexpertidfill").value
+    let check = document.getElementById("checkifexpertidfill")?.value
     if (check != 1) {
-        document.getElementById("modelalert").click()
+        document.getElementById("modelalert")?.click()
     }
 }
-
 setInterval(() => {
     showExpertProfile()
 }, 3 * 60 * 1000);
-
 showExpertProfile()
+jQuery(document).ready(function ($) {
+    $("#place_filter_sbmit").on('click', function () {
+        event.preventDefault();
+        if (webpage_full_link != null) {
+            var link = webpage_full_link;
+        } else {
+            var link = '';
+        }
+        var explor_select = 4;
+        var expert_select_search = $("#place-text-search").val();
+        window.location.href = link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search;
+    });
+    // $("#blog-text-search").on('click', function () {
+    $('#blog-text-search').submit(function (event) {
+        event.preventDefault();
+        if (webpage_full_link != null) {
+            var link = webpage_full_link;
+        } else {
+            var link = '';
+        }
+        var explor_select = 9;
+        var expert_select_search = $("#blog-search").val();
+        window.location.href = link + "search_box_process.php?explor_select=" + explor_select + "&expert_select_search=" + expert_select_search;
+    });
+})
+function rungetchatapi(userid) {
+    let chatBox = document.querySelector(".chatstext");
+    let thread_list = $(".thread-list").val()
+    setInterval(() => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "chat/php/get-chat.php", true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    chatBox.innerHTML = data;
+                    if (!chatBox.classList.contains("active")) {
+                        scrollToBottom();
+                    }
+                }
+            }
+        }
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("incoming_id=" + userid + "&thread=" + thread_list);
+    }, 1000);
+}
+jQuery(document).ready(function ($) {
+    let sendmsgbtn = document.querySelector("#sendmsgbtn")
+    sendmsgbtn.onclick = () => {
+        let list_user_main = $(".list-user-main").val()
+        let thread_list = $(".thread-list").val()
+        let chat_text = $("#chattexttype").val()
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "chat/php/insert-chat.php", true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    document.querySelectorAll("#chattexttype")[0].value = "";
+                    scrollToBottom();
+                }
+            }
+        }
+        let formData = new FormData();
+        formData.append("incoming_id", list_user_main)
+        formData.append("message", chat_text)
+        formData.append("thread_id", thread_list)
+        xhr.send(formData);
+    }
+})
+function scrollToBottom() {
+    let chatBox = document.querySelector(".chatstext");
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+// Chat box on bottom 
+$(document).ready(function () {
+    $('.chat_head').click(function () {
+        $('.chat_body').slideToggle('slow');
+    });
+    $('.msg_head').click(function () {
+        $('.msg_wrap').slideToggle('slow');
+    });
+    $('.close').click(function () {
+        $('.msg_box').hide();
+    });
+    $('.user').click(function () {
+        $('.msg_wrap').show();
+        $('.msg_box').show();
+    });
+    $('textarea').keypress(
+        function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                var msg = $(this).val();
+                $(this).val('');
+                if (msg != '')
+                    $('<div class="msg_b">' + msg + '</div>').insertBefore('.msg_push');
+                $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+            }
+        });
+});
+// Chat box on bottom
+
+$(document).ready(function () {
+    $('#extend').click(function () {
+        this.style.display = "none"
+        document.getElementById("restextendtext").style.display = "initial"
+        console.log('ok');
+    })
+    $('#minmize').click(function () {
+        document.getElementById("restextendtext").style.display = "none"
+        document.getElementById("extend").style.display = "initial"
+    })
+})
+
+
 //************************* Kishor Changes *************************
+
+
+$('#profile_image').on('change', function () {
+    console.log('OKOK');
+    var fileInput = this;
+    imageSizeAndFormateVaidation(fileInput, 20)
+});
+
+$('#cover_image').on('change', function () {
+    var fileInput = this;
+    imageSizeAndFormateVaidation(fileInput, 20)
+});
+
+// =============== Image validate EX: size & formate =============== 
+
+function imageSizeAndFormateVaidation(fileInput, allowMB) {
+    let file_size = parseFloat(fileInput.files[0].size / (1024 * 1024)).toFixed(2)
+    if (file_size >= allowMB) {
+        showToast(`Image size should be not greater than ${allowMB} MB ...`)
+        fileInput.value = '';
+        return false;
+    } else {
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            showToast("Image should be in .jpg, .jpeg, .png ...")
+            fileInput.value = '';
+            return false;
+        }
+    }
+}
+
+function showToast(text) {
+    var x = document.getElementById("toastbar");
+    x.className = "show";
+    x.innerText = text;
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 3000);
+}
+
+// =============== Image validate EX: size & formate =============== 

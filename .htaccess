@@ -70,6 +70,7 @@ RewriteRule ^place/([^/]*)$ %{ENV:BASE_PATH}places/place-details.php?code=$1 [L]
 RewriteRule ^all-listing/([^/]*)$ %{ENV:BASE_PATH}all-listing.php?category=$1 [L]
 
 RewriteRule ^all-listing/([^/]*)/([^/]*)$ %{ENV:BASE_PATH}all-listing.php?category=$1&&subcategory=$2 [L]
+# RewriteRule ^all-listing/([^/]*)/([^/]*)$ %{ENV:BASE_PATH}all-listing.php?category=$1&&subcategory=$2&&placename=$3 [L]
 
 #All Products page URl rewritten
 RewriteRule ^all-products/([^/]*)$ %{ENV:BASE_PATH}all-products.php?category=$1 [L]
