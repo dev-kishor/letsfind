@@ -23686,6 +23686,9 @@ a[data-command="p"] {
   .plac-hom-box-txt span:nth-child(2) {
     display: none;
   }
+  .disc span:nth-child(2) {
+        display: block;
+    }
 
   .plac-hom-box-im h4 {
     font-size: 16px;

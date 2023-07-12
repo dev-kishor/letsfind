@@ -25,13 +25,11 @@ if (isset($_GET['category'])) {
         $category_id = $cat_search_row['category_id'];
     }
     $category_search_name = $cat_search_row['category_name'];
-    $category_search_query = "AND (category_id in ($category_id) or listing_name like '%$category_search_slug%' 
-                                                                or listing_description like '%$category_search_slug%')";
+    $category_search_query = "AND (category_id in ($category_id) or listing_name like '%$category_search_slug%' or listing_description like '%$category_search_slug%')";
 
     categorypageview($category_id); //Function To Find Page View
 }
-// echo $category_search_query;
-// die();
+
 if (isset($_GET['subcategory'])) {
     //Sub category process From GET
     $subcategory_search_slug1 = str_replace('-', ' ', $_GET['subcategory']);
@@ -39,6 +37,13 @@ if (isset($_GET['subcategory'])) {
     $subcat_search_row = getSlugSubCategory($subcategory_search_slug);  //Fetch Sub Category Id using sub category name
     $subcategory_id = $subcat_search_row['sub_category_id'];
     $sub_category_search_query = "AND FIND_IN_SET($subcategory_id, sub_category_id)";
+}
+if (isset($_GET['verify'])) {
+    $place_search_slug1 = str_replace('-', ' ', $_GET['verify']);
+    $place_search_slug = str_replace('.php', '', $place_search_slug1);
+    $placename_search_row = getSlugPlaces($place_search_slug);
+    $place_pincode = $placename_search_row['place_pincode'];
+    $place_pincode_query = "and listing_pincode = $place_pincode";
 }
 //To get City value in URL starts
 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -312,8 +317,9 @@ if (isset($query['city'])) {
                     <div class="all-list-sh all-listing-total">
                         <ul class="all-list-wrapper">
                             <?php
-                            $listsql = "SELECT " . TBL . "listings.*, " . TBL . "users.user_plan FROM " . TBL . "listings
-                            LEFT JOIN " . TBL . "users ON " . TBL . "listings.user_id = " . TBL . "users.user_id  WHERE " . TBL . "listings.listing_status= 'Active' AND " . TBL . "listings.listing_is_delete != '2' $category_search_query $sub_category_search_query $city_search_query ORDER BY " . TBL . "listings.display_position DESC," . TBL . "users.user_plan DESC," . TBL . "listings.listing_id DESC";
+                             $listsql = "SELECT " . TBL . "listings.*, " . TBL . "users.user_plan FROM " . TBL . "listings
+                            LEFT JOIN " . TBL . "users ON " . TBL . "listings.user_id = " . TBL . "users.user_id  WHERE " . TBL . "listings.listing_status= 'Active' AND " . TBL . "listings.listing_is_delete != '2' $category_search_query $place_pincode_query $sub_category_search_query $city_search_query ORDER BY " . TBL . "listings.display_position DESC," . TBL . "users.user_plan DESC," . TBL . "listings.listing_id DESC";
+                            // die();
 
                             $listrs = mysqli_query($conn, $listsql);
                             $total_listings = mysqli_num_rows($listrs);

@@ -113,7 +113,7 @@ placedetailpageview($place_id); //Function To Find Page View
                         <?php echo $place_row['place_description']; ?>
                         <!-- <p><?php //echo substr($place_row['place_description'], 0, 400) 
                                 ?> <span id="extend" class="readmoreless">... READ MORE</span> <span id="restextendtext"><?php //echo substr($place_row['place_description'], 50) 
-                                                                                                                                                                                        ?> <span id="minmize" class="readmoreless">READ LESS</span></span></p> -->
+                                                                                                                            ?> <span id="minmize" class="readmoreless">READ LESS</span></span></p> -->
                     </div>
                 <?php
                 }
@@ -321,88 +321,26 @@ if ((!empty($place_row['place_listings']))) {
                         <p><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES-P']; ?> <b><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES-B']; ?></b></p>
                     </div>
                     <div class="plac-hom-all-pla">
-                        <ul class="multiple-items1">
+                        <ul>
+                            <!-- <Recommation> -->
                             <?php
-                            $place_listings_array = $place_row['place_listings'];
-                            $place_listings = explode(',', $place_listings_array);
-                            foreach ($place_listings as $item) {
-
-                                $place_listings = getIdListing($item);
-                                $place_listings_category_id = $place_listings['category_id'];
-                                $place_listings_listing_id = $place_listings['listing_id'];
-                                $place_listings_category_row = getCategory($place_listings_category_id);
-
-                                // $star_rating_row = getListingReview($listing_id); // List Rating. for Rating of Star
-                                foreach (getListingReview($place_listings_listing_id) as $star_rating_row) {
-                                    if ($star_rating_row["rate_cnt"] > 0) {
-                                        $star_rate_times = $star_rating_row["rate_cnt"];
-                                        $star_sum_rates = $star_rating_row["total_rate"];
-                                        $star_rate_one = $star_sum_rates / $star_rate_times;
-                                        //$star_rate_one = (($Star_rate_value)/5)*100;
-                                        $star_rate_two = number_format($star_rate_one, 1);
-                                        $star_rate = floatval($star_rate_two);
-                                    } else {
-                                        $rate_times = 0;
-                                        $rate_value = 0;
-                                        $star_rate_two = 0;
-                                        $star_rate = 0;
-                                    }
-                                }
-
+                            foreach (getAllRecommCat($place_row['place_pincode']) as $category_sql_row) {
                             ?>
                                 <li>
                                     <div class="plac-hom-box">
                                         <div class="plac-hom-box-im">
-                                            <img src="<?php echo $slash; ?><?php if ($place_listings['profile_image'] != NULL || !empty($place_listings['profile_image'])) {
-                                                                                echo "images/listings/" . $place_listings['profile_image'];
-                                                                            } else {
-                                                                                echo "images/listings/hot4.jpg";
-                                                                            } ?>" alt="">
-                                            <h4><?php echo $place_listings['listing_name']; ?></h4>
-                                            <span class="plac-det-cate"><?php echo $place_listings_category_row['category_name']; ?></span>
+                                            <img loading="lazy" src="../images/services/<?php echo $category_sql_row['category_image']; ?>" alt="">
+                                            <span class="plac-det-cate"><?php echo $category_sql_row['category_name']; ?></span>
                                         </div>
-                                        <div class="plac-hom-box-txt">
+                                        <div class="plac-hom-box-txt disc">
                                             <div class="revi-box-1">
-                                                <?php
-                                                if ($star_rate != 0) {
-                                                ?>
-                                                    <b><?php echo $star_rate_two; ?></b>
-                                                <?php
-                                                } ?>
-                                                <?php
-                                                if ($star_rate != 0) {
-                                                ?>
-                                                    <label class="rat">
-                                                        <?php
-                                                        for ($i = 1; $i <= ceil($star_rate); $i++) {
-                                                        ?>
-                                                            <i class="material-icons">star</i>
-                                                        <?php
-                                                        }
-                                                        $bal_star_rate = abs(ceil($star_rate) - 5);
-
-                                                        for ($i = 1; $i <= $bal_star_rate; $i++) {
-                                                        ?>
-                                                            <i class="material-icons ratstar">star</i>
-                                                        <?php
-                                                        }
-                                                        ?>
-                                                    </label>
-                                                <?php
-                                                }
-                                                ?>
-                                                <?php
-                                                if ($star_rate != 0) {
-                                                ?>
-                                                    <span class="re-cnt"><?php echo $review_count; ?><?php echo $BIZBOOK['REVIEWS']; ?></span>
-                                                <?php
-                                                } ?>
                                             </div>
                                             <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
                                         </div>
-                                        <a href="<?php echo $LISTING_URL . urlModifier($place_listings['listing_slug']); ?>" class="fclick"></a>
+                                        <a href="<?php echo $ALL_LISTING_URL . urlModifier($category_sql_row['category_slug']); ?>&verify=<?php echo $_GET['code']; ?>" class="fclick"></a>
                                     </div>
                                 </li>
+                                <!-- <Recommation> -->
                             <?php
                             }
                             ?>

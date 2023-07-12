@@ -29,6 +29,17 @@ function getAllActiveCategoriesPos()
     $rs = mysqli_query($conn, $sql);
     return $rs;
 }
+//Get All Active Categories order by position Id
+function getAllRecommCat($arg)
+{
+    global $conn;
+
+    //    $sql = "SELECT * FROM " . TBL . "categories WHERE category_id = 38";
+    $sql = "SELECT distinct c.category_name,c.category_image,c.category_slug FROM " . TBL . "listings as l join " . TBL . "categories as c on c.category_id = l.category_id  where l.listing_pincode ='" . $arg . "'";
+    $rs = mysqli_query($conn, $sql);
+    return $rs;
+}
+
 
 //Get particular Category using category id
 function getCategory($arg)
