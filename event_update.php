@@ -1,8 +1,4 @@
 <?php
-/**
- * Created by Vignesh.
- * User: Vignesh
- */
 
 if (file_exists('config/info.php')) {
     include('config/info.php');
@@ -12,39 +8,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['event_submit'])) {
 
-        $event_id = $_POST["event_id"];
+        $event_id = safe_input_Text($_POST["event_id"]);
 
         $event_image_old = $_POST["event_image_old"];
 
-// Basic Personal Details
-        $first_name = $_POST["first_name"];
-        $last_name = $_POST["last_name"];
-        $mobile_number = $_POST["mobile_number"];
-        $email_id = $_POST["email_id"];
+        // Basic Personal Details
+        $first_name = safe_input_Text($_POST["first_name"]);
+        $last_name = safe_input_Text($_POST["last_name"]);
+        $mobile_number = safe_input_Text($_POST["mobile_number"]);
+        $email_id = safe_input_Text($_POST["email_id"]);
 
         $register_mode = "Direct";
 
-// Common Event Details
-        $event_name = $_POST["event_name"];
-        $event_address = $_POST["event_address"];
-        $event_map = $_POST["event_map"];
-        $event_contact_name = $_POST["event_contact_name"];
-        $event_website = $_POST["event_website"];
-        $event_mobile = $_POST["event_mobile"];
-        $event_email = $_POST["event_email"];
+        // Common Event Details
+        $event_name = safe_input_Text($_POST["event_name"]);
+        $event_address = safe_input_Text($_POST["event_address"]);
+        $event_map = safe_input_Text($_POST["event_map"]);
+        $event_contact_name = safe_input_Text($_POST["event_contact_name"]);
+        $event_website = safe_input_Text($_POST["event_website"]);
+        $event_mobile = safe_input_Text($_POST["event_mobile"]);
+        $event_email = safe_input_Text($_POST["event_email"]);
         $event_description = addslashes($_POST["event_description"]);
 
-        $category_id = $_POST["category_id"];
-        $event_start_date_old = $_POST["event_start_date"];
+        $category_id = safe_input_Text($_POST["category_id"]);
+        $event_start_date_old = safe_input_Text($_POST["event_start_date"]);
         $timestamp = strtotime($event_start_date_old);
         $event_start_date = date('Y-m-d H:i:s', $timestamp);
 
-        $event_end_date_old = $_POST["event_end_date"];
+        $event_end_date_old = safe_input_Text($_POST["event_end_date"]);
         $timestamp1 = strtotime($event_end_date_old);
         $event_end_date = date('Y-m-d H:i:s', $timestamp1);
 
-        $event_time = $_POST["event_time"];
-        $isenquiry_old = $_POST["isenquiry"];
+        $event_time = safe_input_Text($_POST["event_time"]);
+        $isenquiry_old = safe_input_Text($_POST["isenquiry"]);
 
         if ($isenquiry_old == "on") {
             $isenquiry = 1;
@@ -55,14 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $event_type = "All";
 
 
-// Event Status
+        // Event Status
 
         $payment_status = "Pending";
 
         $event_type_id = 1;
 
 
-//    Condition to get User Id starts
+        //    Condition to get User Id starts
 
         if (isset($_SESSION['user_code']) && !empty($_SESSION['user_code'])) {
             $user_code = $_SESSION['user_code'];
@@ -78,7 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Event Status
                 $event_status = "Inactive";
             }
-
         } else {
 
             $user_status = "Inactive";
@@ -112,11 +107,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $upres = mysqli_query($conn, $upqry);
 
             $user_id = $lastID; //User Id
-// Event Status
+            // Event Status
             $event_status = "Inactive";
-
         }
-//    Condition to get User Id Ends
+        //    Condition to get User Id Ends
 
 
         if (!empty($_FILES['event_image']['name'])) {
@@ -161,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $event_name1 = trim(preg_replace('/[^A-Za-z0-9]/', ' ', $event_name));
         $event_slug = checkEventSlug($event_name1, $event_id);
 
-        $event_qry =
+        echo  $event_qry =
             "UPDATE  " . TBL . "events  SET user_id='" . $user_id . "', event_name='" . $event_name . "',event_description='" . $event_description . "', event_email='" . $event_email . "'
             , event_mobile='" . $event_mobile . "',event_website='" . $event_website . "', event_address='" . $event_address . "'
             ,event_contact_name='" . $event_contact_name . "' ,event_map='" . $event_map . "' , category_id ='" . $category_id . "'
@@ -169,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ,event_image='" . $event_image . "', event_status='" . $event_status . "', event_type='" . $event_type . "', isenquiry='" . $isenquiry . "'
     ,event_slug='" . $event_slug . "' where event_id='" . $event_id . "'";
 
-
+        // die();
         $event_res = mysqli_query($conn, $event_qry);
 
         //****************************    Admin Primary email fetch starts    *************************
@@ -189,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $webpage_full_link_with_login = $webpage_full_link . "login";  //URL Login Link
 
-//****************************    Admin email starts    *************************
+            //****************************    Admin email starts    *************************
 
             $to = $admin_email;
             $EVENT_UPDATE_ADMIN_SUBJECT = $BIZBOOK['EVENT_UPDATE_ADMIN_SUBJECT'];
@@ -200,9 +194,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $mail_template_admin = $admin_sql_fetch_row['mail_template'];
 
-            $message1 = stripslashes(str_replace(array('\'.$admin_site_name.\'', '\' . $first_name . \'', '\' . $email_id . \''
-            , '\' . $mobile_number . \'', '\' . $event_name . \'', '\' . $event_start_date . \'', '\' . $event_time . \'', '\' . $event_contact_name . \'', '\' . $event_address . \'', '\' . $event_email . \'', '\' . $event_mobile . \'', '\'.$admin_footer_copyright.\'', '\'.$admin_address.\'', '\'.$webpage_full_link.\'', '\'.$webpage_full_link_with_login.\'', '\'.$admin_primary_email.\''),
-                array('' . $admin_site_name . '', '' . $first_name . '', '' . $email_id . '', '' . $mobile_number . '', '' . $event_name . '', '' . $event_start_date_old . '', '' . $event_time . '', '' . $event_contact_name . '', '' . $event_address . '', '' . $event_email . '', '' . $event_mobile . '', '' . $admin_footer_copyright . '', '' . $admin_address . '', '' . $webpage_full_link . '', '' . $webpage_full_link_with_login . '', '' . $admin_primary_email . ''), $mail_template_admin));
+            $message1 = stripslashes(str_replace(
+                array(
+                    '\'.$admin_site_name.\'', '\' . $first_name . \'', '\' . $email_id . \'', '\' . $mobile_number . \'', '\' . $event_name . \'', '\' . $event_start_date . \'', '\' . $event_time . \'', '\' . $event_contact_name . \'', '\' . $event_address . \'', '\' . $event_email . \'', '\' . $event_mobile . \'', '\'.$admin_footer_copyright.\'', '\'.$admin_address.\'', '\'.$webpage_full_link.\'', '\'.$webpage_full_link_with_login.\'', '\'.$admin_primary_email.\''
+                ),
+                array('' . $admin_site_name . '', '' . $first_name . '', '' . $email_id . '', '' . $mobile_number . '', '' . $event_name . '', '' . $event_start_date_old . '', '' . $event_time . '', '' . $event_contact_name . '', '' . $event_address . '', '' . $event_email . '', '' . $event_mobile . '', '' . $admin_footer_copyright . '', '' . $admin_address . '', '' . $webpage_full_link . '', '' . $webpage_full_link_with_login . '', '' . $admin_primary_email . ''),
+                $mail_template_admin
+            ));
 
 
             $headers = "From: " . "$email_id" . "\r\n";
@@ -214,9 +212,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             mail($to, $subject, $message1, $headers); //admin email
 
 
-//****************************    Admin email ends    *************************
+            //****************************    Admin email ends    *************************
 
-//****************************    Client email starts    *************************
+            //****************************    Client email starts    *************************
 
             $to1 = $email_id;
             $EVENT_UPDATE_CLIENT_SUBJECT = $BIZBOOK['EVENT_UPDATE_CLIENT_SUBJECT'];
@@ -227,9 +225,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $mail_template_client = $client_sql_fetch_row['mail_template'];
 
-            $message2 = stripslashes(str_replace(array('\'.$admin_site_name.\'', '\' . $first_name . \'', '\' . $email_id . \''
-            , '\' . $mobile_number . \'', '\' . $event_name . \'', '\' . $event_start_date . \'', '\' . $event_time . \'', '\' . $event_contact_name . \'', '\' . $event_address . \'', '\' . $event_email . \'', '\' . $event_mobile . \'', '\'.$admin_footer_copyright.\'', '\'.$admin_address.\'', '\'.$webpage_full_link.\'', '\'.$webpage_full_link_with_login.\'', '\'.$admin_primary_email.\''),
-                array('' . $admin_site_name . '', '' . $first_name . '', '' . $email_id . '', '' . $mobile_number . '', '' . $event_name . '', '' . $event_start_date_old . '', '' . $event_time . '', '' . $event_contact_name . '', '' . $event_address . '', '' . $event_email . '', '' . $event_mobile . '', '' . $admin_footer_copyright . '', '' . $admin_address . '', '' . $webpage_full_link . '', '' . $webpage_full_link_with_login . '', '' . $admin_primary_email . ''), $mail_template_client));
+            $message2 = stripslashes(str_replace(
+                array(
+                    '\'.$admin_site_name.\'', '\' . $first_name . \'', '\' . $email_id . \'', '\' . $mobile_number . \'', '\' . $event_name . \'', '\' . $event_start_date . \'', '\' . $event_time . \'', '\' . $event_contact_name . \'', '\' . $event_address . \'', '\' . $event_email . \'', '\' . $event_mobile . \'', '\'.$admin_footer_copyright.\'', '\'.$admin_address.\'', '\'.$webpage_full_link.\'', '\'.$webpage_full_link_with_login.\'', '\'.$admin_primary_email.\''
+                ),
+                array('' . $admin_site_name . '', '' . $first_name . '', '' . $email_id . '', '' . $mobile_number . '', '' . $event_name . '', '' . $event_start_date_old . '', '' . $event_time . '', '' . $event_contact_name . '', '' . $event_address . '', '' . $event_email . '', '' . $event_mobile . '', '' . $admin_footer_copyright . '', '' . $admin_address . '', '' . $webpage_full_link . '', '' . $webpage_full_link_with_login . '', '' . $admin_primary_email . ''),
+                $mail_template_client
+            ));
 
 
             $headers1 = "From: " . "$admin_email" . "\r\n";
@@ -240,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             mail($to1, $subject1, $message2, $headers1); //admin email
 
-//****************************    client email ends    *************************
+            //****************************    client email ends    *************************
 
             if ($event_type_id == 1) {
 
@@ -256,7 +258,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 exit;
             }
-
         } else {
 
             $_SESSION['status_msg'] = $BIZBOOK['OOPS_SOMETHING_WENT_WRONG'];

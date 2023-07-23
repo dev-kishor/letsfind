@@ -1,33 +1,28 @@
 <?php
-
 if (file_exists('config/info.php')) {
     include('config/info.php');
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['place_submit'])) {
-
         // Common Place Details
         $place_name = addslashes($_POST["place_name"]);
-        $place_description = $_POST["place_description"];
-        $place_tags = $_POST["place_tags"];
-        $place_fee = $_POST["place_fee"];
-        $seo_title = $_POST["seo_title"];
-        $seo_description = $_POST["seo_description"];
-        $seo_keywords = $_POST["seo_keywords"];
-        $place_status = $_POST["place_status"];
+        $place_description = safe_input_Text($_POST["place_description"]);
+        $place_tags = safe_input_Text($_POST["place_tags"]);
+        $place_fee = safe_input_Text($_POST["place_fee"]);
+        $seo_title = safe_input_Text($_POST["seo_title"]);
+        $seo_description = safe_input_Text($_POST["seo_description"]);
+        $seo_keywords = safe_input_Text($_POST["seo_keywords"]);
+        $place_status = safe_input_Text($_POST["place_status"]);
         $place_discover1 = $_POST["place_discover"];
-
-        $min_child = $_POST["min_child"];
-        $max_child = $_POST["max_child"];
-        $fee_child = $_POST["fee_child"];
-        $min_adult = $_POST["min_adult"];
-        $max_adult = $_POST["max_adult"];
-        $fee_adult = $_POST["fee_adult"];
-        $min_senior = $_POST["min_senior"];
-        $max_senior = $_POST["max_senior"];
-        $fee_senior = $_POST["fee_senior"];
-
-
+        $min_child = safe_input_Text($_POST["min_child"]);
+        $max_child = safe_input_Text($_POST["max_child"]);
+        $fee_child = safe_input_Text($_POST["fee_child"]);
+        $min_adult = safe_input_Text($_POST["min_adult"]);
+        $max_adult = safe_input_Text($_POST["max_adult"]);
+        $fee_adult = safe_input_Text($_POST["fee_adult"]);
+        $min_senior = safe_input_Text($_POST["min_senior"]);
+        $max_senior = safe_input_Text($_POST["max_senior"]);
+        $fee_senior = safe_input_Text($_POST["fee_senior"]);
         $prefix = $fruitList = '';
         foreach ($place_discover1 as $fruit) {
             $place_discover .= $prefix . $fruit;
@@ -63,13 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $places_news .= $prefix . $fruit;
             $prefix = ',';
         }
-        $category_id = $_POST["category_id"];
+        $category_id = safe_input_Text($_POST["category_id"]);
         // Listing Timing Details
-        $opening_time = $_POST["opening_time"];
-        $closing_time = $_POST["closing_time"];
-        $google_map = $_POST["google_map"];
-        $address = $_POST["address"];
-        $pincode = $_POST["pincode"];
+        $opening_time = safe_input_Text($_POST["opening_time"]);
+        $closing_time = safe_input_Text($_POST["closing_time"]);
+        $google_map = safe_input_Text($_POST["google_map"]);
+        $address = safe_input_Text($_POST["address"]);
+        $pincode = safe_input_Text($_POST["pincode"]);
         //Place Other Information
         $place_info_question123 = $_POST["place_info_question"];
         $prefix1 = $fruitList = '';
@@ -143,13 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $place_gallery_image = "";
         }
-
-
         // ************************  Gallery Image Upload ends  **************************
         //    Place Insert Part Starts
         $place_qry = "INSERT INTO " . TBL . "places(category_id, place_name, place_description, place_tags, place_fee, seo_title, seo_description, seo_keywords, places_news, place_experts, place_events, place_listings, place_related, place_discover, place_banner_image, place_gallery_image, opening_time, closing_time, google_map, place_address, place_pincode, place_status, place_info_question , place_info_answer, place_slug, place_cdt,min_child,max_child,fee_child,min_adult,max_adult,fee_adult,min_senior,max_senior,fee_senior) VALUES
-					('$category_id', '$place_name', '$place_description', '$place_tags', '$place_fee', '$seo_title', '$seo_description', '$seo_keywords', '$places_news', '$place_experts', '$place_events', '$place_listings', '$place_related', '$place_discover', '$place_banner_image', '$place_gallery_image', '$opening_time', '$closing_time', '$google_map','$address','$pincode', '$place_status', '$place_info_question', '$place_info_answer', '$place_slug', '$curDate','$min_child','$max_child','$fee_child','$min_adult','$max_adult','$fee_adult','$min_senior','$max_senior','$fee_senior')";
-
+					('$category_id', '$place_name', '$place_description', '$place_tags', '$place_fee', '$seo_title', '$seo_description', '$seo_keywords', '$places_news', '$place_experts', '$place_events', '$place_listings', '$place_related', '$place_discover', 'place_banner_image', 'place_gallery_image', '$opening_time', '$closing_time', '$google_map','$address','$pincode', '$place_status', '$place_info_question', '$place_info_answer', '$place_slug', '$curDate','$min_child','$max_child','$fee_child','$min_adult','$max_adult','$fee_adult','$min_senior','$max_senior','$fee_senior')";
         $place_res = mysqli_query($conn, $place_qry);
         $PlaceID = mysqli_insert_id($conn);
         $placelastID = $PlaceID;

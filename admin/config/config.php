@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by Vignesh.
  * User: Vignesh
@@ -159,54 +160,54 @@ $footer_row = mysqli_fetch_array($footer_rs);
 
 $slash = '/';
 
-$ALL_LISTING_URL = $webpage_full_link.$footer_row['all_listing_page_url'].$slash;
+$ALL_LISTING_URL = $webpage_full_link . $footer_row['all_listing_page_url'] . $slash;
 
-$ALL_PRODUCTS_URL = $webpage_full_link.$footer_row['all_products_page_url'].$slash;
+$ALL_PRODUCTS_URL = $webpage_full_link . $footer_row['all_products_page_url'] . $slash;
 
-$ALL_JOBS_URL = $webpage_full_link.$footer_row['all_jobs_page_url'].$slash;
+$ALL_JOBS_URL = $webpage_full_link . $footer_row['all_jobs_page_url'] . $slash;
 
-$ALL_EXPERTS_URL = $webpage_full_link.$footer_row['all_experts_page_url'].$slash;
+$ALL_EXPERTS_URL = $webpage_full_link . $footer_row['all_experts_page_url'] . $slash;
 
-$ALL_NEWS_URL = $webpage_full_link.$footer_row['all_news_page_url'].$slash;
+$ALL_NEWS_URL = $webpage_full_link . $footer_row['all_news_page_url'] . $slash;
 
-$PROFILE_URL = $webpage_full_link.$footer_row['profile_page_url'].$slash;
+$PROFILE_URL = $webpage_full_link . $footer_row['profile_page_url'] . $slash;
 
-$LISTING_URL = $webpage_full_link.$footer_row['listing_page_url'].$slash;
+$LISTING_URL = $webpage_full_link . $footer_row['listing_page_url'] . $slash;
 
-$JOB_URL = $webpage_full_link.$footer_row['job_page_url'].$slash;
+$JOB_URL = $webpage_full_link . $footer_row['job_page_url'] . $slash;
 
-$SERVICE_EXPERT_URL = $webpage_full_link.$footer_row['service_expert_page_url'].$slash;
+$SERVICE_EXPERT_URL = $webpage_full_link . $footer_row['service_expert_page_url'] . $slash;
 
-$NEWS_DETAIL_URL = $webpage_full_link.$footer_row['news_page_url'].$slash;
+$NEWS_DETAIL_URL = $webpage_full_link . $footer_row['news_page_url'] . $slash;
 
-$PLACE_DETAIL_URL = $webpage_full_link.$footer_row['place_page_url'].$slash;
+$PLACE_DETAIL_URL = $webpage_full_link . $footer_row['place_page_url'] . $slash;
 
-$JOB_PROFILE_URL = $webpage_full_link.$footer_row['job_profile_page_url'].$slash;
+$JOB_PROFILE_URL = $webpage_full_link . $footer_row['job_profile_page_url'] . $slash;
 
-$JOB_PROFILE_CREATION_URL = $webpage_full_link.'jobs/'.$footer_row['job_profile_creation_page_url'].$slash;
+$JOB_PROFILE_CREATION_URL = $webpage_full_link . 'jobs/' . $footer_row['job_profile_creation_page_url'] . $slash;
 
-$EVENT_URL = $webpage_full_link.$footer_row['event_page_url'].$slash;
+$EVENT_URL = $webpage_full_link . $footer_row['event_page_url'] . $slash;
 
-$BLOG_URL = $webpage_full_link.$footer_row['blog_page_url'].$slash;
+$BLOG_URL = $webpage_full_link . $footer_row['blog_page_url'] . $slash;
 
-$PRODUCT_URL = $webpage_full_link.$footer_row['product_page_url'].$slash;
+$PRODUCT_URL = $webpage_full_link . $footer_row['product_page_url'] . $slash;
 
-$COMPANY_URL = $webpage_full_link.$footer_row['company_page_url'].$slash;
+$COMPANY_URL = $webpage_full_link . $footer_row['company_page_url'] . $slash;
 
-$TARGET_LISTING_URL = $webpage_full_link.$footer_row['target_listing_page_url'].$slash;
+$TARGET_LISTING_URL = $webpage_full_link . $footer_row['target_listing_page_url'] . $slash;
 
-$EBOOK_URL = $webpage_full_link.$footer_row['ebook_page_url'].$slash;
+$EBOOK_URL = $webpage_full_link . $footer_row['ebook_page_url'] . $slash;
 
-$GENERAL_PROMOTION_URL = $webpage_full_link.$footer_row['promotion_page_url'].$slash;
+$GENERAL_PROMOTION_URL = $webpage_full_link . $footer_row['promotion_page_url'] . $slash;
 
 $SHYIRAMO = '';
 
 //Login URL redirect with current page URL 
 
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-$CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; 
+$CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-$LOGIN_URL = $webpage_full_link.'login?src='.$CurPageURL;
+$LOGIN_URL = $webpage_full_link . 'login?src=' . $CurPageURL;
 
 //if($footer_row['admin_install_flag'] == 0) { kwohereza($SHYIRAMO); }
 
@@ -223,7 +224,7 @@ define('TIME_LIST', json_encode($timeArr)); # Time List.
 
 $exp_listsql = "SELECT * FROM " . TBL . "listings  WHERE listing_status= 'Active' AND listing_is_delete != '2' ORDER BY listing_id ASC";
 
-$exp_listrs = mysqli_query($conn,$exp_listsql);
+$exp_listrs = mysqli_query($conn, $exp_listsql);
 
 while ($exp_listrow = mysqli_fetch_array($exp_listrs)) {
 
@@ -231,13 +232,13 @@ while ($exp_listrow = mysqli_fetch_array($exp_listrs)) {
     $exp_listing_id = $exp_listrow['listing_id'];
 
     $exp_users = "SELECT * FROM " . TBL . "users WHERE user_id= '$exp_user_id'";
-    $exp_users_rs = mysqli_query($conn,$exp_users);
+    $exp_users_rs = mysqli_query($conn, $exp_users);
 
     $exp_users_row = mysqli_fetch_array($exp_users_rs);
     $exp_user_plan = $exp_users_row['user_plan'];
 
     $exp_users_plan_type = "SELECT * FROM " . TBL . "plan_type  WHERE plan_type_id= '$exp_user_plan'";
-    $exp_users_plan_type_rs = mysqli_query($conn,$exp_users_plan_type);
+    $exp_users_plan_type_rs = mysqli_query($conn, $exp_users_plan_type);
 
     $exp_users_plan_type_row = mysqli_fetch_array($exp_users_plan_type_rs);
 
@@ -250,8 +251,7 @@ while ($exp_listrow = mysqli_fetch_array($exp_listrs)) {
     where listing_id='$exp_listing_id'
 AND listing_cdt < DATE_SUB(NOW(), INTERVAL $exp_plan_type_duration MONTH)";
 
-    $exp_update_rs = mysqli_query($conn,$exp_update_sql);
-
+    $exp_update_rs = mysqli_query($conn, $exp_update_sql);
 }
 
 
@@ -262,9 +262,10 @@ AND listing_cdt < DATE_SUB(NOW(), INTERVAL $exp_plan_type_duration MONTH)";
 
 # Compress Image while uploading
 
-function compressImage($imagename,$source,$path,$new_size){
+function compressImage($imagename, $source, $path, $new_size)
+{
 
-    $target = $path.$imagename;
+    $target = $path . $imagename;
 
     move_uploaded_file($source, $target);
 
@@ -284,10 +285,10 @@ function compressImage($imagename,$source,$path,$new_size){
         $image = imagecreatefromgif($file);
     } elseif ($info['mime'] == 'image/png') {
         $image = imagecreatefrompng($file);
-        $bck   = imagecolorallocate( $image , 0, 0, 0 );
-        imagecolortransparent( $image, $bck );
-        imagealphablending( $image, false );
-        imagesavealpha( $image, true );
+        $bck   = imagecolorallocate($image, 0, 0, 0);
+        imagecolortransparent($image, $bck);
+        imagealphablending($image, false);
+        imagesavealpha($image, true);
     }
 
     if ($info['mime'] != 'image/png') {
@@ -309,13 +310,10 @@ function compressImage($imagename,$source,$path,$new_size){
 
 function kwohereza($url)
 {
-    if(headers_sent())
-    {
-        echo "<script>document.location.href='".$url."'</script>";
-    }
-    else
-    {
-        header("location: ".$url);
+    if (headers_sent()) {
+        echo "<script>document.location.href='" . $url . "'</script>";
+    } else {
+        header("location: " . $url);
     }
 }
 
@@ -325,19 +323,19 @@ $activation_status_activated = 1;
 
 $activation_status_not_activated = 0;
 
-$activation_expiry_date = date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 365 day"));
+$activation_expiry_date = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 365 day"));
 
 # Auto Update Of Buy Points starts
 function delBuyPoints()
 {
     global $conn;
-    
+
     $exp_tlistsql1 = "SELECT * FROM " . TBL . "all_points_enquiry ORDER BY all_points_enquiry_id ASC";
 
     $exp_tlistrs1 = mysqli_query($conn, $exp_tlistsql1);
 
     while ($exp_tlistrow1 = mysqli_fetch_array($exp_tlistrs1)) {
-        
+
         $exp_tlisting_id = $exp_tlistrow1['all_points_enquiry_id'];
 
 
@@ -347,9 +345,16 @@ function delBuyPoints()
         $exp_tupdate_rs = mysqli_query($conn, $exp_tupdate_sql);
 
         $exp_tupdate_row = mysqli_fetch_array($exp_tupdate_rs);
-
     }
     return true;
 }
 
 # Auto Update Of Buy Points ends
+
+function safe_input_Text($text)
+{
+    global $conn;
+
+    $escap_char = trim(mysqli_real_escape_string($conn, $text));
+    return $escap_char;
+}

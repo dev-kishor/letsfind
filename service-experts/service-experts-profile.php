@@ -544,13 +544,26 @@ include "../footer.php";
                                 <input type="text" class="form-control" value="<?php echo $user_details_row['mobile_number'] ?>" name="enquiry_mobile" placeholder="<?php echo $BIZBOOK['LEAD-MOBILE-PLACEHOLDER']; ?>" pattern="[7-9]{1}[0-9]{9}" title="<?php echo $BIZBOOK['LEAD-INVALID-MOBILE-TITLE']; ?>" required>
                             </div>
                             <div class="form-group">
-                                <select class="chosen-select" required="required" name="enquiry_category">
+                                <select class="chosen-select" required="required" name="enquiry_category" disabled>
                                     <option value=""><?php echo $BIZBOOK['SELECT_CATEGORY']; ?></option>
                                     <?php
                                     foreach (getAllActiveExpertCategoriesPos() as $lead_categories_row) {
+                                        if ($lead_categories_row['category_name'] == $expert_category_name) {
                                     ?>
-                                        <option value="<?php echo $lead_categories_row['category_id']; ?>">
-                                            <?php echo $lead_categories_row['category_name']; ?></option>
+                                            <option value="<?php echo $lead_categories_row['category_id']; ?>" selected>
+                                                <?php echo $lead_categories_row['category_name']; ?></option>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <option value="<?php echo $lead_categories_row['category_id']; ?>">
+                                                <?php echo $lead_categories_row['category_name']; ?></option>
+                                        <?php
+                                        }
+
+                                        ?>
+
+
+
                                     <?php
                                     }
                                     ?>
