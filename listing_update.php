@@ -208,12 +208,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $service_1_image_old = $_POST["service_1_image_old"];
             // Listing Service Names Details
             $service_1_name123 = $_POST["service_1_name"];
-            $service_1_name = implode("|", $service_1_name123);
+            $service_1_name = safe_input_Text(implode("|", $service_1_name123));
             // Listing Offer Prices Details
             $service_1_price123 = $_POST["service_1_price"];
             $prefix1 = $fruitList = '';
             foreach ($service_1_price123 as $fruit1) {
-                $service_1_price .= $prefix1 . $fruit1;
+                $service_1_price .= $prefix1 . safe_input_Text($fruit1);
                 $prefix1 = ',';
             }
             // Listing Offer Details
@@ -224,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $service_1_view_more123 = $_POST["service_1_view_more"];
             $prefix1 = $fruitList = '';
             foreach ($service_1_view_more123 as $fruit1) {
-                $service_1_view_more .= $prefix1 . $fruit1;
+                $service_1_view_more .= $prefix1 . safe_input_Text($fruit1);
                 $prefix1 = ',';
             }
             // ************************  Offer Image Upload Starts  **************************
@@ -255,7 +255,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $service_1_image = implode(",", $service_1_image1);
             }
             // ************************  Offer Image Upload ends  **************************
-            $listing_qry = "UPDATE  " . TBL . "listings  SET user_id='" . $user_id . "'
+           $listing_qry = "UPDATE  " . TBL . "listings  SET user_id='" . $user_id . "'
                         ,service_1_name='" . $service_1_name . "',service_1_price='" . $service_1_price . "', service_1_detail='" . $service_1_detail . "'
                         ,service_1_image='" . $service_1_image . "' , service_1_view_more='" . $service_1_view_more . "' where listing_id='" . $listing_id . "'";
         }

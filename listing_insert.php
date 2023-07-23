@@ -4,8 +4,8 @@ if (file_exists('config/info.php')) {
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['listing_submit'])) {
-        $_SESSION['listing_info_question'] = $_POST["listing_info_question"];
-        $_SESSION['listing_info_answer'] = $_POST["listing_info_answer"];
+        $_SESSION['listing_info_question'] =safe_input_Text($_POST["listing_info_question"]);
+        $_SESSION['listing_info_answer'] = safe_input_Text($_POST["listing_info_answer"]);
         // Basic Personal Details
         $first_name = safe_input_Text($_SESSION["first_name"]);
         $last_name = safe_input_Text($_SESSION["last_name"]);
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $listing_lng = safe_input_Text($_SESSION["listing_lng"]);
         $listing_description = addslashes($_SESSION["listing_description"]);
         if (isset($_SESSION['listing_type_id']) && !empty($_SESSION['listing_type_id'])) {
-            $listing_type_id = $_SESSION["listing_type_id"];
+            $listing_type_id = safe_input_Text($_SESSION["listing_type_id"]);
         } else {
             $listing_type_id = 1;
         }
@@ -34,20 +34,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $city_id1 = $_SESSION["city_id"];
         $prefix = $fruitList = '';
         foreach ($city_id1 as $fruit) {
-            $city_id .= $prefix .  $fruit;
+            $city_id .= $prefix .  safe_input_Text($fruit);
             $prefix = ',';
         }
         $category_id = safe_input_Text($_SESSION["category_id"]);
         $sub_category_id123 = $_SESSION["sub_category_id"];
         $prefix = $fruitList = '';
         foreach ($sub_category_id123 as $fruit) {
-            $sub_category_id .= $prefix .  $fruit;
+            $sub_category_id .= $prefix .  safe_input_Text($fruit);
             $prefix = ',';
         }
         $service_id123 = $_SESSION["service_id"];
         $prefix1 = $fruitList = '';
         foreach ($service_id123 as $fruit1) {
-            $service_id .= $prefix1 .  $fruit1;
+            $service_id .= $prefix1 .  safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         // Listing Timing Details
@@ -65,18 +65,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $listing_video123 = $_SESSION['listing_video'];
         $prefix6 = $fruitList = '';
         foreach ($listing_video123 as $fruit6) {
-            $listing_video1 = $prefix6 .  $fruit6;
+            $listing_video1 = $prefix6 .  safe_input_Text($fruit6);
             $listing_video .= addslashes($listing_video1);
             $prefix6 = '|';
         }
         // Listing Service Names Details
         $service_1_name123 = $_SESSION["service_1_name"];
-        $service_1_name = implode("|", $service_1_name123);
+        $service_1_name = safe_input_Text(implode("|", $service_1_name123));
         // Listing Offer Prices Details
         $service_1_price123 = $_SESSION["service_1_price"];
         $prefix1 = $fruitList = '';
         foreach ($service_1_price123 as $fruit1) {
-            $service_1_price .= $prefix1 .  $fruit1;
+            $service_1_price .= $prefix1 .  safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         $service_2_price = 0;
@@ -86,26 +86,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $service_6_price = 0;
         // Listing Offer Details
         $service_1_detail123 = $_SESSION["service_1_detail"];
-        $service_1_detail1 = implode("|", $service_1_detail123);
+        $service_1_detail1 = safe_input_Text(implode("|", $service_1_detail123));
         $service_1_detail = addslashes($service_1_detail1);
         // Listing Offer View more link
         $service_1_view_more123 = $_SESSION["service_1_view_more"];
         $prefix1 = $fruitList = '';
         foreach ($service_1_view_more123 as $fruit1) {
-            $service_1_view_more .= $prefix1 .  $fruit1;
+            $service_1_view_more .= $prefix1 .  safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         //Listing Other Informations
         $listing_info_question123 = $_SESSION["listing_info_question"];
         $prefix1 = $fruitList = '';
         foreach ($listing_info_question123 as $fruit1) {
-            $listing_info_question .= $prefix1 .  $fruit1;
+            $listing_info_question .= $prefix1 .  safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         $listing_info_answer123 = $_SESSION["listing_info_answer"];
         $prefix1 = $fruitList = '';
         foreach ($listing_info_answer123 as $fruit1) {
-            $listing_info_answer .= $prefix1 .  $fruit1;
+            $listing_info_answer .= $prefix1 .  safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         // $listing_status = "Pending";
@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $service_1_image = $_SESSION['service_1_image'];
         // ************************  Offer Image Upload ends  **************************
         //    Listing Insert Part Starts
-        $listing_qry = "INSERT INTO " . TBL . "listings 
+      echo  $listing_qry = "INSERT INTO " . TBL . "listings 
 					(user_id, category_id, sub_category_id, service_id, service_image, listing_type_id, listing_name, listing_mobile, listing_email
 					, listing_website, listing_whatsapp, listing_description, listing_address, listing_lat, listing_lng, service_locations, country_id,listing_pincode, state_id, city_id, profile_image, cover_image
 					, gallery_image, opening_days, opening_time, closing_time, fb_link, twitter_link, gplus_link, google_map
@@ -199,6 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					,'$threesixty_view', '$listing_video', '$service_1_name', '$service_1_price', '$service_1_detail', '$service_1_image', '$service_1_view_more', '$service_2_name', '$service_2_price', '$service_2_image', '$service_3_name', '$service_3_price', '$service_3_image'
 					, '$service_4_name', '$service_4_price', '$service_4_image', '$service_5_name', '$service_5_price', '$service_5_image', '$service_6_name', '$service_6_price', '$service_6_image', '$listing_status'
 					, '$listing_info_question', '$listing_info_answer', '$payment_status', '$listing_slug', '$curDate')";
+                    die();
         $listing_res = mysqli_query($conn, $listing_qry);
         $ListingID = mysqli_insert_id($conn);
         $listlastID = $ListingID;

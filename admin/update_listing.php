@@ -34,20 +34,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $city_id1 = $_POST["city_id"];
         $prefix = $fruitList = '';
         foreach ($city_id1 as $fruit) {
-            $city_id .= $prefix . $fruit;
+            $city_id .= $prefix . safe_input_Text($fruit);
             $prefix = ',';
         }
         $category_id = $_POST["category_id"];
         $sub_category_id123 = $_POST["sub_category_id"];
         $prefix = $fruitList = '';
         foreach ($sub_category_id123 as $fruit) {
-            $sub_category_id .= $prefix . $fruit;
+            $sub_category_id .= $prefix . safe_input_Text($fruit);
             $prefix = ',';
         }
         $service_id123 = $_POST["service_id"];
         $prefix1 = $fruitList = '';
         foreach ($service_id123 as $fruit1) {
-            $service_id .= $prefix1 . $fruit1;
+            $service_id .= $prefix1 . safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         // Listing Timing Details
@@ -65,18 +65,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Listing Video
         $prefix6 = $fruitList = '';
         foreach ($listing_video123 as $fruit6) {
-            $listing_video1 = $prefix6 . $fruit6;
+            $listing_video1 = $prefix6 . safe_input_Text($fruit6);
             $listing_video .= addslashes($listing_video1);
             $prefix6 = '|';
         }
         // Listing Service Names Details
         $service_1_name123 = $_POST["service_1_name"];
-        $service_1_name = implode("|", $service_1_name123);
+        $service_1_name = safe_input_Text(implode("|", $service_1_name123));
         // Listing Offer Prices Details
         $service_1_price123 = $_POST["service_1_price"];
         $prefix1 = $fruitList = '';
         foreach ($service_1_price123 as $fruit1) {
-            $service_1_price .= $prefix1 . $fruit1;
+            $service_1_price .= $prefix1 . safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         $service_2_price = 0;
@@ -86,26 +86,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $service_6_price = 0;
         // Listing Offer Details
         $service_1_detail123 = $_POST["service_1_detail"];
-        $service_1_detail1 = implode("|", $service_1_detail123);
+        $service_1_detail1 = safe_input_Text(implode("|", $service_1_detail123));
         $service_1_detail = addslashes($service_1_detail1);
         // Listing Offer View More
         $service_1_view_more123 = $_POST["service_1_view_more"];
         $prefix1 = $fruitList = '';
         foreach ($service_1_view_more123 as $fruit1) {
-            $service_1_view_more .= $prefix1 . $fruit1;
+            $service_1_view_more .= $prefix1 . safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         //Listing Other Informations
         $listing_info_question123 = $_POST["listing_info_question"];
         $prefix1 = $fruitList = '';
         foreach ($listing_info_question123 as $fruit1) {
-            $listing_info_question .= $prefix1 . $fruit1;
+            $listing_info_question .= $prefix1 . safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         $listing_info_answer123 = $_POST["listing_info_answer"];
         $prefix1 = $fruitList = '';
         foreach ($listing_info_answer123 as $fruit1) {
-            $listing_info_answer .= $prefix1 . $fruit1;
+            $listing_info_answer .= $prefix1 . safe_input_Text($fruit1);
             $prefix1 = ',';
         }
         // Listing Status
