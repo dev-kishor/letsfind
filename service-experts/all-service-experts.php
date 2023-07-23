@@ -153,9 +153,10 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                             <a href="#" data-toggle="modal" data-target="#allexpfrm"><?php echo $BIZBOOK['SERVICE-EXPERTS-ALL-A-TEXT']; ?></a>
                         </div>
                     </div>
-                  </div>
+                </div>
                 <?php
                 $expertssql = "SELECT T1.* $service_start_search_query $service_rating_start_query FROM " . TBL . "experts AS T1 $service_end_search_query $service_rating_end_query WHERE T1.expert_status= 'Active' $category_search_query $service_availability_search_query $expert_location_search_query $service_verified_search_query $service_rating_search_query $service_sort_by_search_query $service_sort_by_search_order_query";
+
                 $expertrs = mysqli_query($conn, $expertssql);
                 $total_experts = mysqli_num_rows($expertrs);
                 ?>
@@ -264,12 +265,20 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                                                                     <input type="text" class="form-control" value="<?php echo $user_details_row['mobile_number'] ?>" name="enquiry_mobile" placeholder="<?php echo $BIZBOOK['LEAD-MOBILE-PLACEHOLDER']; ?>" pattern="[7-9]{1}[0-9]{9}" title="<?php echo $BIZBOOK['LEAD-INVALID-MOBILE-TITLE']; ?>" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <select class="chosen-select" required="required" name="enquiry_category">
+                                                                    <select class="chosen-select" required="required" name="enquiry_category" disabled>
                                                                         <option value=""><?php echo $BIZBOOK['SELECT_CATEGORY']; ?></option>
                                                                         <?php
                                                                         foreach (getAllActiveExpertCategoriesPos() as $lead_categories_row) {
+                                                                            if ($lead_categories_row['category_name'] == $category_search_name) {
                                                                         ?>
-                                                                            <option value="<?php echo $lead_categories_row['category_id']; ?>"><?php echo $lead_categories_row['category_name']; ?></option>
+                                                                                <option selected value="<?php echo $lead_categories_row['category_id']; ?>"><?php echo $lead_categories_row['category_name']; ?></option>
+                                                                            <?php
+                                                                            } else {
+                                                                            ?>
+                                                                                <option value="<?php echo $lead_categories_row['category_id']; ?>"><?php echo $lead_categories_row['category_name']; ?></option>
+                                                                            <?php
+                                                                            }
+                                                                            ?>
                                                                         <?php
                                                                         }
                                                                         ?>
@@ -386,12 +395,21 @@ if (isset($_REQUEST['home_city']) && !empty($_REQUEST['home_city'])) {
                                 <input type="text" class="form-control" value="<?php echo $user_details_row['mobile_number'] ?>" name="enquiry_mobile" placeholder="<?php echo $BIZBOOK['LEAD-MOBILE-PLACEHOLDER']; ?>" pattern="[7-9]{1}[0-9]{9}" title="<?php echo $BIZBOOK['LEAD-INVALID-MOBILE-TITLE']; ?>" required>
                             </div>
                             <div class="form-group">
-                                <select class="chosen-select" required="required" name="enquiry_category">
+                                <select class="chosen-select" required="required" name="enquiry_category" disabled>
                                     <option value=""><?php echo $BIZBOOK['SELECT_CATEGORY']; ?></option>
                                     <?php
                                     foreach (getAllActiveExpertCategoriesPos() as $lead_categories_row) {
+                                        if ($lead_categories_row['category_name'] == $category_search_name) {
                                     ?>
-                                        <option value="<?php echo $lead_categories_row['category_id']; ?>"><?php echo $lead_categories_row['category_name']; ?></option>
+                                            <option selected value="<?php echo $lead_categories_row['category_id']; ?>" ><?php echo $lead_categories_row['category_name']; ?></option>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <option value="<?php echo $lead_categories_row['category_id']; ?>"><?php echo $lead_categories_row['category_name']; ?></option>
+                                        <?php
+                                        }
+                                        ?>
+
                                     <?php
                                     }
                                     ?>

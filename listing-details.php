@@ -262,14 +262,21 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                                     ?>
                                 </li>
                             </a>
-                            <a href="mailto:<?php if ($listrow['listing_email'] != NULL) {
-                                                echo $listrow['listing_email'];
-                                            } ?>">
-                                <li class="ic-mai"><?php if ($listrow['listing_email'] != NULL) {
-                                                        echo $listrow['listing_email'];
-                                                    } ?>
-                                </li>
-                            </a>
+                            <?php
+                            if ($listrow['listing_email'] != NULL) {
+                            ?>
+                                <a href="mailto:<?php if ($listrow['listing_email'] != NULL) {
+                                                    echo $listrow['listing_email'];
+                                                } ?>">
+                                    <li class="ic-mai"><?php if ($listrow['listing_email'] != NULL) {
+                                                            echo $listrow['listing_email'];
+                                                        } ?>
+                                    </li>
+                                </a>
+                            <?php
+                            }
+
+                            ?>
                             <?php if ($listrow['listing_website'] != NULL) { ?>
                                 <a target="_blank" href="<?php echo $listrow['listing_website']; ?>">
                                     <li class="ic-web"><?php echo $listrow['listing_website']; ?></li>
