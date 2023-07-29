@@ -264,92 +264,128 @@ if ((!empty($place_row['place_info_question']))) {
 }
 // if ((!empty($place_row['place_related']))) {
 ?>
-    <!--START-->
-    <section>
-        <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com plac-pad-top">
-            <div class="container">
-                <div class="row">
-                    <div class="plac-det-tit-inn">
-                        <h2><?php echo $BIZBOOK['PLACE-RELATED-PLACES']; ?></h2>
-                    </div>
-                    <div class="plac-hom-all-pla">
-                        <ul class="multiple-items1">
-                            <?php
-                            $place_cate_id = getAllPlacesCategory($place_row['category_id']);
-                            while ($row = mysqli_fetch_array($place_cate_id)) {
-                                // pr($row);
-                            ?>
-                                <li>
-                                    <div class="plac-hom-box">
-                                        <div class="plac-hom-box-im">
-                                            <img src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $row['place_gallery_image'])[0]; ?>" alt="">
-                                            <h4><?php echo stripslashes($row['place_name']); ?></h4>
-                                        </div>
-                                        <div class="plac-hom-box-txt">
-                                            <span></span>
-                                            <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
-                                        </div>
-                                        <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($row['place_slug']); ?>" class="fclick"></a>
+<!--START-->
+<section>
+    <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com plac-pad-top">
+        <div class="container">
+            <div class="row">
+                <div class="plac-det-tit-inn">
+                    <h2><?php echo $BIZBOOK['PLACE-RELATED-PLACES']; ?></h2>
+                </div>
+                <div class="plac-hom-all-pla">
+                    <ul class="multiple-items1">
+                        <?php
+                        $place_cate_id = getAllPlacesCategory($place_row['category_id']);
+                        while ($row = mysqli_fetch_array($place_cate_id)) {
+                            // pr($row);
+                        ?>
+                            <li>
+                                <div class="plac-hom-box">
+                                    <div class="plac-hom-box-im">
+                                        <img src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $row['place_gallery_image'])[0]; ?>" alt="">
+                                        <h4><?php echo stripslashes($row['place_name']); ?></h4>
                                     </div>
-                                </li>
-                            <?php
-                            }
+                                    <div class="plac-hom-box-txt">
+                                        <span></span>
+                                        <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
+                                    </div>
+                                    <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($row['place_slug']); ?>" class="fclick"></a>
+                                </div>
+                            </li>
+                        <?php
+                        }
 
-                            ?>
-                        </ul>
-                    </div>
+                        ?>
+                    </ul>
                 </div>
             </div>
         </div>
-    </section>
-    <!--END-->
+    </div>
+</section>
+<!--END-->
 <?php
 // }
-if ((!empty($place_row['place_listings']))) {
+// if ((!empty($place_row['place_listings']))) {
 ?>
 
-    <!--START-->
-    <section>
-        <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com" id="near">
-            <div class="container">
-                <div class="row">
-                    <div class="plac-hom-tit plac-hom-tit-ic-ser">
-                        <h2><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES']; ?></h2>
-                        <p><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES-P']; ?> <b><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES-B']; ?></b></p>
-                    </div>
-                    <div class="plac-hom-all-pla">
-                        <ul>
-                            <!-- <Recommation> -->
-                            <?php
-                            foreach (getAllRecommCat($place_row['place_pincode']) as $category_sql_row) {
-                            ?>
-                                <li>
-                                    <div class="plac-hom-box">
-                                        <div class="plac-hom-box-im">
-                                            <img loading="lazy" src="../images/services/<?php echo $category_sql_row['category_image']; ?>" alt="">
-                                            <span class="plac-det-cate"><?php echo $category_sql_row['category_name']; ?></span>
-                                        </div>
-                                        <div class="plac-hom-box-txt disc">
-                                            <div class="revi-box-1">
-                                            </div>
-                                            <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
-                                        </div>
-                                        <a href="<?php echo $ALL_LISTING_URL . urlModifier($category_sql_row['category_slug']); ?>&verify=<?php echo $_GET['code']; ?>" class="fclick"></a>
+<section>
+    <div class="str">
+        <div class="container">
+            <div class="row">
+                <div class="plac-hom-tit plac-hom-tit-ic-ser">
+                    <h2><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES']; ?></h2>
+                    <p><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES-P']; ?> <b><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES-B']; ?></b></p>
+                </div>
+                <div class="land-pack">
+                    <ul>
+                        <?php
+                        foreach (getAllRecommCat($place_row['place_pincode']) as $category_sql_row) {
+                        ?>
+                            <li>
+                                <div class="land-pack-grid">
+                                    <div class="land-pack-grid-img">
+                                        <img loading="lazy" src="../images/services/<?php echo $category_sql_row['category_image']; ?>" alt="">
                                     </div>
-                                </li>
-                                <!-- <Recommation> -->
-                            <?php
-                            }
-                            ?>
-                        </ul>
-                    </div>
+                                    <div class="land-pack-grid-text">
+                                        <h4>
+                                            <?php echo $category_sql_row['category_name']; ?>
+
+                                            </span>
+                                        </h4>
+                                    </div>
+                                    <a href="<?php echo $ALL_LISTING_URL . urlModifier($category_sql_row['category_slug']); ?>&verify=<?php echo $_GET['code']; ?>" class="fclick"></a>
+                                </div>
+                            </li>
+                        <?php
+                        }
+                        ?>
+                    </ul>
                 </div>
             </div>
         </div>
-    </section>
-    <!--END-->
+    </div>
+</section>
+
+<!--START-->
+<!-- <section>
+    <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com" id="near">
+        <div class="container">
+            <div class="row"> -->
+<!-- <div class="plac-hom-tit plac-hom-tit-ic-ser">
+                    <h2><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES']; ?></h2>
+                    <p><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES-P']; ?> <b><?php echo $BIZBOOK['PLACE-TOP-NEARBY-SERVICES-B']; ?></b></p>
+                </div> -->
+<!-- <div class="plac-hom-all-pla">
+                    <ul> -->
 <?php
-}
+// foreach (getAllRecommCat($place_row['place_pincode']) as $category_sql_row) {
+?>
+<!-- <li>
+                                <div class="plac-hom-box">
+                                    <div class="plac-hom-box-im">
+                                        <img loading="lazy" src="../images/services/<?php echo $category_sql_row['category_image']; ?>" alt="">
+                                        <span class="plac-det-cate"><?php echo $category_sql_row['category_name']; ?></span>
+                                    </div>
+                                    <div class="plac-hom-box-txt disc">
+                                        <div class="revi-box-1">
+                                        </div>
+                                        <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
+                                    </div>
+                                    <a href="<?php echo $ALL_LISTING_URL . urlModifier($category_sql_row['category_slug']); ?>&verify=<?php echo $_GET['code']; ?>" class="fclick"></a>
+                                </div>
+                            </li> -->
+<?php
+// }
+?>
+<!-- </ul>
+                </div> -->
+<!-- </div>
+        </div>
+    </div>
+</section> -->
+<!--END-->
+<?php
+// }
 if ((!empty($place_row['place_events']))) {
 ?>
     <!--START-->

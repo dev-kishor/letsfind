@@ -68,9 +68,9 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
     <?php echo stripslashes($footer_row['admin_google_ad_sense']); ?>
     <!--    Google Ad Sense Code Ends-->
     <!-- Preloader -->
-    <div id="preloader">
+    <!-- <div id="preloader">
         <div id="status">&nbsp;</div>
-    </div>
+    </div> -->
     <!-- Chat box on bottom -->
     <!-- <div class="chat_box">
         <div class="chat_head"> Chat Box</div>
