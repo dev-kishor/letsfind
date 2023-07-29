@@ -262,7 +262,7 @@ if ((!empty($place_row['place_info_question']))) {
     <!--END-->
 <?php
 }
-if ((!empty($place_row['place_related']))) {
+// if ((!empty($place_row['place_related']))) {
 ?>
     <!--START-->
     <section>
@@ -275,29 +275,26 @@ if ((!empty($place_row['place_related']))) {
                     <div class="plac-hom-all-pla">
                         <ul class="multiple-items1">
                             <?php
-                            $place_related_array = $place_row['place_related'];
-                            $place_related = explode(',', $place_related_array);
-                            foreach ($place_related as $item) {
-
-                                $place_related = getIdPlaces($item);
-                                $place_related_category_id = $place_related['category_id'];
-                                $place_related_category_row = getPlaceCategory($place_related_category_id);
+                            $place_cate_id = getAllPlacesCategory($place_row['category_id']);
+                            while ($row = mysqli_fetch_array($place_cate_id)) {
+                                // pr($row);
                             ?>
                                 <li>
                                     <div class="plac-hom-box">
                                         <div class="plac-hom-box-im">
-                                            <img src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $place_related['place_gallery_image'])[0]; ?>" alt="">
-                                            <h4><?php echo stripslashes($place_related['place_name']); ?></h4>
+                                            <img src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $row['place_gallery_image'])[0]; ?>" alt="">
+                                            <h4><?php echo stripslashes($row['place_name']); ?></h4>
                                         </div>
                                         <div class="plac-hom-box-txt">
-                                            <span><?php echo $place_related_category_row['category_name']; ?></span>
+                                            <span></span>
                                             <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
                                         </div>
-                                        <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($place_related['place_slug']); ?>" class="fclick"></a>
+                                        <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($row['place_slug']); ?>" class="fclick"></a>
                                     </div>
                                 </li>
                             <?php
                             }
+
                             ?>
                         </ul>
                     </div>
@@ -307,7 +304,7 @@ if ((!empty($place_row['place_related']))) {
     </section>
     <!--END-->
 <?php
-}
+// }
 if ((!empty($place_row['place_listings']))) {
 ?>
 

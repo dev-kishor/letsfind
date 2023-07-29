@@ -19,7 +19,8 @@ $display_json7 = array();
 //get matched data from skills table
 //$qry ="SELECT * FROM " . TBL . "listings ORDER BY listing_name ASC";
 
-$qry = "SELECT listing_name FROM " . TBL . "listings WHERE listing_status= 'Active' AND listing_is_delete != '2'  limit 1000"; //Listing Table Fetch
+// $qry = "SELECT listing_name FROM " . TBL . "listings WHERE listing_status= 'Active' AND listing_is_delete != '2'  limit 1000"; //Listing Table Fetch
+$qry = "SELECT listing_name FROM " . TBL . "listings WHERE listing_status= 'Active' AND listing_is_delete != '2'"; //Listing Table Fetch
 
 $qry1 = "SELECT category_name FROM " . TBL . "categories";  //Category Table Fetch
 
