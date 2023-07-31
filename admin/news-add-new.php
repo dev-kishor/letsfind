@@ -2,7 +2,7 @@
 include "header.php";
 ?>
 
-<?php if ($footer_row['admin_news_show'] !=1 || $admin_row['admin_news_options'] != 1) {
+<?php if ($footer_row['admin_news_show'] != 1 || $admin_row['admin_news_options'] != 1) {
     header("Location: profile.php");
 }
 ?>
@@ -20,16 +20,14 @@ include "header.php";
                                 <div class="login">
                                     <h4>Create News</h4>
                                     <?php include "../page_level_message.php"; ?>
-                                    <form name="news_form" id="news_form" method="post" action="insert_news.php"
-                                          enctype="multipart/form-data">
+                                    <form name="news_form" id="news_form" method="post" action="insert_news.php" enctype="multipart/form-data">
                                         <ul>
                                             <li>
                                                 <!--FILED START-->
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <input type="text" name="news_title" required="required"
-                                                                   class="form-control" placeholder="News title *">
+                                                            <input type="text" name="news_title" required="required" class="form-control" placeholder="News title *">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -38,9 +36,7 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <textarea name="news_description" id="news_description"
-                                                                      required="required" class="form-control"
-                                                                      placeholder="News details"></textarea>
+                                                            <textarea name="news_description" id="news_description" required="required" class="form-control" placeholder="News details"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -50,8 +46,7 @@ include "header.php";
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Choose banner image</label>
-                                                            <input type="file" name="news_image" required="required"
-                                                                   class="form-control">
+                                                            <input type="file" name="news_image" required="required" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -60,15 +55,13 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <select name="category_id" required="required"
-                                                                    class="chosen-select form-control" id="category_id">
+                                                            <select name="category_id" required="required" class="chosen-select form-control" id="category_id">
                                                                 <option value="">Select category</option>
                                                                 <?php
                                                                 foreach (getAllNewsCategories() as $row) {
-                                                                    ?>
-                                                                    <option
-                                                                        value="<?php echo $row['category_id']; ?>"><?php echo $row['category_name']; ?></option>
-                                                                    <?php
+                                                                ?>
+                                                                    <option value="<?php echo $row['category_id']; ?>"><?php echo $row['category_name']; ?></option>
+                                                                <?php
                                                                 }
                                                                 ?>
                                                             </select>
@@ -78,20 +71,25 @@ include "header.php";
                                                 <!--FILED END-->
 
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="tit">Location</label>
                                                             <select class="form-control" name="city_id">
                                                                 <option value="">Select News location</option>
                                                                 <?php
                                                                 foreach (getAllNewsCities() as $cities_row) {
-                                                                    ?>
-                                                                    <option
-                                                                        value="<?php echo $cities_row['city_id']; ?>"><?php echo $cities_row['city_name']; ?></option>
-                                                                    <?php
+                                                                ?>
+                                                                    <option value="<?php echo $cities_row['city_id']; ?>"><?php echo $cities_row['city_name']; ?></option>
+                                                                <?php
                                                                 }
                                                                 ?>
                                                             </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="tit">Pincode</label>
+                                                            <input type="text" maxlength="4" pattern="\d{4}" name="pincode" required="required" placeholder="Ex: 3003" class="form-control" id="pincode" value="<?php echo $place_row['place_pincode']; ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -103,15 +101,11 @@ include "header.php";
                                                             <h5 data-toggle="collapse" data-target="#jb-expe">SEO
                                                                 details</h5>
                                                             <div id="jb-expe" class="collapse coll-box">
-                                                                <input type="text" name="seo_title" class="form-control"
-                                                                       placeholder="SEO Title">
+                                                                <input type="text" name="seo_title" class="form-control" placeholder="SEO Title">
                                                                 <hr>
-                                                                <input type="text" name="seo_description"
-                                                                       class="form-control"
-                                                                       placeholder="Meta descriptions">
+                                                                <input type="text" name="seo_description" class="form-control" placeholder="Meta descriptions">
                                                                 <hr>
-                                                                <input type="text" name="seo_keywords"
-                                                                       class="form-control" placeholder="Meta keywords">
+                                                                <input type="text" name="seo_keywords" class="form-control" placeholder="Meta keywords">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -154,6 +148,12 @@ include "header.php";
 <script src="ckeditor/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('news_description');
+    document.getElementById('pincode').onkeyup = selectValue
+
+    function selectValue() {
+        let minmaxfeeVal = this;
+        minmaxfeeVal.value = minmaxfeeVal.value.replace(/[^0-9\^]/g, "");
+    }
 </script>
 </body>
 

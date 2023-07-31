@@ -55,6 +55,19 @@ function getIdNews($arg)
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($rs);
     return $row;
+    
+}
+
+//Get all news that match the pincode
+function getPincodeMatchNews($arg)
+{
+    global $conn;
+
+    $sql = "SELECT * FROM  " . TBL . "news WHERE pincode='" . $arg . "'";
+    $rs = mysqli_query($conn, $sql);
+    // $row = mysqli_fetch_array($rs);
+    return $rs;
+    
 
 }
 

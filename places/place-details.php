@@ -391,40 +391,40 @@ $event_count = mysqli_num_rows($loger);
 // echo $event_count;
 if ($event_count) {
 ?>
-<!--START-->
-<section>
-    <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com">
-        <div class="container">
-            <div class="row">
-                <div class="plac-hom-tit plac-hom-tit-ic-eve">
-                    <h2><?php echo $BIZBOOK['PLACE-EVENTS-H2']; ?> <b><?php echo stripslashes($place_row['place_name']); ?></b></h2>
-                    <p><?php echo $BIZBOOK['PLACE-EVENTS-P']; ?> <b><?php echo $BIZBOOK['PLACE-EVENTS-B']; ?></b></p>
-                </div>
-                <div class="plac-hom-all-pla plac-det-eve">
-                    <ul class="multiple-items1">
-                        <?php
-                        foreach (getAllRecommEvent($place_row['place_pincode']) as $place_events) {
-                        ?>
-                            <li>
-                                <div class="plac-hom-box">
-                                    <div class="plac-hom-box-im">
-                                        <img loading="lazy" src="<?php echo $slash; ?>images/events/<?php echo $place_events['event_image']; ?>" alt="">
-                                        <h4><?php echo $place_events['event_name']; ?></h4>
-                                        <span class="plac-det-cate"><?php echo dateMonthFormatconverter($place_events['event_start_date']); ?> <?php echo dateDayFormatconverter($place_events['event_start_date']); ?></span>
+    <!--START-->
+    <section>
+        <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com">
+            <div class="container">
+                <div class="row">
+                    <div class="plac-hom-tit plac-hom-tit-ic-eve">
+                        <h2><?php echo $BIZBOOK['PLACE-EVENTS-H2']; ?> <b><?php echo stripslashes($place_row['place_name']); ?></b></h2>
+                        <p><?php echo $BIZBOOK['PLACE-EVENTS-P']; ?> <b><?php echo $BIZBOOK['PLACE-EVENTS-B']; ?></b></p>
+                    </div>
+                    <div class="plac-hom-all-pla plac-det-eve">
+                        <ul class="multiple-items1">
+                            <?php
+                            foreach (getAllRecommEvent($place_row['place_pincode']) as $place_events) {
+                            ?>
+                                <li>
+                                    <div class="plac-hom-box">
+                                        <div class="plac-hom-box-im">
+                                            <img loading="lazy" src="<?php echo $slash; ?>images/events/<?php echo $place_events['event_image']; ?>" alt="">
+                                            <h4><?php echo $place_events['event_name']; ?></h4>
+                                            <span class="plac-det-cate"><?php echo dateMonthFormatconverter($place_events['event_start_date']); ?> <?php echo dateDayFormatconverter($place_events['event_start_date']); ?></span>
+                                        </div>
+                                        <a href="<?php echo $EVENT_URL . urlModifier($place_events['event_slug']); ?>" class="fclick"></a>
                                     </div>
-                                    <a href="<?php echo $EVENT_URL . urlModifier($place_events['event_slug']); ?>" class="fclick"></a>
-                                </div>
-                            </li>
-                        <?php
-                        }
-                        ?>
-                    </ul>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!--END-->
+    </section>
+    <!--END-->
 
 <?php
 }
@@ -531,48 +531,47 @@ if ((!empty($place_row['place_experts']))) {
     <!--END-->
 <?php
 }
-if ((!empty($place_row['places_news']))) {
+$loger = getPincodeMatchNews($place_row['place_pincode']);
+$event_count = mysqli_num_rows($loger);
+// echo $event_count;
+if ($event_count) {
 ?>
-    <!--START-->
-    <section>
-        <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com">
-            <div class="container">
-                <div class="row">
-                    <div class="plac-hom-tit plac-hom-tit-ic-nws">
-                        <h2><?php echo $BIZBOOK['PLACE-NEWS-H2']; ?> <b><?php echo stripslashes($place_row['place_name']); ?></b></h2>
-                        <p><?php echo $BIZBOOK['PLACE-NEWS-P']; ?> <b><?php echo $BIZBOOK['PLACE-NEWS-B']; ?></b></p>
-                    </div>
-                    <div class="plac-hom-all-pla plac-det-eve">
-                        <ul class="multiple-items1">
-                            <?php
-                            $places_news_array = $place_row['places_news'];
-                            $places_news = explode(',', $places_news_array);
-                            foreach ($places_news as $item) {
-
-                                $places_news = getIdNews($item);
-                                $places_news_category_id = $places_news['category_id'];
-                                $places_news_category = getNewsCategory($places_news_category_id);
-                            ?>
-                                <li>
-                                    <div class="plac-hom-box">
-                                        <div class="plac-hom-box-im">
-                                            <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $places_news['news_image']; ?>" alt="">
-                                            <h4><?php echo stripslashes($places_news['news_title']); ?></h4>
-                                            <span class="plac-det-cate"><?php echo $places_news_category['category_name']; ?></span>
-                                        </div>
-                                        <a href="<?php echo $NEWS_DETAIL_URL . urlModifier($places_news['news_slug']); ?>" class="fclick"></a>
+<!--START-->
+<section>
+    <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com">
+        <div class="container">
+            <div class="row">
+                <div class="plac-hom-tit plac-hom-tit-ic-nws">
+                    <h2><?php echo $BIZBOOK['PLACE-NEWS-H2']; ?> <b><?php echo stripslashes($place_row['place_name']); ?></b></h2>
+                    <p><?php echo $BIZBOOK['PLACE-NEWS-P']; ?> <b><?php echo $BIZBOOK['PLACE-NEWS-B']; ?></b></p>
+                </div>
+                <div class="plac-hom-all-pla plac-det-eve">
+                    <ul class="multiple-items1">
+                        <?php
+                        foreach (getPincodeMatchNews($place_row['place_pincode']) as $places_news) {
+                            $places_news_category_id = $places_news['category_id'];
+                            $places_news_category = getNewsCategory($places_news_category_id);
+                        ?>
+                            <li>
+                                <div class="plac-hom-box">
+                                    <div class="plac-hom-box-im">
+                                        <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $places_news['news_image']; ?>" alt="">
+                                        <h4><?php echo stripslashes($places_news['news_title']); ?></h4>
+                                        <span class="plac-det-cate"><?php echo $places_news_category['category_name']; ?></span>
                                     </div>
-                                </li>
-                            <?php
-                            }
-                            ?>
-                        </ul>
-                    </div>
+                                    <a href="<?php echo $NEWS_DETAIL_URL . urlModifier($places_news['news_slug']); ?>" class="fclick"></a>
+                                </div>
+                            </li>
+                        <?php
+                        }
+                        ?>
+                    </ul>
                 </div>
             </div>
         </div>
-    </section>
-    <!--END-->
+    </div>
+</section>
+<!--END-->
 <?php
 }
 ?>
