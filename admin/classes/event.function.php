@@ -8,7 +8,6 @@ function getAllEvents()
     $sql = "SELECT * FROM " . TBL . "events  WHERE event_type= 'All' ORDER BY event_id DESC";
     $rs = mysqli_query($conn, $sql);
     return $rs;
-
 }
 
 //Get All Active Events
@@ -19,7 +18,6 @@ function getAllActiveEvents()
     $sql = "SELECT * FROM " . TBL . "events WHERE event_status= 'Active' ORDER BY event_id ASC";
     $rs = mysqli_query($conn, $sql);
     return $rs;
-
 }
 
 //Get All Events with User Id
@@ -31,7 +29,6 @@ function getAllUserEvents($arg)
     $sql = "SELECT * FROM " . TBL . "events  WHERE event_type= 'All' AND  user_id= '$arg' ORDER BY event_id DESC";
     $rs = mysqli_query($conn, $sql);
     return $rs;
-
 }
 
 
@@ -44,7 +41,14 @@ function getEvent($arg)
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($rs);
     return $row;
+}
 
+function getAllRecommEvent($arg)
+{
+    global $conn;
+    $sql = "SELECT * FROM  " . TBL . "events where event_pincode='" . $arg . "'";
+    $rs = mysqli_query($conn, $sql);
+    return $rs;
 }
 
 //Get particular Event using event id
@@ -56,18 +60,16 @@ function getSlugEvent($arg)
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($rs);
     return $row;
-
 }
 
 //Get All Events except given event id
-function getExceptEvent($arg,$arg1)
+function getExceptEvent($arg, $arg1)
 {
     global $conn;
 
     $sql = "SELECT * FROM  " . TBL . "events WHERE event_status= 'Active' AND event_id !='" . $arg . "' AND category_id = '" . $arg1 . "'";
     $rs = mysqli_query($conn, $sql);
     return $rs;
-
 }
 
 //Get All Active Events
@@ -78,7 +80,6 @@ function getAllTopViewsPremiumActiveEvents()
     $sql = "SELECT *, COUNT(*) FROM " . TBL . "events AS t1 LEFT JOIN " . TBL . "users AS t4 ON t1.user_id = t4.user_id INNER JOIN `" . TBL . "page_views` AS t2  ON t1.event_id = t2.event_id WHERE t1.event_status= 'Active' AND t4.user_plan != 1 AND t4.user_plan != 2 GROUP BY t1.event_id ORDER BY COUNT(*) DESC, t4.user_plan DESC LIMIT 2";
     $rs = mysqli_query($conn, $sql);
     return $rs;
-
 }
 
 //Get All Events Count
@@ -90,7 +91,6 @@ function getCountEvent()
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_num_rows($rs);
     return $row;
-
 }
 
 //Event Count using User Id
@@ -102,7 +102,6 @@ function getCountUserEvent($arg)
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_num_rows($rs);
     return $row;
-
 }
 
 //Get particular Event SEO Score using event id
@@ -130,7 +129,4 @@ function getCountCategoryEvent($arg)
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_num_rows($rs);
     return $row;
-
 }
-
-?>

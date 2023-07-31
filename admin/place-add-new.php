@@ -274,9 +274,10 @@ include "header.php";
                                                     </div>
                                                 </div>
                                                 <!--FILED END-->
-                                                <hr>
+                                                <!-- <hr> -->
                                                 <!--FILED START-->
-                                                <div class="row">
+                                                <!-- because of pincode -->
+                                                <!-- <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Related places</label>
@@ -291,11 +292,13 @@ include "header.php";
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
+                                                <!-- because of pincode -->
                                                 <!--FILED END-->
-                                                <hr>
+                                                <!-- <hr> -->
                                                 <!--FILED START-->
-                                                <div class="row">
+                                                   <!-- because of pincode -->
+                                                <!-- <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Top near by Services(Business listings)</label>
@@ -310,7 +313,8 @@ include "header.php";
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
+                                                   <!-- because of pincode -->
                                                 <!--FILED END-->
                                                 <hr>
                                                 <!--FILED START-->

@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $register_mode = "Direct";
         $event_name = safe_input_Text($_POST["event_name"]);
         $event_address = safe_input_Text($_POST["event_address"]);
+        $event_pincode = safe_input_Text($_POST["event_pincode"]);
         $event_map = safe_input_Text($_POST["event_map"]);
         $event_contact_name = safe_input_Text($_POST["event_contact_name"]);
         $event_website = safe_input_Text($_POST["event_website"]);
@@ -105,11 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         $event_name1 = trim(preg_replace('/[^A-Za-z0-9]/', ' ', $event_name));
         $event_slug = checkEventSlug($event_name1);
-        $event_qry = "INSERT INTO " . TBL . "events (user_id, event_name, event_description,event_email,event_mobile,event_website, event_address, category_id
+        $event_qry = "INSERT INTO " . TBL . "events (user_id, event_name, event_description,event_email,event_mobile,event_website, event_address,event_pincode, category_id
 					,event_contact_name, event_map, event_start_date, event_time, event_image, event_status, event_type, isenquiry, event_slug, event_cdt)
 					VALUES
 					('$user_id', '$event_name', '$event_description', '$event_email', '$event_mobile', '$event_website'
-					, '$event_address', '$category_id', '$event_contact_name', '$event_map', '$event_start_date',  '$event_time', 'event_image', '$event_status', '$event_type', '$isenquiry', '$event_slug', '$curDate')";
+					, '$event_address', '$event_pincode','$category_id', '$event_contact_name', '$event_map', '$event_start_date',  '$event_time', 'event_image', '$event_status', '$event_type', '$isenquiry', '$event_slug', '$curDate')";
         $event_res = mysqli_query($conn, $event_qry);
         
         //****************************    Admin Primary email fetch starts    *************************

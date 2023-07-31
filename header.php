@@ -41,12 +41,17 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
     <!--== FAV ICON(BROWSER TAB ICON) ==-->
     <link rel="shortcut icon" href="<?php echo $slash; ?>images/<?php echo $footer_row['home_page_fav_icon']; ?>" type="image/x-icon">
     <!--== GOOGLE FONTS ==-->
-    <link href="https://fonts.googleapis.com/css?family=Oswald:700|Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Oswald:700|Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet"> -->
+    <link rel="stylesheet" href="<?php echo $slash; ?>utils/googleapis-font.css">
+
     <!--== WEB ICON FONTS ==-->
     <link rel="preload" as="font" href="<?php echo $slash; ?>css/icon.woff2" type="font/woff2" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link rel="stylesheet" href="<?php echo $slash; ?>utils/material-Icons.css">
+
     <!--== CSS FILES ==-->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"> -->
+    <link rel="stylesheet" href="<?php echo $slash; ?>utils/jquery-ui.css">
     <link rel="stylesheet" href="<?php echo $slash; ?>css/jquery-ui.css">
     <link rel="stylesheet" href="<?php echo $slash; ?>css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $slash; ?>css/theme-color.php">

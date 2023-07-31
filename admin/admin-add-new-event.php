@@ -20,8 +20,7 @@ include "header.php";
                                 <div class="login">
                                     <h4>Create Event</h4>
                                     <?php include "../page_level_message.php"; ?>
-                                    <form name="event_form" id="event_form" method="post" action="insert_event.php"
-                                          enctype="multipart/form-data">
+                                    <form name="event_form" id="event_form" method="post" action="insert_event.php" enctype="multipart/form-data">
                                         <ul>
                                             <li>
                                                 <!--FILED START-->
@@ -29,15 +28,13 @@ include "header.php";
                                                     <div class="col-md-12">
                                                         <div class="form-group">
 
-                                                            <select name="user_id" required="required"
-                                                                    class="form-control" id="user_id">
+                                                            <select name="user_id" required="required" class="form-control" id="user_id">
                                                                 <option value="">Choose a user</option>
                                                                 <?php
                                                                 foreach (getAllUser() as $row) {
-                                                                    ?>
-                                                                    <option
-                                                                        value="<?php echo $row['user_id']; ?>"><?php echo $row['first_name']; ?></option>
-                                                                    <?php
+                                                                ?>
+                                                                    <option value="<?php echo $row['user_id']; ?>"><?php echo $row['first_name']; ?></option>
+                                                                <?php
                                                                 }
                                                                 ?>
                                                             </select>
@@ -49,8 +46,21 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_name" required="required"
-                                                                   class="form-control" placeholder="Event name *">
+                                                            <input type="text" name="event_name" required="required" class="form-control" placeholder="Event name *">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--FILED END-->
+                                                <!--FILED START-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="text" name="event_address" required="required" class="form-control" placeholder="Address *">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="text" maxlength="4" pattern="\d{4}" name="event_pincode" required="required" placeholder="Pincode, Ex: 3003" class="form-control" id="pincode" value="<?php echo $place_row['place_pincode']; ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -59,27 +69,15 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_address" required="required"
-                                                                   class="form-control" placeholder="Address *">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--FILED END-->
-                                                <!--FILED START-->
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <select name="category_id"
-                                                                    id="category_id" class="chosen-select form-control">
+                                                            <select name="category_id" id="category_id" class="chosen-select form-control">
                                                                 <option value="">Select Category</option>
                                                                 <?php
                                                                 foreach (getAllEventCategories() as $categories_row) {
-                                                                    ?>
+                                                                ?>
                                                                     <option <?php if ($_SESSION['category_id'] == $categories_row['category_id']) {
-                                                                        echo "selected";
-                                                                    } ?>
-                                                                        value="<?php echo $categories_row['category_id']; ?>"><?php echo $categories_row['category_name']; ?></option>
-                                                                    <?php
+                                                                                echo "selected";
+                                                                            } ?> value="<?php echo $categories_row['category_id']; ?>"><?php echo $categories_row['category_name']; ?></option>
+                                                                <?php
                                                                 }
                                                                 ?>
                                                             </select>
@@ -91,15 +89,12 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="date" name="event_start_date"
-                                                                   required="required" class="form-control"
-                                                                   placeholder="Date *">
+                                                            <input type="date" name="event_start_date" required="required" class="form-control" placeholder="Date *">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_time" required="required"
-                                                                   class="form-control" placeholder="Time *">
+                                                            <input type="text" name="event_time" required="required" class="form-control" placeholder="Time *">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -108,9 +103,7 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" required="required"
-                                                                      id="event_description" name="event_description"
-                                                                      placeholder="Event details"></textarea>
+                                                            <textarea class="form-control" required="required" id="event_description" name="event_description" placeholder="Event details"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -119,8 +112,7 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" name="event_map"
-                                                                      placeholder="Google map location"></textarea>
+                                                            <textarea class="form-control" name="event_map" placeholder="Google map location"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -130,8 +122,7 @@ include "header.php";
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Choose banner image</label>
-                                                            <input type="file" name="event_image" required="required"
-                                                                   class="form-control">
+                                                            <input type="file" name="event_image" required="required" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -140,16 +131,12 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_contact_name"
-                                                                   required="required" class="form-control"
-                                                                   placeholder="Contact person *">
+                                                            <input type="text" name="event_contact_name" required="required" class="form-control" placeholder="Contact person *">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_mobile" required="required"
-                                                                   class="form-control"
-                                                                   placeholder="Contact phone number *">
+                                                            <input type="text" name="event_mobile" required="required" class="form-control" placeholder="Contact phone number *">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -158,15 +145,12 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="email" name="event_email" required="required"
-                                                                   class="form-control"
-                                                                   placeholder="Contact Email Id *">
+                                                            <input type="email" name="event_email" required="required" class="form-control" placeholder="Contact Email Id *">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_website" class="form-control"
-                                                                   placeholder="Event Website">
+                                                            <input type="text" name="event_website" class="form-control" placeholder="Event Website">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -176,8 +160,7 @@ include "header.php";
                                                     <div class="col-md-12">
                                                         <div>
                                                             <div class="chbox">
-                                                                <input type="checkbox" id="isenquiry" name="isenquiry"
-                                                                       checked="">
+                                                                <input type="checkbox" id="isenquiry" name="isenquiry" checked="">
                                                                 <label for="isenquiry">Enquiry or Registration form
                                                                     enable</label>
                                                             </div>
@@ -223,7 +206,15 @@ include "header.php";
 <script src="ckeditor/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('event_description');
+    
+    document.getElementById('pincode').onkeyup = selectValue
+
+    function selectValue() {
+        let minmaxfeeVal = this;
+        minmaxfeeVal.value = minmaxfeeVal.value.replace(/[^0-9\^]/g, "");
+    }
 </script>
+
 </body>
 
 </html>

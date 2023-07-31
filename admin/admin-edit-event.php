@@ -2,7 +2,7 @@
 include "header.php";
 ?>
 
-<?php if($footer_row['admin_event_show'] !=1 || $admin_row['admin_event_options'] != 1){
+<?php if ($footer_row['admin_event_show'] != 1 || $admin_row['admin_event_options'] != 1) {
     header("Location: profile.php");
 }
 ?>
@@ -25,13 +25,9 @@ include "header.php";
                                     $events_a_row = getEvent($event_codea);
 
                                     ?>
-                                    <form action="update_event.php" class="event_edit_form" id="event_edit_form" name="event_edit_form"
-                                          method="post" enctype="multipart/form-data">
-                                        <input type="hidden" id="event_id" value="<?php echo $events_a_row['event_id']; ?>"
-                                               name="event_id" class="validate">
-                                        <input type="hidden" id="event_image_old"
-                                               value="<?php echo $events_a_row['event_image']; ?>" name="event_image_old"
-                                               class="validate">
+                                    <form action="update_event.php" class="event_edit_form" id="event_edit_form" name="event_edit_form" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" id="event_id" value="<?php echo $events_a_row['event_id']; ?>" name="event_id" class="validate">
+                                        <input type="hidden" id="event_image_old" value="<?php echo $events_a_row['event_image']; ?>" name="event_image_old" class="validate">
                                         <ul>
                                             <li>
                                                 <!--FILED START-->
@@ -42,10 +38,11 @@ include "header.php";
                                                                 <option value="">Choose a user</option>
                                                                 <?php
                                                                 foreach (getAllUser() as $row) {
-                                                                    ?>
-                                                                    <option <?php if($events_a_row['user_id']== $row['user_id']){ echo "selected"; } ?>
-                                                                        value="<?php echo $row['user_id']; ?>"><?php echo $row['first_name']; ?></option>
-                                                                    <?php
+                                                                ?>
+                                                                    <option <?php if ($events_a_row['user_id'] == $row['user_id']) {
+                                                                                echo "selected";
+                                                                            } ?> value="<?php echo $row['user_id']; ?>"><?php echo $row['first_name']; ?></option>
+                                                                <?php
                                                                 }
                                                                 ?>
                                                             </select>
@@ -57,8 +54,21 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_name" required="required" class="form-control"
-                                                                   value="<?php echo $events_a_row['event_name']; ?>" placeholder="Event name *">
+                                                            <input type="text" name="event_name" required="required" class="form-control" value="<?php echo $events_a_row['event_name']; ?>" placeholder="Event name *">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--FILED END-->
+                                                <!--FILED START-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="text" name="event_address" required="required" class="form-control" value="<?php echo $events_a_row['event_address']; ?>" placeholder="Address *">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="text" maxlength="4" pattern="\d{4}" name="event_pincode" value="<?php echo $events_a_row['event_pincode']; ?>" required="required" placeholder="Pincode, Ex: 3003" class="form-control" id="pincode" value="<?php echo $place_row['place_pincode']; ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -67,27 +77,15 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_address" required="required" class="form-control"
-                                                                   value="<?php echo $events_a_row['event_address']; ?>"  placeholder="Address *">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--FILED END-->
-                                                <!--FILED START-->
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <select name="category_id"
-                                                                    id="category_id" class="chosen-select form-control">
+                                                            <select name="category_id" id="category_id" class="chosen-select form-control">
                                                                 <option value="">Select Category</option>
                                                                 <?php
                                                                 foreach (getAllEventCategories() as $categories_row) {
-                                                                    ?>
+                                                                ?>
                                                                     <option <?php if ($events_a_row['category_id'] == $categories_row['category_id']) {
-                                                                        echo "selected";
-                                                                    } ?>
-                                                                        value="<?php echo $categories_row['category_id']; ?>"><?php echo $categories_row['category_name']; ?></option>
-                                                                    <?php
+                                                                                echo "selected";
+                                                                            } ?> value="<?php echo $categories_row['category_id']; ?>"><?php echo $categories_row['category_name']; ?></option>
+                                                                <?php
                                                                 }
                                                                 ?>
                                                             </select>
@@ -104,14 +102,12 @@ include "header.php";
                                                             $timestamp = strtotime($events_a_row['event_start_date']);
                                                             $event_start_date = date('m/d/Y', $timestamp);
                                                             ?>
-                                                            <input type="text" id="event_start_date" name="event_start_date" required="required" class="form-control"
-                                                                   value="<?php echo $event_start_date; ?>" placeholder="Date *">
+                                                            <input type="text" id="event_start_date" name="event_start_date" required="required" class="form-control" value="<?php echo $event_start_date; ?>" placeholder="Date *">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_time" required="required" class="form-control"
-                                                                   value="<?php echo $events_a_row['event_time']; ?>" placeholder="Time *">
+                                                            <input type="text" name="event_time" required="required" class="form-control" value="<?php echo $events_a_row['event_time']; ?>" placeholder="Time *">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -120,8 +116,7 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" required="required" id="event_description" name="event_description"
-                                                                      placeholder="Event details"><?php echo $events_a_row['event_description']?></textarea>
+                                                            <textarea class="form-control" required="required" id="event_description" name="event_description" placeholder="Event details"><?php echo $events_a_row['event_description'] ?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -130,8 +125,7 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" name="event_map"
-                                                                      placeholder="Google map location"><?php echo $events_a_row['event_map']; ?></textarea>
+                                                            <textarea class="form-control" name="event_map" placeholder="Google map location"><?php echo $events_a_row['event_map']; ?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -150,14 +144,12 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_contact_name" required="required" class="form-control"
-                                                                   value="<?php echo $events_a_row['event_contact_name']; ?>" placeholder="Contact person *">
+                                                            <input type="text" name="event_contact_name" required="required" class="form-control" value="<?php echo $events_a_row['event_contact_name']; ?>" placeholder="Contact person *">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_mobile" required="required" class="form-control"
-                                                                   value="<?php echo $events_a_row['event_mobile']; ?>" placeholder="Contact phone number *">
+                                                            <input type="text" name="event_mobile" required="required" class="form-control" value="<?php echo $events_a_row['event_mobile']; ?>" placeholder="Contact phone number *">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -167,14 +159,12 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="email" name="event_email" required="required" class="form-control"
-                                                                   value="<?php echo $events_a_row['event_email']; ?>" placeholder="Contact Email Id *">
+                                                            <input type="email" name="event_email" required="required" class="form-control" value="<?php echo $events_a_row['event_email']; ?>" placeholder="Contact Email Id *">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" name="event_website" class="form-control"
-                                                                   value="<?php echo $events_a_row['event_website']; ?>" placeholder="Event Website">
+                                                            <input type="text" name="event_website" class="form-control" value="<?php echo $events_a_row['event_website']; ?>" placeholder="Event Website">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -185,7 +175,7 @@ include "header.php";
                                                     <div class="col-md-12">
                                                         <div>
                                                             <div class="chbox">
-                                                                <input type="checkbox" id="isenquiry" name="isenquiry" <?php if($events_a_row['isenquiry'] == 1){ ?> checked="" <?php }?>>
+                                                                <input type="checkbox" id="isenquiry" name="isenquiry" <?php if ($events_a_row['isenquiry'] == 1) { ?> checked="" <?php } ?>>
                                                                 <label for="isenquiry">Enquiry or Registration form
                                                                     enable</label>
                                                             </div>
@@ -225,11 +215,17 @@ include "header.php";
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery-ui.js"></script>
-<script src="js/admin-custom.js"></script> 
+<script src="js/admin-custom.js"></script>
 <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
 <script src="ckeditor/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('event_description');
+    document.getElementById('pincode').onkeyup = selectValue
+
+    function selectValue() {
+        let minmaxfeeVal = this;
+        minmaxfeeVal.value = minmaxfeeVal.value.replace(/[^0-9\^]/g, "");
+    }
 </script>
 </body>
 
