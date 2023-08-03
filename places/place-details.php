@@ -428,7 +428,9 @@ if ($event_count) {
 
 <?php
 }
-if ((!empty($place_row['place_experts']))) {
+$loger = getExpertUsingPincode($place_row['place_pincode']);
+$event_count = mysqli_num_rows($loger);
+if ($event_count) {
 ?>
     <!--START-->
     <section>
@@ -444,9 +446,8 @@ if ((!empty($place_row['place_experts']))) {
                             <?php
                             $place_experts_array = $place_row['place_experts'];
                             $place_experts = explode(',', $place_experts_array);
-                            foreach ($place_experts as $item) {
+                            foreach (getExpertUsingPincode($place_row['place_pincode']) as $place_experts) {
 
-                                $place_experts = getIdExpert($item);
                                 $place_experts_category_id = $place_experts['category_id'];
                                 $place_experts_category = getExpertCategory($place_experts_category_id);
                                 $place_experts_expert_id = $place_experts['expert_id'];

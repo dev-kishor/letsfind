@@ -101,6 +101,16 @@ function getIdExpert($arg)
     return $row;
 
 }
+//Get Experts Using Pincode Code
+function getExpertUsingPincode($arg)
+{
+    global $conn;
+
+    $sql = "SELECT * FROM  " . TBL . "experts WHERE pincode='" . $arg . "'";
+    $rs = mysqli_query($conn, $sql);
+    return $rs;
+
+}
 
 //Get All Experts with given User Id
 function getExpertUser($arg)

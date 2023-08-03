@@ -68,7 +68,7 @@ include "header.php";
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" maxlength="4" pattern="\d{4}" name="event_pincode" value="<?php echo $events_a_row['event_pincode']; ?>" required="required" placeholder="Pincode, Ex: 3003" class="form-control" id="pincode" value="<?php echo $place_row['place_pincode']; ?>">
+                                                            <input type="text" maxlength="4" pattern="\d{4}" name="event_pincode" value="<?php echo $events_a_row['event_pincode']; ?>" required="required" placeholder="Pincode, Ex: 3003" class="form-control" id="pincode">
                                                         </div>
                                                     </div>
                                                 </div>
