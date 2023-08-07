@@ -130,7 +130,7 @@ if ($listing_count_user >= $plan_type_listing_count) {
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <select onChange="getCities(this.value);" name="country_id" required="required" id="country_id" class="chosen-select form-control">
+                                        <select onChange="getState(this.value);" name="country_id" required="required" id="country_id" class="chosen-select form-control">
                                             <option value=""><?php echo $BIZBOOK['SELECT_YOUR_COUNTRY']; ?></option>
                                             <?php
                                             //Countries Query
@@ -151,19 +151,27 @@ if ($listing_count_user >= $plan_type_listing_count) {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" name="listing_pincode" class="form-control" value="<?php echo $_SESSION['listing_pincode'] ?>" placeholder="Pincode" id="pincode">
+                                        <select onChange="getCities(this.value);" name="state_id" required="required" id="state_id" class="chosen-select form-control">
+                                            <option value="">Select your state</option>
+                                        </select>
                                     </div>
                                 </div>
+                               
                             </div>
                             <!--FILED END-->
 
                             <!--FILED START-->
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <select data-placeholder="<?php echo $BIZBOOK['SELECT_YOUR_CITY']; ?>" name="city_id[]" id="city_id" multiple required="required" class="chosen-select form-control">
                                             <option value=""><?php echo $BIZBOOK['SELECT_YOUR_CITY']; ?></option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="listing_pincode" class="form-control" value="<?php echo $_SESSION['listing_pincode'] ?>" placeholder="Pincode" id="pincode">
                                     </div>
                                 </div>
                             </div>
@@ -294,11 +302,22 @@ include "footer.php";
     CKEDITOR.replace('listing_description');
 </script>
 <script>
+    function getState(val) {
+        $.ajax({
+            type: "POST",
+            url: "state_process.php",
+            data: 'country_id=' + val,
+            success: function(data) {
+                $("#state_id").html(data);
+                $('#state_id').trigger("chosen:updated");
+            }
+        });
+    }
     function getCities(val) {
         $.ajax({
             type: "POST",
             url: "city_process.php",
-            data: 'country_id=' + val,
+            data: 'state_id=' + val,
             success: function(data) {
                 $("#city_id").html(data);
                 $('#city_id').trigger("chosen:updated");

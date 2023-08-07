@@ -3,9 +3,9 @@
 if (file_exists('config/info.php')) {
     include('config/info.php');
 }
-$state_id = $_POST['state_id'];
+$country_id = $_POST['country_id'];
 //get matched data from State table
-$state_sql = "SELECT * FROM  " . TBL . "cities where state_id='" . $state_id . "'";
+$state_sql = "SELECT * FROM  " . TBL . "states where country_id='" . $country_id . "'";
 $state_rs = mysqli_query($conn, $state_sql);
 $state_row_count = mysqli_num_rows($state_rs);
 if ($state_row_count <= 0) {
@@ -14,11 +14,11 @@ if ($state_row_count <= 0) {
 <?php
 } else {
 ?>
-<option value="">Select City</option>
+    <option value="">Select State</option>
     <?php
-    while ($city_row = mysqli_fetch_array($state_rs)) {
+    while ($state_row = mysqli_fetch_array($state_rs)) {
     ?>
-        <option value="<?php echo $city_row['city_id']; ?>"><?php echo $city_row['city_name']; ?></option>
+        <option value="<?php echo $state_row['state_id']; ?>"><?php echo $state_row['state_name']; ?></option>
 <?php
     }
 }

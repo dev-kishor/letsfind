@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $country_id = safe_input_Text($_POST["country_id"]);
             $listing_pincode = safe_input_Text($_POST["listing_pincode"]);
             $service_locations = safe_input_Text($_POST["service_locations"]);
-            $state_id = "1";
+            $state_id = $_POST["state_id"];
             $city_id1 = $_POST["city_id"];
             $prefix = $fruitList = '';
             foreach ($city_id1 as $fruit) {

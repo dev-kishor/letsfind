@@ -195,14 +195,26 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input id="listing_pincode" name="listing_pincode" type="text" value="<?php echo $listings_a_row['listing_pincode']; ?>" class="form-control" placeholder="Pincode" id="pincode">
+                                        <select onChange="getCities(this.value);" name="state_id" required="required" id="state_id" class="chosen-select form-control">
+                                            <option value="">Select your state</option>
+                                            <?php
+                                            foreach (getAllStates($listings_a_row['country_id']) as $state_row) {
+                                            ?>
+                                                <option <?php if ($listings_a_row['state_id'] == $state_row['state_id']) {
+                                                            echo "selected";
+                                                        } ?> value="<?php echo $state_row['state_id']; ?>"><?php echo $state_row['state_name']; ?></option>
+                                            <?php
+                                            } ?>
+                                        </select>
                                     </div>
                                 </div>
+
+
                             </div>
                             <!--FILED END-->
 
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <select data-placeholder="<?php echo $BIZBOOK['SELECT_YOUR_CITY']; ?>" name="city_id[]" id="city_id" multiple required="required" class="chosen-select form-control">
                                             <?php
@@ -220,6 +232,11 @@ if (!isset($_SESSION['listing_codea']) || empty($_SESSION['listing_codea'])) {
                                             ?>
 
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input id="listing_pincode" name="listing_pincode" type="text" value="<?php echo $listings_a_row['listing_pincode']; ?>" class="form-control" placeholder="Pincode" id="pincode">
                                     </div>
                                 </div>
                             </div>
@@ -368,11 +385,23 @@ include "footer.php";
     CKEDITOR.replace('listing_description');
 </script>
 <script>
+    function getState(val) {
+        $.ajax({
+            type: "POST",
+            url: "state_process.php",
+            data: 'country_id=' + val,
+            success: function(data) {
+                $("#state_id").html(data);
+                $('#state_id').trigger("chosen:updated");
+            }
+        });
+    }
+
     function getCities(val) {
         $.ajax({
             type: "POST",
             url: "city_process.php",
-            data: 'country_id=' + val,
+            data: 'state_id=' + val,
             success: function(data) {
                 $("#city_id").html(data);
                 $('#city_id').trigger("chosen:updated");
