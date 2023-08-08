@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $listing_type_id = 1;
         $country_id = safe_input_Text($_POST["country_id"]);
         $service_locations = safe_input_Text($_POST["service_locations"]);
-        $state_id = "1";
+        $state_id = $_POST["state_id"];
         $city_id1 = $_POST["city_id"];
         $prefix = $fruitList = '';
         foreach ($city_id1 as $fruit) {
