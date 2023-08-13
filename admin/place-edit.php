@@ -33,7 +33,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                         <div class="form-group">
                                                             <h6>Place details & Info</h6>
                                                             <label>Place name</label>
-                                                            <input type="text" value="<?php echo $place_row['place_name']; ?>" name="place_name" required="required" class="form-control">
+                                                            <input type="text" value="<?php echo $place_row['place_name']; ?>" name="place_name" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -43,7 +43,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Category</label>
-                                                            <select name="category_id" required="required" class="chosen-select form-control">
+                                                            <select name="category_id" class="chosen-select form-control">
                                                                 <option value="">Select place category</option>
                                                                 <?php
                                                                 foreach (getAllPlaceCategories() as $row) {
@@ -60,7 +60,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tag name</label>
-                                                            <input type="text" name="place_tags" required="required" class="form-control" value="<?php echo $place_row['place_tags']; ?>" placeholder="Ex: Group of three waterfalls, Best spot in canada">
+                                                            <input type="text" name="place_tags" class="form-control" value="<?php echo $place_row['place_tags']; ?>" placeholder="Ex: Group of three waterfalls, Best spot in canada">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -70,7 +70,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Status</label>
-                                                            <select name="place_status" required="required" class="chosen-select form-control">
+                                                            <select name="place_status" class="chosen-select form-control">
                                                                 <option <?php if ($place_row['place_status'] == 1) {
                                                                             echo "selected";
                                                                         } ?> value="1">Active</option>
@@ -92,7 +92,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tourism fee</label>
-                                                            <select name="place_fee" required="required" class="chosen-select form-control" id="place_fee">
+                                                            <select name="place_fee" class="chosen-select form-control" id="place_fee">
                                                                 <option value="1" <?php if ($place_row['place_fee'] == 1) {
                                                                                         echo "selected";
                                                                                     } ?>>Free</option>
@@ -205,7 +205,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Open time</label>
-                                                            <select name="opening_time" required="required" class="chosen-select form-control">
+                                                            <select name="opening_time" id="opening_time" class="chosen-select form-control">
                                                                 <?php
                                                                 $time = '4:00'; // start
                                                                 for ($i = 0; $i <= 19; $i++) {
@@ -219,13 +219,16 @@ if ($footer_row['admin_place_show'] != 1) {
                                                                 <?php
                                                                 }
                                                                 ?>
+                                                                <option value="247" <?php if ($place_row['opening_time'] == "247") {
+                                                                                        echo "selected";
+                                                                                    } ?>>24*7</option>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6" id="closing_time_box" style=<?php echo $place_row['opening_time'] != "247" ? '"display: block;"' : '"display: none;"' ?>>
                                                         <div class="form-group">
                                                             <label>Close time</label>
-                                                            <select name="closing_time" required="required" class="chosen-select form-control" data-placeholder="Select places">
+                                                            <select name="closing_time" id="closing_time" class="chosen-select form-control" data-placeholder="Select places">
                                                                 <?php
                                                                 $time = '5:00'; // start
                                                                 for ($i = 0; $i <= 18; $i++) {
@@ -244,29 +247,27 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     </div>
                                                 </div>
                                                 <!--FILED END-->
-
-                                                 <!--FILED START-->
-                                                 <div class="row">
+                                                <!--FILED START-->
+                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Address</label>
-                                                            <input type="text" name="address" required="required" placeholder="Ex: A 778-B abcarea, 3003" class="form-control" value="<?php echo $place_row['place_address']; ?>">
+                                                            <input type="text" name="address" placeholder="Ex: A 778-B abcarea, 3003" class="form-control" value="<?php echo $place_row['place_address']; ?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Pincode</label>
-                                                            <input type="text" name="pincode" required="required" placeholder="Ex: 3003" class="form-control" id="pincode" value="<?php echo $place_row['place_pincode']; ?>">
+                                                            <input type="text" name="pincode" placeholder="Ex: 3003" class="form-control" id="pincode" value="<?php echo $place_row['place_pincode']; ?>">
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <!--FILED START-->
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Direction(Google map link)</label>
-                                                            <input type="text" name="google_map" required="required" value="<?php echo $place_row['google_map']; ?>" placeholder="Ex: https://goo.gl/maps/cUZ39XriLPf9HhKk7" class="form-control">
+                                                            <input type="text" name="google_map" value="<?php echo $place_row['google_map']; ?>" placeholder="Ex: https://goo.gl/maps/cUZ39XriLPf9HhKk7" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -274,7 +275,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>About Place</label>
-                                                            <textarea class="form-control" required="required" name="place_description" id="place_description" placeholder="Product details"><?php echo $place_row['place_description']; ?></textarea>
+                                                            <textarea class="form-control" name="place_description" id="place_description" placeholder="Product details"><?php echo $place_row['place_description']; ?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -451,6 +452,56 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     </div>
                                                 </div>
                                                 <!--FILED END-->
+                                                <!-- Things todo -->
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <h6>Things to do</h6>
+                                                            <span class="add-list-add-btn plac-todo-add" title="add new field">+</span>
+                                                            <span class="add-list-rem-btn plac-todo-remov" title="remove field">-</span>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="plac-ask-que thingstodo">
+                                                        <?php
+                                                        $todo_name = $place_row['todo_name'];
+                                                        $todo_url = $place_row['todo_url'];
+                                                        $todo_img = $place_row['todo_img'];
+                                                        $todo_name_Array = explode('|', $todo_name);
+                                                        $todo_url_Array = explode('|', $todo_url);
+                                                        $todo_img_Array = explode(',', $todo_img);
+                                                        $zipped = array_map(null, $todo_name_Array, $todo_url_Array, $todo_img_Array);
+                                                        foreach ($zipped as $tuple) {
+                                                            $tuple[0]; // Info question
+                                                            $tuple[1]; // Info Answer
+                                                        ?>
+                                                            <li>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Name</label>
+                                                                        <input type="text" name="todo_name[]" class="form-control" value="<?php echo $tuple[0]; ?>">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>URL</label>
+                                                                        <input type="text" name="todo_url[]" class="form-control" value="<?php echo $tuple[1]; ?>">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Image</label>
+                                                                        <input type="hidden" name="todo_img_old[]" value="<?php echo $tuple[2]; ?>">
+                                                                        <input type="file" name="todo_img[]" value="abc" class="form-control" onchange="filehandle(this)" accept="image/*,.jpg,.jpeg,.png">
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </ul>
+                                                </div>
+                                                <!-- Things todo -->
                                                 <hr>
                                                 <!--FILED START-->
                                                 <div class="row">
@@ -461,7 +512,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                             <span class="add-list-rem-btn plac-ask-remov" title="remove field">-</span>
                                                         </div>
                                                     </div>
-                                                    <ul class="plac-ask-que">
+                                                    <ul class="plac-ask-que whatask">
                                                         <?php
                                                         $place_a_row_place_info_question = $place_row['place_info_question'];
                                                         $place_a_row_place_info_answer = $place_row['place_info_answer'];
@@ -556,7 +607,6 @@ if ($footer_row['admin_place_show'] != 1) {
         } else {
             $(".feest").prop('required', true);
         }
-
         $('#place_fee').change(function() {
             let selected_fee = this.value
             let fee_structure = document.getElementById("fee_structure");
@@ -572,7 +622,6 @@ if ($footer_row['admin_place_show'] != 1) {
     })
     var minmaxfee = document.querySelectorAll('#minmaxfee');
     document.getElementById('pincode').onkeyup = selectValue
-
     function selectValue() {
         let minmaxfeeVal = this;
         minmaxfeeVal.value = minmaxfeeVal.value.replace(/[^0-9\^]/g, "");
@@ -581,5 +630,4 @@ if ($footer_row['admin_place_show'] != 1) {
         btn.onkeyup = selectValue;
 </script>
 </body>
-
 </html>

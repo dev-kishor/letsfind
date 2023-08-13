@@ -25,37 +25,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fee_senior = safe_input_Text($_POST["fee_senior"]);
         $prefix = $fruitList = '';
         foreach ($place_discover1 as $fruit) {
-            $place_discover .= $prefix . $fruit;
+            $place_discover .= $prefix . safe_input_Text($fruit);
             $prefix = ',';
         }
         $place_related1 = $_POST["place_related"];
         $prefix = $fruitList = '';
         foreach ($place_related1 as $fruit) {
-            $place_related .= $prefix . $fruit;
+            $place_related .= $prefix . safe_input_Text($fruit);
             $prefix = ',';
         }
         $place_listings1 = $_POST["place_listings"];
         $prefix = $fruitList = '';
         foreach ($place_listings1 as $fruit) {
-            $place_listings .= $prefix . $fruit;
+            $place_listings .= $prefix . safe_input_Text($fruit);
             $prefix = ',';
         }
         $place_events1 = $_POST["place_events"];
         $prefix = $fruitList = '';
         foreach ($place_events1 as $fruit) {
-            $place_events .= $prefix . $fruit;
+            $place_events .= $prefix . safe_input_Text($fruit);
             $prefix = ',';
         }
         $place_experts1 = $_POST["place_experts"];
         $prefix = $fruitList = '';
         foreach ($place_experts1 as $fruit) {
-            $place_experts .= $prefix . $fruit;
+            $place_experts .= $prefix . safe_input_Text($fruit);
             $prefix = ',';
         }
         $places_news1 = $_POST["places_news"];
         $prefix = $fruitList = '';
         foreach ($places_news1 as $fruit) {
-            $places_news .= $prefix . $fruit;
+            $places_news .= $prefix . safe_input_Text($fruit);
             $prefix = ',';
         }
         $category_id = safe_input_Text($_POST["category_id"]);
@@ -139,9 +139,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $place_gallery_image = "";
         }
         // ************************  Gallery Image Upload ends  **************************
+        $todo_name_raw = $_POST["todo_name"];
+        $prefix = '';
+        foreach ($todo_name_raw as $item) {
+            $todo_names .= $prefix . safe_input_Text($item);
+            $prefix = '|';
+        }
+        $todo_url_raw = $_POST["todo_url"];
+        $prefix = '';
+        foreach ($todo_url_raw as $item) {
+            $todo_urls .= $prefix . safe_input_Text($item);
+            $prefix = '|';
+        }
+        // ************************  TODO Image Upload starts  **************************
+        $all_todo_img = $_FILES['todo_img'];
+        $all_todo_img23 = $_FILES['todo_img']['name'];
+        if (!empty($all_todo_img['name'][0])) {
+            for ($k = 0; $k < count($all_todo_img23); $k++) {
+                if (!empty($all_todo_img['name'][$k])) {
+                    $file1 = rand(1000, 100000) . $all_todo_img['name'][$k];
+                    $file_loc1 = $all_todo_img['tmp_name'][$k];
+                    $file_size1 = $all_todo_img['size'][$k];
+                    $file_type1 = $all_todo_img['type'][$k];
+                    $allowed = array("image/jpeg", "image/pjpeg", "image/png", "image/gif", "image/webp", "image/svg", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.wordprocessingml.template");
+                    if (in_array($file_type1, $allowed)) {
+                        $folder1 = "../places/images/todo/";
+                        $new_size = $file_size1 / 1024;
+                        $new_file_name1 = strtolower($file1);
+                        $event_image1 = str_replace(' ', '-', $new_file_name1);
+                        $todo_image1[] = compressImage($event_image1, $file_loc1, $folder1, $new_size);
+                    } else {
+                        $todo_image1[] = '';
+                    }
+                }
+            }
+            $todo_image = implode(",", $todo_image1);
+        } else {
+            $todo_image = "";
+        }
+        // ************************  TODO Image Upload ends  **************************
         //    Place Insert Part Starts
-        $place_qry = "INSERT INTO " . TBL . "places(category_id, place_name, place_description, place_tags, place_fee, seo_title, seo_description, seo_keywords, places_news, place_experts, place_events, place_listings, place_related, place_discover, place_banner_image, place_gallery_image, opening_time, closing_time, google_map, place_address, place_pincode, place_status, place_info_question , place_info_answer, place_slug, place_cdt,min_child,max_child,fee_child,min_adult,max_adult,fee_adult,min_senior,max_senior,fee_senior) VALUES
-					('$category_id', '$place_name', '$place_description', '$place_tags', '$place_fee', '$seo_title', '$seo_description', '$seo_keywords', '$places_news', '$place_experts', '$place_events', '$place_listings', '$place_related', '$place_discover', 'place_banner_image', 'place_gallery_image', '$opening_time', '$closing_time', '$google_map','$address','$pincode', '$place_status', '$place_info_question', '$place_info_answer', '$place_slug', '$curDate','$min_child','$max_child','$fee_child','$min_adult','$max_adult','$fee_adult','$min_senior','$max_senior','$fee_senior')";
+        $place_qry = "INSERT INTO " . TBL . "places(category_id, place_name, place_description, place_tags, place_fee, seo_title, seo_description, seo_keywords, places_news, place_experts, place_events, place_listings, place_related, place_discover, place_banner_image, place_gallery_image, opening_time, closing_time, google_map, place_address, place_pincode, place_status, place_info_question , place_info_answer, place_slug, place_cdt,min_child,max_child,fee_child,min_adult,max_adult,fee_adult,min_senior,max_senior,fee_senior,todo_name,todo_url,todo_img) VALUES
+					('$category_id', '$place_name', '$place_description', '$place_tags', '$place_fee', '$seo_title', '$seo_description', '$seo_keywords', '$places_news', '$place_experts', '$place_events', '$place_listings', '$place_related', '$place_discover', '$place_banner_image', 'place_gallery_image', '$opening_time', '$closing_time', '$google_map','$address','$pincode', '$place_status', '$place_info_question', '$place_info_answer', '$place_slug', '$curDate','$min_child','$max_child','$fee_child','$min_adult','$max_adult','$fee_adult','$min_senior','$max_senior','$fee_senior','$todo_names','$todo_urls','$todo_image')";
         $place_res = mysqli_query($conn, $place_qry);
         $PlaceID = mysqli_insert_id($conn);
         $placelastID = $PlaceID;

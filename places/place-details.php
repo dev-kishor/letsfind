@@ -71,14 +71,18 @@ placedetailpageview($place_id); //Function To Find Page View
                             <li><span><?php echo $BIZBOOK['PLACE-STATUS']; ?>:
                                     <?php
                                     if ($place_row['place_status'] == 1) {
-                                        $currentDateTime = new DateTime(); // Get the current time
-                                        $openingTime = new DateTime($place_row['opening_time']); // Set the opening time
-                                        $closingTime = new DateTime($place_row['closing_time']); // Set the closing time
-
-                                        if ($currentDateTime >= $openingTime && $currentDateTime <= $closingTime) {
+                                        if ($place_row['opening_time'] == "247") {
                                             echo $BIZBOOK['PLACE-OPEN'];
                                         } else {
-                                            echo $BIZBOOK['PLACE-CLOSED'];
+                                            $currentDateTime = new DateTime(); // Get the current time
+                                            $openingTime = new DateTime($place_row['opening_time']); // Set the opening time
+                                            $closingTime = new DateTime($place_row['closing_time']); // Set the closing time
+
+                                            if ($currentDateTime >= $openingTime && $currentDateTime <= $closingTime) {
+                                                echo $BIZBOOK['PLACE-OPEN'];
+                                            } else {
+                                                echo $BIZBOOK['PLACE-CLOSED'];
+                                            }
                                         }
                                     } elseif ($place_row['place_status'] == 2) {
                                         $currentDateTime = new DateTime(); // Get the current time
@@ -98,8 +102,20 @@ placedetailpageview($place_id); //Function To Find Page View
                                         echo $BIZBOOK['PLACE-PERMANENTLY-CLOSED'];
                                     }
                                     ?></span></li>
-                            <li><span><?php echo $BIZBOOK['PLACE-OPEN-TIME']; ?>: <?php echo $place_row['opening_time']; ?></span></li>
-                            <li><span><?php echo $BIZBOOK['PLACE-CLOSE-TIME']; ?>: <?php echo $place_row['closing_time']; ?></span></li>
+                            <?php
+                            if ($place_row['opening_time'] == "247") {
+                            ?>
+                                <li><span>Open : 24*7 </span></li>
+                            <?php
+                            } else {
+                            ?>
+                                <li><span><?php echo $BIZBOOK['PLACE-OPEN-TIME']; ?>: <?php echo $place_row['opening_time']; ?></span></li>
+                                <li><span><?php echo $BIZBOOK['PLACE-CLOSE-TIME']; ?>: <?php echo $place_row['closing_time']; ?></span></li>
+                            <?php
+                            }
+
+                            ?>
+
                             <li><span><?php echo $BIZBOOK['PLACE-TOURISM-FEE']; ?>: <?php echo $place_row['place_fee'] == 1 ? "Free" : "Paid"; ?></span></li>
                             <li><a href="<?php echo $place_row['google_map']; ?>" target="_blank"><?php echo $BIZBOOK['PLACE-DIRECTION']; ?></a></li>
                             <li><a href="#near" class="cta-near"><?php echo $BIZBOOK['PLACE-NEAR-BY-SERVICES']; ?></a></li>
@@ -179,7 +195,7 @@ if ((!empty($place_row['place_discover']))) {
             <div class="container">
                 <div class="row">
                     <div class="plac-det-tit-inn">
-                        <h2><?php echo $BIZBOOK['PLACE-DISCOVER']; ?> <?php echo stripslashes($place_row['place_name']); ?></h2>
+                        <h2><?php echo $BIZBOOK['PLACE-DISCOVER']; ?> Near <?php echo stripslashes($place_row['place_name']); ?></h2>
                     </div>
                     <div class="plac-hom-all-pla">
                         <ul class="multiple-items1">
@@ -264,6 +280,67 @@ if ((!empty($place_row['place_info_question']))) {
 }
 // if ((!empty($place_row['place_related']))) {
 ?>
+
+<?php
+// }
+if ((!empty($place_row['todo_name']))) {
+?>
+    <section>
+        <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com plac-pad-top">
+            <div class="container">
+                <div class="row">
+                    <div class="plac-det-tit-inn">
+                        <h2>Things To Do Near <?php echo stripslashes($place_row['place_name']); ?></h2>
+                    </div>
+                    <div class="plac-hom-all-pla">
+
+                        <ul class="multiple-items2">
+                            <?php
+                            $todo_name = $place_row['todo_name'];
+                            $todo_url = $place_row['todo_url'];
+                            $todo_img = $place_row['todo_img'];
+                            $todo_name_Array = explode('|', $todo_name);
+                            $todo_url_Array = explode('|', $todo_url);
+                            $todo_img_Array = explode(',', $todo_img);
+                            $zipped = array_map(null, $todo_name_Array, $todo_url_Array, $todo_img_Array);
+                            foreach ($zipped as $tuple) {
+                                $tuple[0]; // Info question
+                                $tuple[1]; // Info Answer
+                            ?>
+                                <!-- <li class="col-md-3">
+                                    <a href="<?php echo $tuple[1]; ?>" target="_blank">
+                                        <div class="pg-list-ser-p1">
+                                            <img src="<?php echo $slash; ?>places/images/todo/<?php echo $tuple[2] ?>" alt="">
+                                        </div>
+                                        <div class="pg-list-ser-p2">
+                                            <h4><?php echo $tuple[0] ?></h4>
+                                        </div>
+                                    </a>
+                                </li> -->
+
+                                <li>
+                                    <div class="land-pack-grid">
+                                        <div class="land-pack-grid-img">
+                                            <img src="<?php echo $slash; ?>places/images/todo/<?php echo $tuple[2] ?>" alt="" loading="lazy">
+                                        </div>
+                                        <div class="land-pack-grid-text">
+                                            <h4><?php echo $tuple[0] ?> </h4>
+                                        </div>
+                                        <a href="<?php echo $tuple[1]; ?>" class="land-pack-grid-btn"><?php echo $tuple[0] ?></a>
+                                    </div>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php
+}
+?>
 <!--START-->
 <section>
     <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com plac-pad-top">
@@ -303,10 +380,7 @@ if ((!empty($place_row['place_info_question']))) {
     </div>
 </section>
 <!--END-->
-<?php
-// }
-// if ((!empty($place_row['place_listings']))) {
-?>
+
 
 <section>
     <div class="str">
@@ -537,42 +611,42 @@ $event_count = mysqli_num_rows($loger);
 // echo $event_count;
 if ($event_count) {
 ?>
-<!--START-->
-<section>
-    <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com">
-        <div class="container">
-            <div class="row">
-                <div class="plac-hom-tit plac-hom-tit-ic-nws">
-                    <h2><?php echo $BIZBOOK['PLACE-NEWS-H2']; ?> <b><?php echo stripslashes($place_row['place_name']); ?></b></h2>
-                    <p><?php echo $BIZBOOK['PLACE-NEWS-P']; ?> <b><?php echo $BIZBOOK['PLACE-NEWS-B']; ?></b></p>
-                </div>
-                <div class="plac-hom-all-pla plac-det-eve">
-                    <ul class="multiple-items1">
-                        <?php
-                        foreach (getPincodeMatchNews($place_row['place_pincode']) as $places_news) {
-                            $places_news_category_id = $places_news['category_id'];
-                            $places_news_category = getNewsCategory($places_news_category_id);
-                        ?>
-                            <li>
-                                <div class="plac-hom-box">
-                                    <div class="plac-hom-box-im">
-                                        <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $places_news['news_image']; ?>" alt="">
-                                        <h4><?php echo stripslashes($places_news['news_title']); ?></h4>
-                                        <span class="plac-det-cate"><?php echo $places_news_category['category_name']; ?></span>
+    <!--START-->
+    <section>
+        <div class="plac-hom-bd plac-deta-sec plac-deta-sec-com">
+            <div class="container">
+                <div class="row">
+                    <div class="plac-hom-tit plac-hom-tit-ic-nws">
+                        <h2><?php echo $BIZBOOK['PLACE-NEWS-H2']; ?> <b><?php echo stripslashes($place_row['place_name']); ?></b></h2>
+                        <p><?php echo $BIZBOOK['PLACE-NEWS-P']; ?> <b><?php echo $BIZBOOK['PLACE-NEWS-B']; ?></b></p>
+                    </div>
+                    <div class="plac-hom-all-pla plac-det-eve">
+                        <ul class="multiple-items1">
+                            <?php
+                            foreach (getPincodeMatchNews($place_row['place_pincode']) as $places_news) {
+                                $places_news_category_id = $places_news['category_id'];
+                                $places_news_category = getNewsCategory($places_news_category_id);
+                            ?>
+                                <li>
+                                    <div class="plac-hom-box">
+                                        <div class="plac-hom-box-im">
+                                            <img loading="lazy" src="<?php echo $slash; ?>/news/images/news/<?php echo $places_news['news_image']; ?>" alt="">
+                                            <h4><?php echo stripslashes($places_news['news_title']); ?></h4>
+                                            <span class="plac-det-cate"><?php echo $places_news_category['category_name']; ?></span>
+                                        </div>
+                                        <a href="<?php echo $NEWS_DETAIL_URL . urlModifier($places_news['news_slug']); ?>" class="fclick"></a>
                                     </div>
-                                    <a href="<?php echo $NEWS_DETAIL_URL . urlModifier($places_news['news_slug']); ?>" class="fclick"></a>
-                                </div>
-                            </li>
-                        <?php
-                        }
-                        ?>
-                    </ul>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!--END-->
+    </section>
+    <!--END-->
 <?php
 }
 ?>
@@ -693,6 +767,22 @@ include "../footer.php";
     $('.multiple-items1').slick({
         infinite: true,
         slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        responsive: [{
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                centerMode: false
+            }
+        }]
+
+    });
+    $('.multiple-items2').slick({
+        infinite: true,
+        slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,

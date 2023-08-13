@@ -1,7 +1,6 @@
 <?php
 include "header.php";
 ?>
-
 <?php if ($footer_row['admin_place_show'] != 1) {
     header("Location: profile.php");
 }
@@ -28,7 +27,7 @@ include "header.php";
                                                         <div class="form-group">
                                                             <h6>Place details & Info</h6>
                                                             <label>Place name</label>
-                                                            <input type="text" name="place_name" required="required" class="form-control">
+                                                            <input type="text" name="place_name" class="form-control" required="required">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -52,7 +51,7 @@ include "header.php";
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tag name</label>
-                                                            <input type="text" name="place_tags" required="required" class="form-control" placeholder="Ex: Group of three waterfalls">
+                                                            <input type="text" required="required" name="place_tags" class="form-control" placeholder="Ex: Group of three waterfalls">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -183,7 +182,7 @@ include "header.php";
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Open time</label>
-                                                            <select name="opening_time" required="required" class="chosen-select form-control">
+                                                            <select name="opening_time" required="required" id="opening_time" class="chosen-select form-control">
                                                                 <?php
                                                                 $time = '4:00'; // start
                                                                 for ($i = 0; $i <= 19; $i++) {
@@ -195,13 +194,14 @@ include "header.php";
                                                                 <?php
                                                                 }
                                                                 ?>
+                                                                <option value="247">24 Hours</option>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6" id="closing_time_box">
                                                         <div class="form-group">
                                                             <label>Close time</label>
-                                                            <select name="closing_time" required="required" class="chosen-select form-control" data-placeholder="Select places">
+                                                            <select name="closing_time" id="closing_time" required="required" class="chosen-select form-control" data-placeholder="Select places">
                                                                 <?php
                                                                 $time = '5:00'; // start
                                                                 for ($i = 0; $i <= 18; $i++) {
@@ -218,7 +218,6 @@ include "header.php";
                                                     </div>
                                                 </div>
                                                 <!--FILED END-->
-
                                                 <!--FILED START-->
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -234,7 +233,6 @@ include "header.php";
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <!--FILED START-->
                                                 <div class="row">
                                                     <div class="col-md-12">
@@ -244,7 +242,6 @@ include "header.php";
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
@@ -297,7 +294,7 @@ include "header.php";
                                                 <!--FILED END-->
                                                 <!-- <hr> -->
                                                 <!--FILED START-->
-                                                   <!-- because of pincode -->
+                                                <!-- because of pincode -->
                                                 <!-- <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
@@ -314,7 +311,7 @@ include "header.php";
                                                         </div>
                                                     </div>
                                                 </div> -->
-                                                   <!-- because of pincode -->
+                                                <!-- because of pincode -->
                                                 <!--FILED END-->
                                                 <hr>
                                                 <!--FILED START-->
@@ -381,7 +378,7 @@ include "header.php";
                                                             <h6>Banner</h6>
                                                             <!--FILED END-->
                                                             <div>
-                                                                <input type="file" name="banner" required="required" class="form-control" id="banner_img" accept="image/*,.jpg,.jpeg,.png">
+                                                                <input type="file" required="required" name="banner" class="form-control" id="banner_img" accept="image/*,.jpg,.jpeg,.png">
                                                             </div>
                                                             <!--FILED START-->
                                                         </div>
@@ -393,13 +390,47 @@ include "header.php";
                                                             <h6>Photo gallery</h6>
                                                             <!--FILED END-->
                                                             <div>
-                                                                <input type="file" name="place_gallery_image[]" required="required" class="form-control place_gallery_image" id="place_gallery_image" accept="image/*,.jpg,.jpeg,.png" multiple>
+                                                                <input type="file" required="required" name="place_gallery_image[]" class="form-control place_gallery_image" id="place_gallery_image" accept="image/*,.jpg,.jpeg,.png" multiple>
                                                             </div>
                                                             <!--FILED START-->
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!--FILED END-->
+                                                <!-- Things todo -->
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <h6>Things to do</h6>
+                                                            <span class="add-list-add-btn plac-todo-add" title="add new field">+</span>
+                                                            <span class="add-list-rem-btn plac-todo-remov" title="remove field">-</span>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="plac-ask-que thingstodo">
+                                                        <li>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label>Name</label>
+                                                                    <input type="text" name="todo_name[]" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label>URL</label>
+                                                                    <input type="text" name="todo_url[]" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label>Image</label>
+                                                                    <input type="file" name="todo_img[]" class="form-control" onchange="filehandle(this)" accept="image/*,.jpg,.jpeg,.png">
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- Things todo -->
                                                 <hr>
                                                 <!--FILED START-->
                                                 <div class="row">
@@ -410,7 +441,7 @@ include "header.php";
                                                             <span class="add-list-rem-btn plac-ask-remov" title="remove field">-</span>
                                                         </div>
                                                     </div>
-                                                    <ul class="plac-ask-que">
+                                                    <ul class="plac-ask-que whatask">
                                                         <li>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
@@ -440,10 +471,8 @@ include "header.php";
                                                             </div>
                                                         </li>
                                                     </ul>
-
                                                 </div>
                                                 <!--FILED END-->
-
                                                 <hr>
                                                 <!--FILED END-->
                                                 <div class="row">
@@ -515,7 +544,6 @@ include "header.php";
             console.log(this.value);
         })
     })
-
     var minmaxfee = document.querySelectorAll('#minmaxfee');
     document.getElementById('pincode').onkeyup = selectValue
 
@@ -523,7 +551,6 @@ include "header.php";
         let minmaxfeeVal = this;
         minmaxfeeVal.value = minmaxfeeVal.value.replace(/[^0-9\^]/g, "");
     }
-
     for (btn of minmaxfee)
         btn.onkeyup = selectValue;
 </script>
