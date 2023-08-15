@@ -171,11 +171,11 @@ if (isset($_POST['listing_submit'])) {
                             <input id="country_id" name="country_id" value="<?php echo $_SESSION['country_id']; ?>" required="required" type="hidden" class="validate">
                             <input id="profile_image" name="profile_image" value="<?php echo $_SESSION['profile_image']; ?>" required="required" type="hidden" class="validate">
                             <input id="cover_image" name="cover_image" value="<?php echo $_SESSION['cover_image']; ?>" required="required" type="hidden" class="validate">
-                            <ul>
+                            <ul class="servicecontainer">
                                 <?php
                                 $service_id_1 = $_SESSION['service_id'];
 
-                                $service_id_count = count($service_id_1);
+                                $service_id_count = is_array($service_id_1) ? count($service_id_1) : 0;
                                 if ($service_id_count != 0) {
                                     foreach ($service_id_1 as $service_Array) {
                                 ?>
