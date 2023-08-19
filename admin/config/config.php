@@ -251,7 +251,7 @@ while ($exp_listrow = mysqli_fetch_array($exp_listrs)) {
     where listing_id='$exp_listing_id'
 AND listing_cdt < DATE_SUB(NOW(), INTERVAL $exp_plan_type_duration MONTH)";
 
-    $exp_update_rs = mysqli_query($conn, $exp_update_sql);
+    // $exp_update_rs = mysqli_query($conn, $exp_update_sql);
 }
 
 
