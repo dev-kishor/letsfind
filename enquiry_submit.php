@@ -120,7 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 array('' . $admin_site_name . '', '' . $listing_name . '', '' . $email_id . '', '' . $star_password . '', '' . $admin_footer_copyright . '', '' . $admin_address . '', '' . $webpage_full_link . '', '' . $enquiry_name . '', '' . $enquiry_mobile . '', '' . $enquiry_email . '', '' . $enquiry_message . '', '' . $admin_primary_email . ''),
                 $mail_template_client
             ));
-            prx($message2);
             $headers1 = "From: " . "$admin_email" . "\r\n";
             $headers1 .= "Reply-To: " . "$admin_email" . "\r\n";
             $headers1 .= "MIME-Version: 1.0\r\n";

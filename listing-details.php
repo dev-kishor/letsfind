@@ -1,46 +1,29 @@
 <?php
-
 include "header.php";
-
 if (isset($_SESSION['user_id'])) {
     $session_user_id = $_SESSION['user_id'];
 }
 $user_details_row = getUser($session_user_id);
-
 $session_user_plan = $user_details_row['user_plan'];
 $session_plan_type_row = getPlanType($session_user_plan); //Session User Plan Type Database Fetch
-
-
 if ($_GET['code'] == NULL && empty($_GET['code'])) {
-
     header("Location: all-listing");
 }
-
 $listing_codea1 = str_replace('-', ' ', $_GET['code']);
 $listing_codea = str_replace('.php', '', $listing_codea1);
-
 //$listing_codea = $_GET['code'];
-
 $listrow = getSlugListing($listing_codea); //To Fetch the listing
-
 $listing_id = $listrow['listing_id'];
 $list_user_id = $listrow['user_id'];
 $list_category_id = $listrow['category_id'];
-
 $redirect_url = $webpage_full_link . 'dashboard';  //Redirect Url
-
 if ($listing_id == NULL && empty($listing_id)) {
-
     header("Location: $redirect_url");  //Redirect When No Listing Found in Table
 }
-
 listingpageview($listing_id); //Function To Find Page View
-
 $usersqlrow = getUser($list_user_id); // To Fetch particular User Data
-
 $user_plan = $usersqlrow['user_plan'];
 $listing_main_user = $usersqlrow['user_id'];
-
 foreach (getListingReview($listing_id) as $star_rating_row) {
     if ($star_rating_row["rate_cnt"] > 0) {
         $star_rate_times = $star_rating_row["rate_cnt"];
@@ -54,11 +37,8 @@ foreach (getListingReview($listing_id) as $star_rating_row) {
         $star_rate = 0;
     }
 }
-
 // List Rating. for Rating of Star Ends
-
 $check_listing_likes_total1 = getCountUserLikedListing($listing_id, $list_user_id); // To get count of likes
-
 if ($check_listing_likes_total1 >= 1) {
     $check_listing_likes_total = 0;
     $check_listing_likes_active = 'sav-act';
@@ -66,21 +46,14 @@ if ($check_listing_likes_total1 >= 1) {
     $check_listing_likes_total = 1;
     $check_listing_likes_active = '';
 }
-
 $plan_type_row = getPlanType($user_plan); //User Plan Type Database Fetch
-
 $review_count = getCountListingReview($listing_id); //Listing Reviews Count
-
 ?>
-
-
 <!-- <div class="ani-quo-form ani-quo-form-act"> -->
 <div class="ani-quo-form chatwindow">
     <i class="material-icons ani-req-clo closechat">close</i>
-
     <div class="hom-col-req listchatbox">
         <div class="chatstext">
-
         </div>
         <form name="home_slide_enquiry_form" id="home_slide_enquiry_form" method="post" enctype="multipart/form-data">
             <input type="hidden" class="list-user-main" value="<?php echo $listing_main_user ?>">
@@ -96,7 +69,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
         </form>
     </div>
 </div>
-
 <!-- START -->
 <section>
     <div class="v3-list-ql">
@@ -132,7 +104,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
     </div>
 </section>
 <!-- END -->
-
 <!-- START -->
 <section>
     <div class="list-det-fix">
@@ -159,7 +130,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
     </div>
 </section>
 <!-- END -->
-
 <!-- START -->
 <section>
     <div class="list-bann">
@@ -171,7 +141,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
     </div>
 </section>
 <!-- END -->
-
 <!-- START -->
 <!--LISTING DETAILS-->
 <section class="<?php if ($footer_row['admin_language'] == 2) {
@@ -214,7 +183,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 <?php
                                 }
                                 $bal_star_rate = abs(ceil($star_rate) - 5);
-
                                 for ($i = 1; $i <= $bal_star_rate; $i++) {
                                 ?>
                                     <i class="material-icons ratstar">star</i>
@@ -236,13 +204,11 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 }
                         ?>
                     </div>
-
                     <p><b><?php echo $BIZBOOK['ADDRESS']; ?>:</b> <?php echo $listrow['listing_address']; ?></p>
                     <div class="list-number pag-p1-phone">
                         <ul>
                             <a href="tel:<?php
                                             if ($listrow['listing_mobile'] != NULL || $usersqlrow['mobile_number'] != NULL) {
-
                                                 if ($list_user_id == 1) {
                                                     echo $listrow['listing_mobile'];
                                                 } else {
@@ -252,7 +218,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                             ?>">
                                 <li class="ic-php"><?php
                                                     if ($listrow['listing_mobile'] != NULL || $usersqlrow['mobile_number'] != NULL) {
-
                                                         if ($list_user_id == 1) {
                                                             echo $listrow['listing_mobile'];
                                                         } else {
@@ -275,7 +240,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 </a>
                             <?php
                             }
-
                             ?>
                             <?php if ($listrow['listing_website'] != NULL) { ?>
                                 <a target="_blank" href="<?php echo $listrow['listing_website']; ?>">
@@ -301,7 +265,8 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                         <li>
                             <span data-toggle="modal" data-target="#quote" class="pulse cta cta-get"><?php echo $BIZBOOK['LEAD-GET-QUOTE']; ?></span>
                         </li>
-                        <li>
+                        <!-- CHAT BUTTON -->
+                        <!-- <li>
                             <?php
                             if (empty($session_user_id) || $session_user_id == Null) {
                             ?>
@@ -312,17 +277,14 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 <a class="cta cta-chat chatbtnbox inablechat">Chat</a>
                             <?php
                             }
-
                             ?>
-                        </li>
+                        </li> -->
+                        <!-- CHAT BUTTON -->
                         <?php
                         if ($plan_type_row['plan_type_social'] == '1') {
                         ?>
-
                             <?php
-
                             //To Check whether listing owner made listing Share is enable
-
                             $setting_share = $usersqlrow['setting_share'];
                             if ($setting_share == 0) {
                             ?>
@@ -331,11 +293,9 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                             }
                         }
                         ?>
-
                     </ul>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
@@ -349,7 +309,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                     <?php
                     if ($plan_type_row['plan_type_description'] == '1' || $plan_type_row['plan_type_social'] == '1') {
                     ?>
-
                         <!--LISTING DETAILS: LEFT PART 1-->
                         <div class="pglist-bg pglist-p-com">
                             <div class="pglist-p-com-ti">
@@ -367,7 +326,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 ?>
                             </div>
                         </div>
-
                         <!--END LISTING DETAILS: LEFT PART 1-->
                         <!--LISTING DETAILS: LEFT PART 2-->
                         <?php if (!empty($listrow['service_id'])) { ?>
@@ -381,16 +339,12 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                     <div class="row pg-list-ser">
                                         <ul>
                                             <?php
-
                                             $service_name_array = explode(',', $listrow['service_id']);
                                             $service_image_array = explode(',', $listrow['service_image']);
-
                                             $zipped = array_map(null, $service_name_array, $service_image_array);
-
                                             foreach ($zipped as $tuple) {
                                                 $tuple[0]; // service name
                                                 $tuple[1]; // service Image
-
                                             ?>
                                                 <li class="col-md-3">
                                                     <div class="pg-list-ser-p1"><img src="<?php echo $slash; ?>images/services/<?php if ($tuple[1] != NULL) {
@@ -406,7 +360,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                             <?php
                                             }
                                             ?>
-
                                         </ul>
                                     </div>
                                 </div>
@@ -443,7 +396,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                     <?php
                     }
                     ?>
-
                     <!--LISTING DETAILS: LEFT PART 3-->
                     <?php
                     if ($plan_type_row['plan_type_photos'] == '1') {
@@ -463,14 +415,10 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                             $gallery_image_array = $listrow['gallery_image'];
                                             $gallery_image = explode(',', $gallery_image_array);
                                             $listing_video_array = $listrow['listing_video'];
-
                                             $gallery_image1 = explode('|', $listing_video_array);
-
-
                                             if (count($gallery_image + $gallery_image1) >= 1) {
                                                 $p1 = 0;
                                                 foreach ($gallery_image as $item) {
-
                                             ?>
                                                     <li data-target="#demo" data-slide-to="<?php echo $p1 ?>" class="<?php if ($p1 == 0) {
                                                                                                                             echo "active";
@@ -480,7 +428,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                                 }
                                                 if ($listing_video_array != "") {
                                                     foreach ($gallery_image1 as $item1) {
-
                                                     ?>
                                                         <li data-target="#demo" data-slide-to="<?php echo $p1 ?>" class="<?php if ($p1 == 0) {
                                                                                                                                 echo "active";
@@ -492,14 +439,11 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                             }
                                             ?>
                                         </ul>
-
                                         <!-- The slideshow -->
                                         <div class="carousel-inner">
                                             <?php
-
                                             $p = 1;
                                             foreach ($gallery_image as $item) {
-
                                             ?>
                                                 <div class="carousel-item <?php if ($p == 1) {
                                                                                 echo "active";
@@ -511,7 +455,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                             }
                                             if ($listing_video_array != "") {
                                                 foreach ($gallery_image1 as $item1) {
-
                                                 ?>
                                                     <div class="carousel-item viki">
                                                         <?php echo preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "<iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>", $item1); ?>
@@ -544,7 +487,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                     <!--END LISTING DETAILS: LEFT PART 3-->
                     <?php
                     if ($plan_type_row['plan_type_offers'] == '1') {
-
                         if (!empty($listrow['service_1_name'])) { ?>
                             <!--LISTING DETAILS: LEFT PART 4-->
                             <div id="ld-off" class="pglist-bg pglist-off-last pglist-p-com">
@@ -554,22 +496,18 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                     </h3>
                                 </div>
                                 <?php
-
                                 $ser_1_name_Array = explode('|', $listrow['service_1_name']);
                                 $ser_1_price_Array = explode(',', $listrow['service_1_price']);
                                 $ser_1_detail_Array = explode('|', $listrow['service_1_detail']);
                                 $ser_1_image_Array = explode(',', $listrow['service_1_image']);
                                 $ser_1_view_more_Array = explode(',', $listrow['service_1_view_more']);
-
                                 $zipped = array_map(null, $ser_1_name_Array, $ser_1_price_Array, $ser_1_detail_Array, $ser_1_image_Array, $ser_1_view_more_Array);
-
                                 foreach ($zipped as $tuple) {
                                     $tuple[0]; // offer name
                                     $tuple[1]; // offer Price
                                     stripslashes($tuple[2]); // offer Detail
                                     $tuple[3]; // offer Image
                                     $tuple[4]; // offer View More
-
                                 ?>
                                     <div class="list-pg-inn-sp">
                                         <div class="home-list-pop">
@@ -608,7 +546,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 <?php
                                 }
                                 ?>
-
                             </div>
                     <?php
                         }
@@ -632,24 +569,18 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                         }
                     }
                     ?>
-
                     <div class="list-sh">
                         <span class="share-new" data-toggle="modal" data-target="#sharepop"><i class="material-icons">share</i> Share now</span>
                     </div>
-
                     <!--END 360 DEGREE MAP: LEFT PART 8-->
                     <?php
                     if ($plan_type_row['plan_type_ratings'] == '1') {
                     ?>
-
                         <?php
-
                         //To Check whether listing owner made listing review option enabled
-
                         $setting_review = $usersqlrow['setting_review'];
                         if ($setting_review == 0) {
                         ?>
-
                             <!--LISTING DETAILS: LEFT PART 6-->
                             <?php
                             if ($list_user_id != $session_user_id) {
@@ -660,7 +591,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 <?php
                                 }
                                 ?>
-
                                 <!--LISTING DETAILS: LEFT PART 6-->
                                 <div class="pglist-bg pglist-p-com" <?php if (empty($session_user_id) || $session_user_id == Null) {
                                                                         echo 'style="pointer-events:none; opacity:.5"';
@@ -766,16 +696,12 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                     }
                     ?>
                     <!--END LISTING DETAILS: LEFT PART 6-->
-
                     <?php
                     if ($plan_type_row['plan_type_ratings'] == '1') {
                     ?>
-
                         <!--LISTING DETAILS: LEFT PART 5-->
                         <?php
-
                         if ($review_count > 0) {
-
                         ?>
                             <!--LISTING DETAILS: LEFT PART 5-->
                             <div class="pglist-p3 pglist-bg pglist-p-com" id="ld-rev">
@@ -831,7 +757,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                                         <?php
                                                         }
                                                         $bal_star_rate = abs(ceil($star_rate) - 5);
-
                                                         for ($i = 1; $i <= $bal_star_rate; $i++) {
                                                         ?>
                                                             <i class="material-icons ratstar">star</i>
@@ -851,13 +776,9 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                         <ul>
                                             <?php
                                             foreach (getAllListingReviews($listing_id) as $reviewsqlrow) {
-
                                                 $review_user_id = $reviewsqlrow['review_user_id'];
-
                                                 $total_per_user_rating = round((($reviewsqlrow['price_rating'] + $reviewsqlrow['customer_service_rating'] + $reviewsqlrow['staff_rating'] + $reviewsqlrow['overall_rating']) / 4), 1);
-
                                                 $revuser_details_row = getUser($review_user_id); // To Fetch particular User Data
-
                                             ?>
                                                 <li>
                                                     <div class="lr-user-wr-img"><img src="<?php echo $slash; ?>images/user/<?php if (($revuser_details_row['profile_image'] == NULL) || empty($revuser_details_row['profile_image'])) {
@@ -923,12 +844,10 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                         <?php
                         }
                         ?>
-
                     <?php
                     }
                     ?>
                     <!--END LISTING DETAILS: LEFT PART 5-->
-
                     <!--ADS-->
                     <div class="ban-ati-com ads-det-page">
                         <?php
@@ -943,7 +862,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                                                                                                                                                             } ?>"></a>
                     </div>
                     <!--ADS-->
-
                     <!--RELATED PREMIUM LISTINGS-->
                     <div class="list-det-rel-pre">
                         <h2><?php echo $BIZBOOK['LISTING_DETAILS_RELATED_LISTINGS']; ?>:</h2>
@@ -951,7 +869,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                             <?php
                             foreach (getExceptListingCategoryListing($list_category_id, $listing_id) as $except_list_row) {
                                 $except_listing_id = $except_list_row['listing_id'];
-
                                 // List Rating. for Rating of Star
                                 foreach (getListingReview($except_listing_id) as $star_rating_row_except) {
                                     if ($star_rating_row_except["rate_cnt"] > 0) {
@@ -966,7 +883,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                         $star_rate_except = 0;
                                     }
                                 }
-
                             ?>
                                 <li>
                                     <div class="land-pack-grid">
@@ -992,7 +908,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                                         <?php
                                                         }
                                                         $bal_star_rate_except = abs(ceil($star_rate_except) - 5);
-
                                                         for ($i = 1; $i <= $bal_star_rate_except; $i++) {
                                                         ?>
                                                             <i class="material-icons ratstar">star</i>
@@ -1014,13 +929,10 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                         </ul>
                     </div>
                     <!--RELATED PREMIUM LISTINGS-->
-
                 </div>
                 <div class="list-pg-rt">
-
                     <!--LISTING DETAILS: LEFT PART 9-->
                     <div class="list-rhs-form pglist-bg pglist-p-com">
-
                         <div class="quote-pop">
                             <h3><span><?php echo $BIZBOOK['LEAD-GET']; ?></span> <?php echo $BIZBOOK['LEAD-QUOTE']; ?>
                             </h3>
@@ -1066,7 +978,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 <?php } ?>
                             </form>
                         </div>
-
                     </div>
                     <!--END LISTING DETAILS: LEFT PART 9-->
                     <?php
@@ -1158,15 +1069,11 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                         <!--END LISTING DETAILS: COMPANY BADGE-->
                     <?php
                     } ?>
-
                     <?php
-
                     //To Check whether listing owner made listing guarantee is visible
-
                     $setting_guarantee_show = $usersqlrow['setting_guarantee_show'];
                     if ($setting_guarantee_show == 0) {
                     ?>
-
                         <!--LISTING DETAILS: LEFT PART 7-->
                         <div class="lide-guar pglist-bg pglist-p-com">
                             <div class="pglist-p-com-ti pglist-p-com-ti-right">
@@ -1225,9 +1132,7 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                         <?php
                                         $listings_a_row_listing_info_question_Array = explode(',', $listrow['listing_info_question']);
                                         $listings_a_row_listing_info_answer_Array = explode(',', $listrow['listing_info_answer']);
-
                                         $zipped = array_map(null, $listings_a_row_listing_info_question_Array, $listings_a_row_listing_info_answer_Array);
-
                                         foreach ($zipped as $tuple) {
                                             $tuple[0]; // Info question
                                             $tuple[1]; // Info Answer
@@ -1246,14 +1151,10 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                     <?php
                     }
                     ?>
-
                     <?php
-
                     //To Check whether listing owner made profile is visible
-
                     $setting_profile_show = $usersqlrow['setting_profile_show'];
                     if ($setting_profile_show == 0) {
-
                     ?>
                         <!--LISTING DETAILS: LEFT PART 7-->
                         <!-- <div class="ld-rhs-pro pglist-bg pglist-p-com">
@@ -1281,7 +1182,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                     <?php
                     }
                     ?>
-
                     <?php
                     $likes_count = listing_total_like_count($listing_id);
                     if ($likes_count >= 1) {
@@ -1293,7 +1193,6 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
                                 <ul>
                                     <?php
                                     foreach (getAllLikedListingListing($listing_id) as $likesuser_row) {
-
                                         $user_id_liked = $likesuser_row['user_id'];
                                         $user_id_liked_row = getUser($user_id_liked);
                                     ?>
@@ -1335,11 +1234,9 @@ $review_count = getCountListingReview($listing_id); //Listing Reviews Count
         </div>
     </div>
 </section>
-
 <?php
 include "footer.php";
 ?>
-
 <section>
     <div class="pop-ups pop-quo">
         <!-- The Modal -->
@@ -1383,21 +1280,13 @@ include "footer.php";
                                 <textarea class="form-control" rows="3" name="enquiry_message" placeholder="<?php echo $BIZBOOK['LEAD-MESSAGE-PLACEHOLDER']; ?>"></textarea>
                             </div>
                             <input type="hidden" id="source">
-                            <?php if ($session_plan_type_row['plan_type_ratings'] == 0 && $user_details_row['user_type'] != "General") { ?>
-                                <button disabled="disabled" type="submit" id="popup_enquiry_submit" name="popup_enquiry_submit" class="btn btn-primary"><?php echo $BIZBOOK['LISTING_DETAILS_UNABLE_SUBMIT_ENQUIRY']; ?>
-                                </button>
-                            <?php } else { ?>
-                                <button <?php if ($session_user_id == NULL || empty($session_user_id)) {
-                                        ?> disabled="disabled" <?php } ?> type="submit" id="popup_enquiry_submit" name="popup_enquiry_submit" class="btn btn-primary"><?php if ($session_user_id == NULL || empty($session_user_id)) {
-                                                                                                                                                                        ?><?php echo $BIZBOOK['LOG_IN_TO_SUBMIT']; ?><?php } else { ?><?php echo $BIZBOOK['SUBMIT']; ?><?php } ?>
-                                </button>
-                            <?php } ?>
+                            <button type="submit" id="popup_enquiry_submit" name="popup_enquiry_submit" class="btn btn-primary"><?php echo $BIZBOOK['SUBMIT']; ?>
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- The Modal -->
         <div class="modal fade" id="claim">
             <div class="modal-dialog">
@@ -1464,18 +1353,15 @@ include "footer.php";
         </div>
     </div>
 </section>
-
 <!-- SHARE POPUP -->
 <div class="modal fade sharepop" id="sharepop">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Share now</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
                 <input type="text" value="" id="shareurl">
@@ -1485,11 +1371,9 @@ include "footer.php";
                         Copy text </button>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="<?php echo $slash; ?>js/jquery.min.js"></script>
@@ -1515,7 +1399,6 @@ include "footer.php";
             $(".list-det-fix").removeClass("list-det-fix-act");
         }
     });
-
     function scrollNav() {
         $('.v3-list-ql-inn a').click(function() {
             //Toggle Class
@@ -1533,7 +1416,6 @@ include "footer.php";
     }
     scrollNav();
 </script>
-
 <script>
     $(document).ready(function() {
         $('input[name="price_rating"]').change(function() {
@@ -1553,7 +1435,5 @@ include "footer.php";
         });
     });
 </script>
-
 </body>
-
 </html>
