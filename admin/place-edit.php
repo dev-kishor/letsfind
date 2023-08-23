@@ -359,7 +359,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Events in this place</label>
-                                                            <select name="place_events[]" multiple="multiple" class="chosen-select form-control" data-placeholder="Select Events">
+                                                            <select name="place_events[]" disabled multiple="multiple" class="chosen-select form-control" data-placeholder="Select Events">
                                                                 <?php
                                                                 foreach (getAllEvents() as $row) {
                                                                 ?>
@@ -383,7 +383,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Services Experts in this place</label>
-                                                            <select name="place_experts[]" multiple="multiple" class="chosen-select form-control" data-placeholder="Select Experts">
+                                                            <select name="place_experts[]" disabled multiple="multiple" class="chosen-select form-control" data-placeholder="Select Experts">
                                                                 <?php
                                                                 foreach (getAllExperts() as $row) {
                                                                 ?>
@@ -407,7 +407,7 @@ if ($footer_row['admin_place_show'] != 1) {
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>News & Articles in this place</label>
-                                                            <select name="places_news[]" multiple="multiple" class="chosen-select form-control" data-placeholder="Select News/Articles">
+                                                            <select name="places_news[]" disabled multiple="multiple" class="chosen-select form-control" data-placeholder="Select News/Articles">
                                                                 <?php
                                                                 foreach (getAllNews() as $row) {
                                                                 ?>
