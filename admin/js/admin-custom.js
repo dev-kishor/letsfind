@@ -125,11 +125,21 @@ $(document).ready(function () {
   //CITY ADD - APPEND
   $(".city-add-btn").click(function () {
     $(".add-ncate ul li:last-child").after(
-      '<li> <div class="row"> <div class="col-md-12"> <div class="form-group"> <input type="text" class="form-control" name="city_name[]" placeholder="City name *" required> </div> </div> </div> </li>'
+      '<li> <div class="row"> <div class="col-md-12"> <div class="form-group"> <input type="text" name="city_name[]" class="form-control" placeholder="City name *"> </div> </div> </div> </li>'
     );
   });
   //CITY REMOVE - APPEND
   $(".city-rem-btn").click(function () {
+    $(".add-ncate ul li:last-child").remove();
+  });
+  //STATE ADD - APPEND
+  $(".state-add-btn").click(function () {
+    $(".add-ncate ul li:last-child").after(
+      '<li> <div class="row"> <div class="col-md-12"> <div class="form-group"> <input type="text" name="state_name[]" class="form-control" placeholder="State name *"> </div> </div> </div> </li>'
+    );
+  });
+  //STATE REMOVE - APPEND
+  $(".state-rem-btn").click(function () {
     $(".add-ncate ul li:last-child").remove();
   });
   //Expert City ADD - APPEND

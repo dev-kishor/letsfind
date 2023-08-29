@@ -14,14 +14,18 @@ include "header.php";
                     <div class="row">
                         <div class="login-main add-list add-ncate">
                             <div class="log-bor">&nbsp;</div>
-                            <span class="udb-inst">New City</span>
+                            <span class="udb-inst">Edit State</span>
                             <div class="log log-1">
                                 <div class="login">
-                                    <h4>Add New City</h4>
+                                    <h4>Edit this State</h4>
                                     <?php include "../page_level_message.php"; ?>
-                                    <span class="add-list-add-btn city-add-btn" data-toggle="tooltip" title="Click to make additional city">+</span>
-                                    <span class="add-list-rem-btn city-rem-btn" data-toggle="tooltip" title="Click to remove last city">-</span>
-                                    <form name="city_form" id="city_form" method="post" action="insert_city.php" enctype="multipart/form-data" class="cre-dup-form cre-dup-form-show">
+                                    <?php
+                                    $state_id = $_GET['row'];
+                                    $row = getStateById($state_id);
+                                    // prx($row);
+                                    ?>
+                                    <form name="city_form" id="city_form" method="post" action="update_state.php" enctype="multipart/form-data" class="cre-dup-form cre-dup-form-show">
+                                        <input type="hidden" class="validate" id="state_id" name="state_id" value="<?php echo $row['state_id']; ?>" required="required">
                                         <ul>
                                             <li>
                                                 <div class="row">
@@ -33,7 +37,7 @@ include "header.php";
                                                                 //Countries Query
                                                                 foreach (getAllCountries() as $countries_row) {
                                                                 ?>
-                                                                    <option <?php if ($_SESSION['country_id'] == $countries_row['country_id']) {
+                                                                    <option <?php if ($row['country_id'] == $countries_row['country_id']) {
                                                                                 echo "selected";
                                                                             } ?> value="<?php echo $countries_row['country_id']; ?>"><?php echo $countries_row['country_name']; ?></option>
                                                                 <?php
@@ -43,32 +47,19 @@ include "header.php";
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </li>
-                                            <li>
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <select name="state_id" required="required" id="state_id" class="chosen-select form-control">
-                                                                <option value="">Choose State</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <input type="text" name="city_name[]" class="form-control" placeholder="City name *" required>
+                                                            <input type="text" name="state_name" value="<?php echo $row['state_name']; ?>" class="form-control" placeholder="State name *" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
-                                        <button type="submit" name="city_submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" name="state_submit" class="btn btn-primary">Update</button>
                                     </form>
                                     <div class="col-md-12">
-                                        <a href="admin-all-city.php" class="skip">Go to All City >></a>
+                                        <a href="admin-all-city.php" class="skip">Go to All State >></a>
                                     </div>
                                 </div>
                             </div>
@@ -86,25 +77,8 @@ include "header.php";
 <script src="../js/popper.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery-ui.js"></script>
-<script src="../js/select-opt.js"></script>
 <script src="js/admin-custom.js"></script>
-<script>
-    $("#country_id").change((e) => {
-        getState(e.target.value);
-    })
-
-    function getState(country_id) {
-        $.ajax({
-            type: "POST",
-            url: "../state_process.php",
-            data: 'country_id=' + country_id,
-            success: function(data) {
-                $("#state_id").html(data);
-                $('#state_id').trigger("chosen:updated");
-            }
-        });
-    }
-</script>
+<script src="../js/select-opt.js"></script>
 </body>
 
 </html>

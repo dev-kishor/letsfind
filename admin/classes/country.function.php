@@ -25,6 +25,15 @@ function getMultipleCountry($arg)
     return $rs;
 }
 //Get All Country with given country Id's
+function getAllOtherStates()
+{
+    global $conn;
+    $sql = "SELECT s.*,c.country_name FROM " . TBL . "states as s join " . TBL . "countries as c on s.country_id = c.country_id";
+    $rs = mysqli_query($conn, $sql);
+    return $rs;
+}
+
+//Get All Country with given country Id's
 function getAllStates($arg)
 {
     global $conn;
@@ -33,6 +42,17 @@ function getAllStates($arg)
     $rs = mysqli_query($conn, $sql);
     return $rs;
 }
+
+//Get All Country with given country Id's
+function getStateById($arg)
+{
+    global $conn;
+    $sql = "SELECT s.*,c.country_name FROM " . TBL . "states as s join " . TBL . "countries as c on s.country_id = c.country_id where s.state_id = '" . $arg . "'";
+    $rs = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($rs);
+    return $row;
+}
+
 //Get All Country Count
 function getCountCountry()
 {
