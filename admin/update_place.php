@@ -71,6 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $google_map = safe_input_Text($_POST["google_map"]);
         $address = safe_input_Text($_POST["address"]);
         $pincode = safe_input_Text($_POST["pincode"]);
+        $country_id = safe_input_Text($_POST["country_id"]);
+        $state_id = safe_input_Text($_POST["state_id"]);
+        $city_id = safe_input_Text($_POST["city_id"]);
         // Place Other Information
         $place_info_question123 = $_POST["place_info_question"];
         $prefix1 = $fruitList = '';
@@ -199,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             , place_gallery_image='" . $place_gallery_image . "', opening_time='" . $opening_time . "'
             , closing_time ='" . $closing_time . "', google_map ='" . $google_map . "',place_address ='" . $address . "',place_pincode ='" . $pincode . "', place_status ='" . $place_status . "'
             , place_info_question ='" . $place_info_question . "', place_info_answer ='" . $place_info_answer . "'
-            , place_slug ='" . $place_slug . "', todo_name ='" . $todo_names . "', todo_url ='" . $todo_urls . "', todo_img ='" . $todo_image . "' where place_id ='" . $place_id . "'";
+            , place_slug ='" . $place_slug . "', todo_name ='" . $todo_names . "', todo_url ='" . $todo_urls . "', todo_img ='" . $todo_image . "',country ='" . $country_id . "',state ='" . $state_id . "',city ='" . $city_id . "' where place_id ='" . $place_id . "'";
         $place_res = mysqli_query($conn, $place_qry);
         if ($place_res) {
             $_SESSION['status_msg'] = "Your Places has been Updated Successfully!!!";

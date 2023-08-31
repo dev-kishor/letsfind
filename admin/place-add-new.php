@@ -222,8 +222,38 @@ include "header.php";
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" name="address" required="required" placeholder="Ex: A 778-B abcarea, 3003" class="form-control">
+                                                            <label>Country</label>
+                                                            <select name="country_id" required="required" id="country_id" class="chosen-select form-control">
+                                                                <option value="" disabled selected>Choose Country</option>
+                                                                <?php
+                                                                //Countries Query
+                                                                foreach (getAllCountries() as $countries_row) {
+                                                                ?>
+                                                                    <option value="<?php echo $countries_row['country_id']; ?>"><?php echo $countries_row['country_name']; ?></option>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>State</label>
+                                                            <select name="state_id" required="required" id="state_id" class="chosen-select form-control">
+                                                                <option value="" disabled selected>Choose State</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--FILED START-->
+                                                <!--FILED START-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>City</label>
+                                                            <select name="city_id" required="required" id="city_id" class="chosen-select form-control">
+                                                                <option value="" disabled selected>Choose City</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -235,7 +265,13 @@ include "header.php";
                                                 </div>
                                                 <!--FILED START-->
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Address</label>
+                                                            <input type="text" name="address" required="required" placeholder="Ex: A 778-B abcarea, 3003" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Direction(Google map link)</label>
                                                             <input type="text" name="google_map" required="required" placeholder="Ex: https://goo.gl/maps/cUZ39XriLPf9HhKk7" class="form-control">
@@ -522,6 +558,7 @@ include "header.php";
 <script src="../js/select-opt.js"></script>
 <script type="text/javascript" src="../js/imageuploadify.min.js"></script>
 <script src="js/admin-custom.js"></script>
+<script src="js/logic.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         // $('input[id="place_gallery_image"]').imageuploadify();

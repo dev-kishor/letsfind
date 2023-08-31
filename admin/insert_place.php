@@ -65,6 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $google_map = safe_input_Text($_POST["google_map"]);
         $address = safe_input_Text($_POST["address"]);
         $pincode = safe_input_Text($_POST["pincode"]);
+        $country_id = safe_input_Text($_POST["country_id"]);
+        $state_id = safe_input_Text($_POST["state_id"]);
+        $city_id = safe_input_Text($_POST["city_id"]);
         //Place Other Information
         $place_info_question123 = $_POST["place_info_question"];
         $prefix1 = $fruitList = '';
@@ -179,8 +182,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         // ************************  TODO Image Upload ends  **************************
         //    Place Insert Part Starts
-        $place_qry = "INSERT INTO " . TBL . "places(category_id, place_name, place_description, place_tags, place_fee, seo_title, seo_description, seo_keywords, places_news, place_experts, place_events, place_listings, place_related, place_discover, place_banner_image, place_gallery_image, opening_time, closing_time, google_map, place_address, place_pincode, place_status, place_info_question , place_info_answer, place_slug, place_cdt,min_child,max_child,fee_child,min_adult,max_adult,fee_adult,min_senior,max_senior,fee_senior,todo_name,todo_url,todo_img) VALUES
-					('$category_id', '$place_name', '$place_description', '$place_tags', '$place_fee', '$seo_title', '$seo_description', '$seo_keywords', '$places_news', '$place_experts', '$place_events', '$place_listings', '$place_related', '$place_discover', '$place_banner_image', '$place_gallery_image', '$opening_time', '$closing_time', '$google_map','$address','$pincode', '$place_status', '$place_info_question', '$place_info_answer', '$place_slug', '$curDate','$min_child','$max_child','$fee_child','$min_adult','$max_adult','$fee_adult','$min_senior','$max_senior','$fee_senior','$todo_names','$todo_urls','$todo_image')";
+        $place_qry = "INSERT INTO " . TBL . "places(category_id, place_name, place_description, place_tags, place_fee, seo_title, seo_description, seo_keywords, places_news, place_experts, place_events, place_listings, place_related, place_discover, place_banner_image, place_gallery_image, opening_time, closing_time, google_map, place_address, place_pincode,country,state,city, place_status, place_info_question , place_info_answer, place_slug, place_cdt,min_child,max_child,fee_child,min_adult,max_adult,fee_adult,min_senior,max_senior,fee_senior,todo_name,todo_url,todo_img) VALUES
+					('$category_id', '$place_name', '$place_description', '$place_tags', '$place_fee', '$seo_title', '$seo_description', '$seo_keywords', '$places_news', '$place_experts', '$place_events', '$place_listings', '$place_related', '$place_discover', '$place_banner_image', '$place_gallery_image', '$opening_time', '$closing_time', '$google_map','$address','$pincode','$country_id','$state_id','$city_id', '$place_status', '$place_info_question', '$place_info_answer', '$place_slug', '$curDate','$min_child','$max_child','$fee_child','$min_adult','$max_adult','$fee_adult','$min_senior','$max_senior','$fee_senior','$todo_names','$todo_urls','$todo_image')";
         $place_res = mysqli_query($conn, $place_qry);
         $PlaceID = mysqli_insert_id($conn);
         $placelastID = $PlaceID;

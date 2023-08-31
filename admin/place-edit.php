@@ -251,8 +251,58 @@ if ($footer_row['admin_place_show'] != 1) {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" name="address" placeholder="Ex: A 778-B abcarea, 3003" class="form-control" value="<?php echo $place_row['place_address']; ?>">
+                                                            <label>Country</label>
+                                                            <select name="country_id" required="required" id="country_id" class="chosen-select form-control">
+                                                                <option value="" disabled selected>Choose Country</option>
+                                                                <?php
+                                                                //Countries Query
+                                                                foreach (getAllCountries() as $countries_row) {
+                                                                ?>
+                                                                    <option <?php if ($place_row['country'] == $countries_row['country_id']) {
+                                                                                echo "selected";
+                                                                            } ?> value="<?php echo $countries_row['country_id']; ?>"><?php echo $countries_row['country_name']; ?></option>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>State</label>
+                                                            <select name="state_id" required="required" id="state_id" class="chosen-select form-control">
+                                                                <option value="" disabled selected>Choose State</option>
+                                                                <?php
+                                                                foreach (getAllOtherStates() as $state_row) {
+                                                                ?>
+                                                                    <option <?php if ($place_row['state'] == $state_row['state_id']) {
+                                                                                echo "selected";
+                                                                            } ?> value="<?php echo $state_row['state_id']; ?>"><?php echo $state_row['state_name']; ?></option>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--FILED START-->
+                                                <!--FILED START-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>City</label>
+                                                            <select name="city_id" required="required" id="city_id" class="chosen-select form-control">
+                                                                <option value="" disabled selected>Choose City</option>
+                                                                <?php
+                                                                foreach (getCityByStateID($place_row['state']) as $city_row) {
+                                                                ?>
+                                                                    <option <?php if ($place_row['city'] == $city_row['city_id']) {
+                                                                                echo "selected";
+                                                                            } ?> value="<?php echo $city_row['city_id']; ?>"><?php echo $city_row['city_name']; ?></option>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -264,7 +314,13 @@ if ($footer_row['admin_place_show'] != 1) {
                                                 </div>
                                                 <!--FILED START-->
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Address</label>
+                                                            <input type="text" name="address" placeholder="Ex: A 778-B abcarea, 3003" class="form-control" value="<?php echo $place_row['place_address']; ?>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Direction(Google map link)</label>
                                                             <input type="text" name="google_map" value="<?php echo $place_row['google_map']; ?>" placeholder="Ex: https://goo.gl/maps/cUZ39XriLPf9HhKk7" class="form-control">
@@ -592,6 +648,7 @@ if ($footer_row['admin_place_show'] != 1) {
 <script src="../js/select-opt.js"></script>
 <script type="text/javascript" src="../js/imageuploadify.min.js"></script>
 <script src="js/admin-custom.js"></script>
+<script src="js/logic.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('input[id="place_gallery_image"]').imageuploadify();
@@ -622,6 +679,7 @@ if ($footer_row['admin_place_show'] != 1) {
     })
     var minmaxfee = document.querySelectorAll('#minmaxfee');
     document.getElementById('pincode').onkeyup = selectValue
+
     function selectValue() {
         let minmaxfeeVal = this;
         minmaxfeeVal.value = minmaxfeeVal.value.replace(/[^0-9\^]/g, "");
@@ -630,4 +688,5 @@ if ($footer_row['admin_place_show'] != 1) {
         btn.onkeyup = selectValue;
 </script>
 </body>
+
 </html>

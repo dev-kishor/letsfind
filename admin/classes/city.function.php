@@ -56,3 +56,12 @@ function getCountCity()
     return $row;
 
 }
+function getCityByStateID($arg)
+{
+    global $conn;
+
+    $sql = "SELECT * FROM " . TBL . "cities where state_id='" . $arg . "'";
+    $rs = mysqli_query($conn, $sql);
+    return $rs;
+
+}
