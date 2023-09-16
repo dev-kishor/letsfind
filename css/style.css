@@ -29205,7 +29205,10 @@ a[data-command="p"] {
   display: flex;
   justify-content: space-between;
 }
-.todoBtn button a {
+.todoBtn button:nth-child(1) a {
+  color: white !important;
+}
+.todoBtn button:nth-child(2) a {
   color: black !important;
 }
 .todoBtn button {

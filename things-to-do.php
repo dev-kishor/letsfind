@@ -174,7 +174,7 @@ include "header.php";
                                                     <h4><?php echo $tuple[0] ?></h4>
                                                 </div>
                                                 <div class="todoBtn">
-                                                    <button><a target="_blank" href="<?php echo $tuple[1] ?>"></a>Explore</button>
+                                                    <button><a target="_blank" href="<?php echo $tuple[1] ?>">Explore</a></button>
                                                     <button><a target="_blank" href="<?php echo $todo_place["google_map"] ?>"><span class="addr"></span> View Map</a></button>
                                                 </div>
                                                 <!-- <a target="_blank" href="<?php echo $tuple[1] ?>" class="land-pack-grid-btn"></a> -->
