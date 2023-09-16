@@ -81,46 +81,106 @@ if (isset($_GET['category'])) {
                     <h2><?php echo $BIZBOOK['PLACE-HOME-H-2-1']; ?></h2>
                     <p><?php echo $BIZBOOK['PLACE-HOME-P-2-1']; ?> <b><?php echo $BIZBOOK['PLACE-HOME-B-2-1']; ?></b></p>
                 </div>
-                <div class="plac-hom-all-pla">
-                    <ul>
-                        <?php
-                        $si = 1;
-                        $placesql = "SELECT * FROM " . TBL . "places WHERE $category_search_query place_name like '%$category_search_slug%' ORDER BY place_id DESC";
-                        $placers = mysqli_query($conn, $placesql);
-                        if (mysqli_num_rows($placers) > 0) {
-                            while ($placerow = mysqli_fetch_array($placers)) {
-                                $place_id = $placerow['place_id'];
-                                $category_id = $placerow['category_id'];
-                                $category_row = getPlaceCategory($category_id);
-                        ?>
+                <div class="col-md-2 fil-mob-view">
+                    <div class="all-filt">
+                        <span class="fil-mob-clo"><i class="material-icons">close</i></span>
+                        <div class="filt-alist-near">
+                            <div class="tit">
+                                <h4>Filter By City</h4>
+                            </div>
+                            <div class="near-ser-list top-ser-secti-prov cutmstateslt">
+                                <div class="how-to-coll">
+                                    <ul>
+                                        <?php foreach (getAllPlaceWhoHaveState() as $state_row) {
+                                        ?>
+                                            <li>
+                                                <h4 class="selected_state" id="selected_state<?php echo $state_row['state'] ?>" value="<?php echo $state_row["state"] ?>">+<?php echo $state_row["state_name"] ?></h4>
+
+                                                <div class="muslertlkjh">
+                                                    <?php foreach (getAllPlaceCatWhoHaveCityForState($state_row["state"]) as $cat_row) {
+                                                    ?>
+                                                        <div class="dbhf">
+                                                            <input type="checkbox" class="selected_cat" name="selected_cat<?php echo $state_row["state"] ?>" value="<?php echo $cat_row["category_id"] ?>" checked><?php echo $cat_row["category_name"] ?>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </li>
+                                        <?php
+                                        } ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--START-->
+                        <div class="filt-com lhs-ads">
+                            <ul>
                                 <li>
-                                    <div class="plac-hom-box">
-                                        <div class="plac-hom-box-im">
-                                            <img loading="lazy" src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $placerow['place_gallery_image'])[0]; ?>" alt="">
-                                            <h4><?php echo stripslashes($placerow['place_name']); ?></h4>
-                                        </div>
-                                        <div class="plac-hom-box-txt">
-                                            <span><?php echo $category_row['category_name']; ?></span>
-                                            <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
-                                        </div>
-                                        <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($placerow['place_slug']); ?>" class="fclick"></a>
+                                    <div class="ads-box">
+                                        <?php
+                                        $ad_position_id = 4;   //Ad position on All Listing page Left
+                                        $get_ad_row = getAds($ad_position_id);
+                                        $ad_enquiry_photo = $get_ad_row['ad_enquiry_photo'];
+                                        ?>
+                                        <a href="<?php echo stripslashes($get_ad_row['ad_link']); ?>">
+                                            <span><?php echo $BIZBOOK['AD']; ?></span>
+                                            <img src="<?php echo $slash; ?>images/ads/<?php if ($ad_enquiry_photo != NULL || !empty($ad_enquiry_photo)) {
+                                                                                            echo $ad_enquiry_photo;
+                                                                                        } else {
+                                                                                            echo "ads1.jpg";
+                                                                                        } ?>" alt="">
+                                        </a>
                                     </div>
                                 </li>
+                            </ul>
+                        </div>
+
+                        <!-- END -->
+                    </div>
+                </div>
+
+                <div class="col-md-10">
+                    <div class="plac-hom-all-pla">
+                        <ul id="dimyhjgh">
                             <?php
-                            }
-                        } else {
+                            $si = 1;
+                            $placesql = "SELECT p.place_id,p.category_id,p.place_name,p.place_gallery_image,p.place_slug,s.state_name,c.city_name FROM " . TBL . "places as p join " . TBL . "states as s on s.state_id = p.state join " . TBL . "cities as c on c.city_id = p.city WHERE $category_search_query place_name like '%$category_search_slug%' ORDER BY place_id DESC";
+                            $placers = mysqli_query($conn, $placesql);
+                            if (mysqli_num_rows($placers) > 0) {
+                                while ($placerow = mysqli_fetch_array($placers)) {
+                                    $place_id = $placerow['place_id'];
+                                    $category_id = $placerow['category_id'];
+                                    $category_row = getPlaceCategory($category_id);
                             ?>
-                            <span style="font-size: 21px;
+                                    <li class="list-plac-hom-box">
+                                        <div class="plac-hom-box">
+                                            <div class="plac-hom-box-im">
+                                                <img loading="lazy" src="<?php echo $slash; ?>places/images/places/<?php echo explode(',', $placerow['place_gallery_image'])[0]; ?>" alt="">
+                                                <h4><?php echo stripslashes($placerow['place_name']); ?></h4>
+                                            </div>
+                                            <div class="plac-hom-box-txt">
+                                                <span><?php echo $category_row['category_name']; ?></span>
+                                                <span><?php echo $BIZBOOK['PLACE-MORE-DETAILS']; ?></span>
+                                            </div>
+                                            <a href="<?php echo $PLACE_DETAIL_URL . urlModifier($placerow['place_slug']); ?>" class="fclick"></a>
+                                        </div>
+                                    </li>
+                                <?php
+                                }
+                            } else {
+                                ?>
+                                <span style="font-size: 21px;
                                         color: #bfbfbf;
                                         letter-spacing: 1px;    
                                         /* background: #525252; */    
                                         text-shadow: 0px 0px 2px #fff;    
                                         text-transform: uppercase;    
                                         margin-top: 5%;"><?php echo $BIZBOOK['PLACES_NO_PLACES_MESSAGE']; ?></span>
-                        <?php
-                        }
-                        ?>
-                    </ul>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
                 </div>
                 <div id="all-list-pagination-container"></div>
             </div>
@@ -189,7 +249,7 @@ if (isset($_GET['category'])) {
                                                                                                                                                                                                 ?> <?php echo $BIZBOOK['LOG_IN_TO_SUBMIT']; ?> <?php } else { ?><?php echo $BIZBOOK['SUBMIT']; ?> <?php } ?></button>
                     </form>
                 </div>
-             
+
             </div>
         </div>
     </div>
@@ -211,29 +271,66 @@ include "../footer.php";
     var login_url = '<?php echo $LOGIN_URL; ?>';
 </script>
 <script src="<?php echo $slash; ?>js/custom.js"></script>
+<script src="<?php echo $slash; ?>js/thingstodo.js"></script>
 <script src="<?php echo $slash; ?>js/jquery.validate.min.js"></script>
 <script src="<?php echo $slash; ?>js/custom_validation.js"></script>
 <script src="<?php echo $slash; ?>js/jquery.simplePagination.min.js"></script>
 <script>
-    var items = $(".plac-hom-all-pla .plac-hom-box");
-    var numItems = items.length;
-    var perPage = 6;
-    items.slice(perPage).hide();
-    $('#all-list-pagination-container').pagination({
-        items: numItems,
-        itemsOnPage: perPage,
-        prevText: "&laquo;",
-        nextText: "&raquo;",
-        onPageClick: function(pageNumber) {
-            var showFrom = perPage * (pageNumber - 1);
-            var showTo = showFrom + perPage;
-            items.hide().slice(showFrom, showTo).show();
-            $("html, body").animate({
-                scrollTop: 0
-            }, "fast");
-            return false;
-        }
-    });
+
+$(".selected_state").on("click", function () {
+  let state_id = $(this).attr("id").replace(/selected_state/g, "");
+  let city_ids = [];
+  $(`input[name=selected_cat${state_id}]:checked`).map(function () {
+    city_ids.push($(this).val());
+  });
+  const queryData = { stateid: state_id, cat_ids: city_ids.join() };
+  getPlaceWithStateCat(queryData);
+});
+
+$(".selected_cat").on("change", function () {
+  let state_id = this.name.replace(/selected_cat/g, "");
+  let city_id = this.value;
+  console.log(state_id);
+  document.querySelector("#selected_state" + state_id).click();
+});
+
+function getPlaceWithStateCat({ stateid, cat_ids }) {
+  $.ajax({
+    type: "POST",
+    url: "../place_state_and_cat_process.php",
+    data: "state_id=" + stateid + "&cat_ids=" + cat_ids,
+    success: function (data) {
+      $("#dimyhjgh").html(data);
+      loadPagi()
+      //   $("#sub_category_id").trigger("chosen:updated");
+    },
+  });
+}
+
+
+    function loadPagi() {
+        var items = $(".list-plac-hom-box");
+        console.log(items);
+        var numItems = items.length;
+        var perPage = 6;
+        items.slice(perPage).hide();
+        $('#all-list-pagination-container').pagination({
+            items: numItems,
+            itemsOnPage: perPage,
+            prevText: "&laquo;",
+            nextText: "&raquo;",
+            onPageClick: function(pageNumber) {
+                var showFrom = perPage * (pageNumber - 1);
+                var showTo = showFrom + perPage;
+                items.hide().slice(showFrom, showTo).show();
+                $("html, body").animate({
+                    scrollTop: 0
+                }, "fast");
+                return false;
+            }
+        });
+    }
+    loadPagi()
 </script>
 </body>
 

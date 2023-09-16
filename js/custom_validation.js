@@ -9,7 +9,7 @@ $(document).ready(function () {
             user_type: { required: true },
             email_id: { required: true, email: true },
             mobile_number: { required: true },
-            password: { required: true, minlength: 6, maxlength: 10 },
+            password: { required: true, minlength: 6, maxlength: 100 },
             user_plan: {
                 required: function () {
                     return $("#user_type").val() == "Service provider";

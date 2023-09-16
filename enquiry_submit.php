@@ -115,11 +115,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $client_sql_fetch = mysqli_query($conn, "SELECT * FROM " . TBL . "mail WHERE mail_id = 23 "); //User mail template fetch
             $client_sql_fetch_row = mysqli_fetch_array($client_sql_fetch);
             $mail_template_client = $client_sql_fetch_row['mail_template'];
-            $message2 = stripslashes(str_replace(
-                array('\'.$admin_site_name.\'', '\' . $first_name . \'', '\' . $email_id . \'', '\' . $password . \'', '\'.$admin_footer_copyright.\'', '\'.$admin_address.\'', '\'.$webpage_full_link.\'', '\' . $enquiry_name. \'', '\' . $enquiry_mobile . \'', '\' . $enquiry_email . \'', '\' . $enquiry_message . \'', '\'.$admin_primary_email.\''),
-                array('' . $admin_site_name . '', '' . $listing_name . '', '' . $email_id . '', '' . $star_password . '', '' . $admin_footer_copyright . '', '' . $admin_address . '', '' . $webpage_full_link . '', '' . $enquiry_name . '', '' . $enquiry_mobile . '', '' . $enquiry_email . '', '' . $enquiry_message . '', '' . $admin_primary_email . ''),
-                $mail_template_client
-            ));
+            $enquiry_listing_link = $webpage_full_link . "db-enquiry";
+            $enquiry_listing_img = $webpage_full_link . "images/listings/" . $listing_email['profile_image'];
+            $message2 = '<!DOCTYPE html>
+           <html lang="en">
+           
+           <head>
+               <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+               <title>Bizbook Mailers</title>
+           </head>
+           
+           <body id="page-top" class="index">
+              <table border="0" cellspacing="0" cellpadding="0" style="width:100%;font-size:14px;font-family:Quicksand, Calibri, Arial, Verdana, sans-serif;background: #f5f6fa;color:#738196;line-height: 21px;padding: 30px;">
+                   <tbody>
+                       <tr>
+                           <td>
+                               <table style="background: #fff;width:500px;padding: 20px;margin: 0 auto;box-shadow: 0px 1px 10px 13px #2d313703;border-radius: 8px;font-weight: 500;">
+                                   <tbody>
+                                   <tr>
+                                       <td style="font-size: 24px;color:#000;font-weight: bold;line-height: 30px;">Hi <span contenteditable="false">' . $first_name . '</span></td>
+                                   </tr>
+                                   <tr>
+                                       <td style="height: 5px;line-height: 2px;">&nbsp;</td>
+                                   </tr>
+                                   <tr>
+                                       <td>A New Enquiry has been received. For reference, here' . "'" . 's your enquiry information:</td>
+                                   </tr>     
+                                   <tr><td>&nbsp;</td></tr>        
+                                   <tr>
+                                       <td style="font-size: 18px;color:#000;font-weight: bold;line-height: 26px;">Enquiry informations:</td>
+                                   </tr>
+                                   <tr>
+                                       <td><strong> Enquirer name:</strong> <span contenteditable="false">' . $enquiry_name . '</span></td>
+                                   </tr>     
+                                   <tr>
+                                       <td><strong>Mobile Number :</strong> <span contenteditable="false">' . $enquiry_mobile . '</span></td>
+                                   </tr> 
+                                   <tr>
+                                       <td><strong>Email Id :</strong> <span contenteditable="false">' . $enquiry_email . '</span></td>
+                                   </tr>
+                                   <tr>
+                                       <td><strong>Message :</strong> <span contenteditable="false">' . $enquiry_message . '</span></td>
+                                   </tr>
+                                   <tr><td>&nbsp;</td></tr>
+                                   <tr>
+                                        <td><img src="' . $enquiry_listing_img . '" width="100px">  </td>
+                                    </tr>
+                                   <tr>
+                                        <td><strong><a target="_blank" href="' . $enquiry_listing_link . '"> Click to Reply</a>  </strong></td>
+                                   </tr>
+                                   <tr><td>&nbsp;</td></tr>    
+                                   <tr>
+                                       <td>Thanks, <br><span contenteditable="false">' . $admin_site_name . '</span></td>
+                                   </tr>    
+                               </tbody></table>
+                           </td>
+                       </tr>
+                       
+                   </tbody>
+               </table>
+           </body>
+           
+           </html>';
+            // echo $message2;
+            // die();
             $headers1 = "From: " . "$admin_email" . "\r\n";
             $headers1 .= "Reply-To: " . "$admin_email" . "\r\n";
             $headers1 .= "MIME-Version: 1.0\r\n";

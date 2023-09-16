@@ -77,3 +77,4 @@ file_put_contents($logFilePath, $logMessage . PHP_EOL, FILE_APPEND);
 //     # code...
 // }
 // die();
+$opcacheStatus = opcache_get_status();

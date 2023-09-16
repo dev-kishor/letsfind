@@ -9,6 +9,39 @@ include "dashboard_left_pane.php";
 
 $session_user_id = $user_details_row['user_id'];
 ?>
+
+<section>
+    <div class="pop-ups pop-quo">
+        <!-- The Modal -->
+        <div class="modal fade" id="extraoption">
+            <div class="modal-dialog modal-dialogcstm">
+                <div class="modal-content">
+                    <div class="log-bor">&nbsp;</div>
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <!-- Modal Header -->
+                    <div class="quote-pop">
+                        <div class="cutmhomebtn">
+                            <div class="cutmhomebtnBx">
+                                <a href="add-listing-start" class="db-tit-btn">Service Listing</a>
+                            </div>
+                            <div class="cutmhomebtnBx">
+                                <a href="service-experts/create-service-expert-profile" class="db-tit-btn">Service Expert</a>
+                            </div>
+                            <div class="cutmhomebtnBx">
+                            <a href="create-job" class="db-tit-btn">Add Jobs</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <!--CENTER SECTION-->
 <div class="ud-main">
     <div class="ud-main-inn">
@@ -23,7 +56,7 @@ $session_user_id = $user_details_row['user_id'];
                 </div>
             </div>
 
-            <div class="custmBtn">
+            <!-- <div class="custmBtn">
                 <div class="cbtnBx">
                     <a href="add-listing-start" class="db-tit-btn"><?php echo $BIZBOOK['ADD_NEW_LISTING']; ?></a>
                 </div>
@@ -42,7 +75,7 @@ $session_user_id = $user_details_row['user_id'];
                 <div class="cbtnBx">
                     <a href="add-coupons" class="db-tit-btn"><?php echo $BIZBOOK['COUPON-ADD-NEW-COUPON']; ?></a>
                 </div>
-            </div>
+            </div> -->
 
             <div class="ud-cen-s1">
                 <ul>
@@ -92,6 +125,24 @@ $session_user_id = $user_details_row['user_id'];
                     </li>
                 </ul>
             </div>
+
+
+            <div class="cutmhomebtn">
+                <div class="cutmhomebtnBx">
+                    <a href="#" data-toggle="modal" data-target="#extraoption" class="db-tit-btn"><?php echo $BIZBOOK['ADD_NEW_LISTING']; ?></a>
+                </div>
+                <div class="cutmhomebtnBx">
+                    <a href="create-new-event" class="db-tit-btn"><?php echo $BIZBOOK['ADD_NEW_EVENT']; ?></a>
+                </div>
+                <div class="cutmhomebtnBx">
+                    <a href="add-coupons" class="db-tit-btn"><?php echo $BIZBOOK['COUPON-ADD-NEW-COUPON']; ?></a>
+                </div>
+                <div class="cutmhomebtnBx">
+                    <a href="add-new-product" class="db-tit-btn"><?php echo $BIZBOOK['ADD_NEW_PRODUCT']; ?></a>
+                </div>
+            </div>
+
+
             <!-- START -->
             <div class="ud-cen-s3 ud-cen-s4">
                 <h2><?php echo $BIZBOOK['PROFILE_PAGE']; ?></h2>
@@ -139,7 +190,7 @@ $session_user_id = $user_details_row['user_id'];
                     <?php
                     $get_user_type = getUser($_SESSION["user_id"])["user_type"];
                     $getExpertInformation = getExpertInformation();
-                 
+
                     if (isset($_SESSION["user_id"]) && $get_user_type === "Service provider" && $getExpertInformation != 1) {
                     ?>
                         <div class="bcmexpert_div">

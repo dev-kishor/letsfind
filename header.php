@@ -920,7 +920,17 @@ if (isset($_GET['preview']) && isset($_GET['q']) && isset($_GET['type']) && isse
                                                 <a href="<?php echo $webpage_full_link; ?>blog-posts" class="fclick"></a>
                                             </div>
                                         </li>
-                                    <?php } ?>
+                                    <?php }
+                                    if ($footer_row['admin_blog_show'] == 1) { ?>
+                                        <li>
+                                            <div>
+                                            <img src="<?php echo $slash; ?>images/places/icons/hot-air-balloon.png" alt="" loading="lazy">
+                                                <h4><?php echo "Things ToDo" ?></h4>
+                                                <a href="<?php echo $webpage_full_link; ?>things-to-do" class="fclick"></a>
+                                            </div>
+                                        </li>
+                                    <?php }
+                                    ?>
                                 </ul>
                             </div>
                             <div class="h2-ban-ql">

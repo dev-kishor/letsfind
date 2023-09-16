@@ -85,14 +85,18 @@ placedetailpageview($place_id); //Function To Find Page View
                                             }
                                         }
                                     } elseif ($place_row['place_status'] == 2) {
-                                        $currentDateTime = new DateTime(); // Get the current time
-                                        $openingTime = new DateTime($place_row['opening_time']); // Set the opening time
-                                        $closingTime = new DateTime($place_row['closing_time']); // Set the closing time
-
-                                        if ($currentDateTime >= $openingTime && $currentDateTime <= $closingTime) {
+                                        if ($place_row['opening_time'] == "247") {
                                             echo $BIZBOOK['PLACE-OPEN'];
                                         } else {
-                                            echo $BIZBOOK['PLACE-CLOSED'];
+                                            $currentDateTime = new DateTime(); // Get the current time
+                                            $openingTime = new DateTime($place_row['opening_time']); // Set the opening time
+                                            $closingTime = new DateTime($place_row['closing_time']); // Set the closing time
+
+                                            if ($currentDateTime >= $openingTime && $currentDateTime <= $closingTime) {
+                                                echo $BIZBOOK['PLACE-OPEN'];
+                                            } else {
+                                                echo $BIZBOOK['PLACE-CLOSED'];
+                                            }
                                         }
                                     } elseif ($place_row['place_status'] == 3) {
                                         echo $BIZBOOK['PLACE-CLOSED'];

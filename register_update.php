@@ -1,4 +1,3 @@
- $register_mode = "Direct";
  <?php
 
     if (file_exists('config/info.php')) {

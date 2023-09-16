@@ -118,6 +118,7 @@ $(document).ready(function () {
   $(".no").on("click", function () {
     $(".noti-sure").removeClass("cnoti-show");
   });
+  
   //HOW TO TAB OPTIONS
   $(".how-to-coll li h4").on("click", function () {
     $(".how-to-coll li h4").removeClass("colact");
@@ -125,6 +126,7 @@ $(document).ready(function () {
     $(this).addClass("colact");
     $(this).next("div").slideDown();
   });
+ 
   //CREATE DUPLICATE LISTING
   $(".cre-dup-btn").on("click", function () {
     $(".cre-dup-form").slideDown();
