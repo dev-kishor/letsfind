@@ -9,7 +9,7 @@ if (!empty($city_ids)) {
     $extra_query = "and city in ($city_ids)";
 }
 
-$sql_query = "SELECT * FROM " . TBL . "places where state = $state_id $extra_query";
+$sql_query = "SELECT * FROM " . TBL . "places where todo_name != '' and state = $state_id $extra_query";
 $res = mysqli_query($conn, $sql_query);
 
 if ($res) {

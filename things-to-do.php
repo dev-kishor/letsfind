@@ -146,7 +146,9 @@ include "header.php";
                     </div>
                     <!--ADS-->
                     <div id="dynmdata">
+
                         <?php
+                        $ccount = 0;
                         foreach (getAllPlacesWithToDo() as $todo_place) {
                         ?>
                             <div class="list-det-rel-pre todouilist">
@@ -164,6 +166,7 @@ include "header.php";
                                     $zipped = array_map(null, $todo_name_Array, $todo_url_Array, $todo_img_Array);
                                     // prx($zipped);
                                     foreach ($zipped as $tuple) {
+                                        $ccount = $ccount + 1;
                                     ?>
                                         <li class="todolistli">
                                             <div class="land-pack-grid">
@@ -188,6 +191,7 @@ include "header.php";
                         }
                         ?>
                     </div>
+                   <input type="hidden" class="allthingtodo" value="<?php echo $ccount ?>">
 
                     <div id="all-list-pagination-container"></div>
                 </div>
