@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Event Status
             $event_status = "Inactive";
         }
+
         if (!empty($_FILES['event_image']['name'])) {
             $file = rand(1000, 100000) . $_FILES['event_image']['name'];
             $file_loc = $_FILES['event_image']['tmp_name'];
@@ -89,6 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $event_image = '';
             }
         }
+
+        // prx($event_image);
+        
         function checkEventSlug($link, $counter = 1)
         {
             global $conn;
@@ -110,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					,event_contact_name, event_map, event_start_date, event_time, event_image, event_status, event_type, isenquiry, event_slug, event_cdt)
 					VALUES
 					('$user_id', '$event_name', '$event_description', '$event_email', '$event_mobile', '$event_website'
-					, '$event_address', '$event_pincode','$category_id', '$event_contact_name', '$event_map', '$event_start_date',  '$event_time', 'event_image', '$event_status', '$event_type', '$isenquiry', '$event_slug', '$curDate')";
+					, '$event_address', '$event_pincode','$category_id', '$event_contact_name', '$event_map', '$event_start_date',  '$event_time', '$event_image', '$event_status', '$event_type', '$isenquiry', '$event_slug', '$curDate')";
         $event_res = mysqli_query($conn, $event_qry);
         
         //****************************    Admin Primary email fetch starts    *************************
