@@ -33,6 +33,7 @@ if (file_exists('config/event_page_authentication.php')) {
                                     <th><?php echo $BIZBOOK['EVENT_NAME']; ?></th>
 									<th><?php echo $BIZBOOK['EVENT_DATE']; ?></th>
 									<th><?php echo $BIZBOOK['VIEWS']; ?></th>
+									<th>Booked Pass</th>
 									<th><?php echo $BIZBOOK['EDIT']; ?></th>
 									<th><?php echo $BIZBOOK['DELETE']; ?></th>
 									<th><?php echo $BIZBOOK['PREVIEW']; ?></th>
@@ -51,6 +52,7 @@ if (file_exists('config/event_page_authentication.php')) {
                                     <td><?php echo $eventrow['event_name']; ?> <span><?php echo dateFormatconverter($eventrow['event_cdt']); ?></span></td>
                                     <td><?php   echo dateFormatconverter($eventrow['event_start_date']); ?></td>
                                     <td><span class="db-list-rat"><?php  echo event_pageview_count($eventrow['event_id']); ?></span></td>
+                                    <td><a href="booked-event?code=<?php echo $eventrow['event_id']; ?>" class="db-list-edit"><?php  echo event_pass_count($eventrow['event_id']); ?> Booked Pass </a></td>
                                     <td><a href="edit-event?code=<?php echo $eventrow['event_id']; ?>" class="db-list-edit"><?php echo $BIZBOOK['EDIT']; ?></a></td>
                                     <td><a href="delete-event?code=<?php echo $eventrow['event_id']; ?>" class="db-list-edit"><?php echo $BIZBOOK['DELETE']; ?></a></td>
                                     <td><a href="<?php echo $EVENT_URL.urlModifier($eventrow['event_slug']); ?>" class="db-list-edit" target="_blank"><?php echo $BIZBOOK['PREVIEW']; ?></a></td>

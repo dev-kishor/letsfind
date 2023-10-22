@@ -118,7 +118,7 @@ $(document).ready(function () {
   $(".no").on("click", function () {
     $(".noti-sure").removeClass("cnoti-show");
   });
-  
+
   //HOW TO TAB OPTIONS
   $(".how-to-coll li h4").on("click", function () {
     $(".how-to-coll li h4").removeClass("colact");
@@ -126,7 +126,7 @@ $(document).ready(function () {
     $(this).addClass("colact");
     $(this).next("div").slideDown();
   });
- 
+
   //CREATE DUPLICATE LISTING
   $(".cre-dup-btn").on("click", function () {
     $(".cre-dup-form").slideDown();
@@ -1374,3 +1374,27 @@ function showToast(text) {
 }
 
 // =============== Image validate EX: size & formate ===============
+
+function hitEventPass() {
+  $(".eventpassdiv").html(
+    ' <span class="share-new" style="background-color: #47b83f;"><i class="material-icons">book</i> Booking</span>'
+  );
+  const eventId = this.classList[1];
+  if (webpage_full_link != null) {
+    var link = webpage_full_link + "book_event_process.php";
+  } else {
+    var link = "book_event_process.php";
+  }
+  $.ajax({
+    type: "POST",
+    url: link,
+    data: "event_id=" + eventId,
+    success: function (data) {
+      $(".eventpassdiv").html(
+        ' <span class="share-new" style="background-color: #47b83f;"><i class="material-icons">check</i> Booked</span>'
+      );
+    },
+  });
+}
+
+document.getElementById("bookevent").onclick = hitEventPass;

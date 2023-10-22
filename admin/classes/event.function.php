@@ -124,9 +124,18 @@ function getEventSeoScore($arg)
 function getCountCategoryEvent($arg)
 {
     global $conn;
-
+    
     $sql = "SELECT * FROM " . TBL . "events WHERE category_id = '$arg'";
     $rs = mysqli_query($conn, $sql);
     $row = mysqli_num_rows($rs);
     return $row;
+}
+
+//Get particular Event SEO Score using event id
+function getBookedPassByEventID($arg)
+{
+    global $conn;
+    $sql = "SELECT u.first_name,ev.* from booked_event_pass as ev join " . TBL . "users as u on u.user_id = ev.user_id where event_id = $arg";
+    $rs = mysqli_query($conn, $sql);
+    return $rs;
 }

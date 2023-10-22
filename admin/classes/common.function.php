@@ -275,6 +275,14 @@ function event_pageview_count($event_id)
     return $total_event_view_count;
 }
 
+function event_pass_count($event_id)
+{
+    global $conn;
+    $total_event_view_count1 = mysqli_query($conn, "SELECT event_id FROM booked_event_pass  WHERE event_id = '$event_id' ");
+    $total_event_view_count = mysqli_num_rows($total_event_view_count1);
+    return $total_event_view_count;
+}
+
 # Getting Total Blog Page/Blog Detail View Count Function #
 
 function blog_pageview_count($blog_id)
