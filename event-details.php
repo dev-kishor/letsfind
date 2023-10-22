@@ -136,8 +136,13 @@ if ($event_id == NULL && empty($event_id)) {
                         } else {
                         ?>
                             <span class="share-new <?php echo $event_id ?>" id="bookevent"><i class="material-icons">book</i> Book Now</span>
-                    <?php
+                        <?php
                         }
+                    } else {
+                        ?>
+                        <a href="<?php echo $slash; ?>login">
+                        <span class="share-new <?php echo $event_id ?>"><i class="material-icons">book</i> Book Now</span></a>
+                    <?php
                     }
                     ?>
                 </div>
