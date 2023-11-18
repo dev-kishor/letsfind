@@ -12,6 +12,7 @@ include "header.php";
             <div class="about-us">
                 <p><?php echo $BIZBOOK['pg_abo_sec1']; ?></p>
                 <p><?php echo $BIZBOOK['pg_abo_sec2']; ?></p>
+                ß
             </div>
             <div class="how-wrks">
                 <div class="home-tit">
